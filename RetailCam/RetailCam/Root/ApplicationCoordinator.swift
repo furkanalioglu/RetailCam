@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-protocol Coordinator {
+public protocol Coordinator {
     func start()
 }
 
@@ -38,8 +38,8 @@ class ApplicationCoordinator: Coordinator {
     
     private func subscribeToRootChanges() {
         appRoot
-            .removeDuplicates()
             .receive(on: scheduler)
+            .removeDuplicates()
             .sink { [weak self] root in
                 self?.transition(to: root)
             }

@@ -19,7 +19,7 @@ final class SplashViewModel {
         self.scheduler = scheduler
     }
     
-    func startSplashFlow() {
+    func startSplashScenario() {
         Just(Void()) // TODO: - Handle splash scenario
             .delay(for: .seconds(2),
                    scheduler: scheduler)
