@@ -34,15 +34,13 @@ public extension Recordable where Self: UIButton {
         switch state {
         case .didNotStart:
             setTitle("Start Recording", for: .normal)
-            backgroundColor = .systemGreen
-
+            tintColor = .systemGreen
         case .started:
             setTitle("Recording...", for: .normal)
-            backgroundColor = .systemRed
-
+            tintColor = .systemRed
         case .paused:
             setTitle("Paused", for: .normal)
-            backgroundColor = .systemPink
+            tintColor = .systemYellow
         }
     }
 }

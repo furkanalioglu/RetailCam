@@ -8,9 +8,6 @@
 import Foundation
 import UIKit
 
-import Foundation
-import UIKit
-
 class RecordRootView: NiblessView {
 
     private let viewModel: RecordViewModel
@@ -25,9 +22,28 @@ class RecordRootView: NiblessView {
         let button = RecordButton()
         var config = UIButton.Configuration.filled()
         config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20)
-        config.baseBackgroundColor = .clear
         button.configuration = config
         return button
+    }()
+
+    let resetButton: UIButton = {
+        let button = UIButton()
+        var config = UIButton.Configuration.filled()
+        config.image = UIImage(systemName: "xmark.circle.fill")
+        config.baseBackgroundColor = .clear
+        config.cornerStyle = .capsule
+        config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
+        button.configuration = config
+        return button
+    }()
+
+    private lazy var buttonStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [recordButton, resetButton])
+        stackView.axis = .horizontal
+        stackView.backgroundColor = .clear
+        stackView.alignment = .center
+        stackView.spacing = 16
+        return stackView
     }()
 
     init(frame: CGRect = .zero,
@@ -35,39 +51,50 @@ class RecordRootView: NiblessView {
         self.viewModel = viewModel
         super.init(frame: frame)
         
-        backgroundColor = .secondarySystemBackground
+        self.backgroundColor = .secondarySystemBackground
         self.setupBindables()
-        constructHierarchy()
+        self.constructHierarchy()
     }
 
     private func constructHierarchy() {
-        addSubview(videoSourceView)
-        addSubview(recordButton)
-        activateConstraints()
+        self.addSubview(videoSourceView)
+        self.addSubview(buttonStackView)
+        self.activateConstraints()
     }
     
     private func setupBindables() {
-        recordButton.addAction(
+        self.recordButton.addAction(
           UIAction(handler: { [viewModel] _ in
               viewModel.changeRecordingState()
           }),
           for: .touchUpInside
         )
+        
+        self.resetButton.addAction(
+          UIAction(handler: { [viewModel] _ in
+              viewModel.stopRecording()
+          }),
+          for: .touchUpInside
+        )
+    }
+
+    @objc private func resetRecording() {
+        self.viewModel.recordingState.send(.didNotStart)
     }
 
     private func activateConstraints() {
-        videoSourceView.translatesAutoresizingMaskIntoConstraints = false
+        self.videoSourceView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            videoSourceView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            videoSourceView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            videoSourceView.topAnchor.constraint(equalTo: topAnchor),
-            videoSourceView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            self.videoSourceView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.videoSourceView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.videoSourceView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.videoSourceView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
 
-        recordButton.translatesAutoresizingMaskIntoConstraints = false
+        self.buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            recordButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            recordButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16)
+            self.buttonStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.buttonStackView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -16)
         ])
     }
 }

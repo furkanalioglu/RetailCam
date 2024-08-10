@@ -39,7 +39,18 @@ class RecordViewController: NiblessViewController {
             .receive(on: defaultScheduler)
             .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] state in
                 self?.rootView?.recordButton.recordingState.value = state
+                self?.updateButtonsStack(for: state)
             })
             .store(in: &disposeBag)
+    }
+    
+    private func updateButtonsStack(for state: RecordingState) {
+        guard let rootView = rootView else { return }
+        
+        if state == .didNotStart {
+            rootView.resetButton.isHidden = true
+        } else {
+            rootView.resetButton.isHidden = false
+        }
     }
 }

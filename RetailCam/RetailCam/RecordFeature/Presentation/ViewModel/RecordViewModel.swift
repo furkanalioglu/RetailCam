@@ -27,5 +27,10 @@ final class RecordViewModel {
             recordingState.send(.paused)
         }
     }
+    
+    public func stopRecording() {
+        guard recordingState.value != .didNotStart else { return }
+        recordingState.send(.didNotStart)
+    }
 }
 
