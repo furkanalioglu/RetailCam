@@ -17,7 +17,7 @@ final class RecordViewModel {
         self.coordinator = coordinator
     }
     
-    public func changeRecordingState() {
+    internal func changeRecordingState() {
         switch recordingState.value {
         case .didNotStart:
             recordingState.send(.started)
@@ -28,9 +28,14 @@ final class RecordViewModel {
         }
     }
     
-    public func stopRecording() {
+    internal func stopRecording() {
         guard recordingState.value != .didNotStart else { return }
         recordingState.send(.didNotStart)
     }
+    
+    internal func detailsTap() {
+        self.coordinator.navigate(to: .recordDetails)
+    }
+    
 }
 

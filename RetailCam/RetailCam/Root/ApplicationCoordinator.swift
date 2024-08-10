@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-protocol Coordinator {
+protocol RootCoordinator {
     func start()
 }
 
@@ -16,10 +16,10 @@ enum Roots: String {
     case splash, record
 }
 
-class ApplicationCoordinator: Coordinator {
+class ApplicationCoordinator: RootCoordinator {
     
     private let window: UIWindow
-    private var childCoordinators = [Coordinator]()
+    private var childCoordinators = [RootCoordinator]()
     
     private let appRoot = CurrentValueSubject<Roots, Never>(.splash)
     private var disposeBag = Set<AnyCancellable>()
