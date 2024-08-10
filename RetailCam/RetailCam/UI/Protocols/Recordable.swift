@@ -24,6 +24,7 @@ public extension Recordable where Self: UIButton {
 
     func setSubscriptions() {
         recordingState
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.updateUI(for: state)
             }

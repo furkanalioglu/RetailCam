@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-public class RecordButton: UIButton, Recordable {
+public class RecordButton: UIButton, Recordable { //TODO: - IS THERE A BETTER WAY TO HANDLE ?
     
     public var recordingState = CurrentValueSubject<RecordingState, Never>(.didNotStart)
     public var disposeBag = Set<AnyCancellable>()
