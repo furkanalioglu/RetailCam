@@ -6,32 +6,33 @@
 //
 
 import Foundation
+import Foundation
 
 struct RecordDetailsCollectionViewModel: Hashable {
-    let id = UUID()
-    var imageName: String?
-    var imagePath: String?
-    var duration: String?
-    var date: String?
+    private let photoId: UUID
+    let displayImageName: String?
+    let displayImagePath: String?
+    let displayDuration: String?
+    let displayDate: String?
     
-    public init(imageName: String? = nil,
-                imagePath: String? = nil,
-                duration: String? = nil,
-                date: String? = nil) {
-        self.imageName = imageName ?? "Invalid_Image_Name"
-        self.imagePath = imagePath
-        self.duration = duration ?? "??:??:??"
-        self.date = date ?? "??/??/????"
+    public init(photo: Photo) {
+        self.photoId = photo.id
+        self.displayImageName = photo.imageName ?? "Invalid_Image_Name"
+        self.displayImagePath = photo.imagePath
+        self.displayDuration = photo.duration ?? "??:??:??"
+        self.displayDate = photo.date ?? "??/??/????"
     }
     
     static func ==(lhs: RecordDetailsCollectionViewModel, rhs: RecordDetailsCollectionViewModel) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.photoId == rhs.photoId
     }
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+        hasher.combine(photoId)
     }
 }
+
+
 
 public enum SectionRecordDetails {
     case main

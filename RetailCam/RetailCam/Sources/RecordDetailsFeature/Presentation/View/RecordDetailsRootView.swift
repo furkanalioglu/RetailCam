@@ -37,6 +37,9 @@ class RecordDetailsRootView: NiblessView {
     private func setupUI() {
         self.addToHierarchy()
         self.setupFlowLayout()
+        self.setupCollectionView()
+        self.setupCollectionDataSource()
+        self.subscribe()
     }
     
     private func addToHierarchy() {
@@ -86,9 +89,26 @@ class RecordDetailsRootView: NiblessView {
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView,
                                                         cellProvider: { collectionView, indexPath, viewModel in
             let cell = collectionView.dequeueReusableCell(with: RecordDetailsCollectionViewCell.self, for: indexPath)
+            cell.backgroundColor = .red
             cell.setViewModel(viewModel)
             return cell
         })
+    }
+    
+    private func subscribe() {
+        viewModel.photosSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] photos in
+                self?.applySnapshot(photos: photos)
+            }
+            .store(in: &disposeBag)
+    }
+    
+    private func applySnapshot(photos: [RecordDetailsCollectionViewModel]) {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(photos)
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

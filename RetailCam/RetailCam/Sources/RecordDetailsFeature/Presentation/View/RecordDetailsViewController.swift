@@ -9,6 +9,7 @@ import Foundation
 
 class RecordDetailsViewController : NiblessViewController {
     private let viewModel: RecordDetailsViewModel
+    private var rootView: RecordDetailsRootView?
     
     init(viewModel: RecordDetailsViewModel) {
         self.viewModel = viewModel
@@ -16,4 +17,13 @@ class RecordDetailsViewController : NiblessViewController {
         self.view.backgroundColor = .systemBackground
     }
     
+    override func loadView() {
+        rootView = RecordDetailsRootView(viewModel: viewModel)
+        self.view = rootView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.viewModel.viewDidLoad()
+    }
 }

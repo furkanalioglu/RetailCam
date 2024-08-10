@@ -38,6 +38,7 @@
 		91F6F7E12C67BC1100F7D312 /* NiblessCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E02C67BC1100F7D312 /* NiblessCollectionViewCell.swift */; };
 		91F6F7E32C67BE8B00F7D312 /* UICollectionView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */; };
 		91F6F7E52C67BEBF00F7D312 /* Dequeuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */; };
+		91F6F7E92C67C06D00F7D312 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E82C67C06D00F7D312 /* Photo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		91F6F7E02C67BC1100F7D312 /* NiblessCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiblessCollectionViewCell.swift; sourceTree = "<group>"; };
 		91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView++.swift"; sourceTree = "<group>"; };
 		91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dequeuable.swift; sourceTree = "<group>"; };
+		91F6F7E82C67C06D00F7D312 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +227,7 @@
 		91F6F7A92C673ABD00F7D312 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				91F6F7E62C67C05500F7D312 /* Shared */,
 				91F6F7DA2C67BA6900F7D312 /* Extensions */,
 				91F6F7C52C675FDD00F7D312 /* Protocols */,
 				91F6F7C42C675FD500F7D312 /* Components */,
@@ -362,6 +365,22 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		91F6F7E62C67C05500F7D312 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				91F6F7E72C67C05900F7D312 /* Entities */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		91F6F7E72C67C05900F7D312 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				91F6F7E82C67C06D00F7D312 /* Photo.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -495,6 +514,7 @@
 				91F6F7A82C673A9A00F7D312 /* SplashViewModel.swift in Sources */,
 				91F6F7AC2C673AE600F7D312 /* NiblessViewController.swift in Sources */,
 				91F6F7CB2C67707D00F7D312 /* RecordDetailsCoordinator.swift in Sources */,
+				91F6F7E92C67C06D00F7D312 /* Photo.swift in Sources */,
 				91F6F7D72C677B3500F7D312 /* VideoSourceView.swift in Sources */,
 				91F6F7A02C67386F00F7D312 /* ApplicationCoordinator.swift in Sources */,
 				91F6F7BD2C67558F00F7D312 /* NiblessView.swift in Sources */,

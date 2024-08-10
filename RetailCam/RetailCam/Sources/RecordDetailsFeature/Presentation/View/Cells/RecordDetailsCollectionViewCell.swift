@@ -44,7 +44,7 @@ class RecordDetailsCollectionViewCell: NiblessCollectionViewCell {
 
     func setViewModel(_ viewModel: RecordDetailsCollectionViewModel) {
         self.viewModel = viewModel
-        self.capturedImageView.image = UIImage(systemName: viewModel.imageName ?? "person.fill")
+        self.capturedImageView.image = UIImage(systemName: viewModel.displayImageName ?? "person.fill")
     }
     
     override func prepareForReuse() {
