@@ -24,6 +24,7 @@
 		91F6F7B92C67409300F7D312 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7B82C67409300F7D312 /* RecordViewModel.swift */; };
 		91F6F7BB2C67557500F7D312 /* RecordRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7BA2C67557500F7D312 /* RecordRootView.swift */; };
 		91F6F7BD2C67558F00F7D312 /* NiblessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7BC2C67558F00F7D312 /* NiblessView.swift */; };
+		91F6F7BF2C6757AA00F7D312 /* SplashRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7BE2C6757AA00F7D312 /* SplashRootView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		91F6F7B82C67409300F7D312 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		91F6F7BA2C67557500F7D312 /* RecordRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRootView.swift; sourceTree = "<group>"; };
 		91F6F7BC2C67558F00F7D312 /* NiblessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiblessView.swift; sourceTree = "<group>"; };
+		91F6F7BE2C6757AA00F7D312 /* SplashRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRootView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,7 @@
 		91F6F7A32C673A7900F7D312 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				91F6F7BE2C6757AA00F7D312 /* SplashRootView.swift */,
 				91F6F7A52C673A9400F7D312 /* SplashViewController.swift */,
 			);
 			path = View;
@@ -381,6 +384,7 @@
 				91F6F7AC2C673AE600F7D312 /* NiblessViewController.swift in Sources */,
 				91F6F7A02C67386F00F7D312 /* ApplicationCoordinator.swift in Sources */,
 				91F6F7BD2C67558F00F7D312 /* NiblessView.swift in Sources */,
+				91F6F7BF2C6757AA00F7D312 /* SplashRootView.swift in Sources */,
 				91F6F7B92C67409300F7D312 /* RecordViewModel.swift in Sources */,
 				91F6F7BB2C67557500F7D312 /* RecordRootView.swift in Sources */,
 				91F6F7B72C67408C00F7D312 /* RecordViewController.swift in Sources */,
