@@ -15,7 +15,7 @@ public class RecordButton: UIButton, Recordable { //TODO: - IS THERE A BETTER WA
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        setSubscriptions()
+        subscribe()
         updateUI(for: .didNotStart)
     }
     

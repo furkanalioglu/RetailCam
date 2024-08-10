@@ -22,7 +22,7 @@ public protocol Recordable: AnyObject {
 
 public extension Recordable where Self: RecordButton {
 
-    func setSubscriptions() {
+    func subscribe() {
         recordingState
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -48,8 +48,7 @@ public extension Recordable where Self: RecordButton {
 
 public extension Recordable where Self: VideoSourceView {
 
-    func setSubscriptions() {
-        debugPrint("Timer sub set")
+    func subscribe() {
         recordingState
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -61,11 +60,11 @@ public extension Recordable where Self: VideoSourceView {
     func updateUI(for state: RecordingState) {
         switch state {
         case .didNotStart:
-            resetTimer()
+            self.resetTimer()
         case .started:
-            startTimer()
+            self.startTimer()
         case .paused:
-            stopTimer()
+            self.stopTimer()
         }
     }
 
@@ -82,12 +81,13 @@ public extension Recordable where Self: VideoSourceView {
     }
 
     private func stopTimer() {
-        timerSubscription?.cancel()
+        self.timerSubscription?.cancel()
+        self.timerSubscription = nil
     }
 
     private func resetTimer() {
-        stopTimer()
-        secondsElapsed = 0
-        timerLabel.text = "00:00"
+        self.stopTimer()
+        self.secondsElapsed = 0
+        self.timerLabel.text = "00:00"
     }
 }
