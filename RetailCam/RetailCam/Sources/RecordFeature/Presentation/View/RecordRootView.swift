@@ -64,19 +64,20 @@ class RecordRootView: NiblessView {
     
     private func setupBindables() {
         self.recordButton.addAction(
-          UIAction(handler: { [viewModel] _ in
-              viewModel.changeRecordingState()
-          }),
-          for: .touchUpInside
+            UIAction(handler: { [weak viewModel] _ in
+                viewModel?.changeRecordingState()
+            }),
+            for: .touchUpInside
         )
         
         self.resetButton.addAction(
-          UIAction(handler: { [viewModel] _ in
-              viewModel.stopRecording()
-          }),
-          for: .touchUpInside
+            UIAction(handler: { [weak viewModel] _ in
+                viewModel?.stopRecording()
+            }),
+            for: .touchUpInside
         )
     }
+
 
     @objc private func resetRecording() {
         self.viewModel.recordingState.send(.didNotStart)

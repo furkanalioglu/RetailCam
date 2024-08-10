@@ -61,10 +61,13 @@ public extension Recordable where Self: VideoSourceView {
         switch state {
         case .didNotStart:
             self.resetTimer()
+            self.timerLabel.textColor = .systemGreen
         case .started:
             self.startTimer()
+            self.timerLabel.textColor = .systemRed
         case .paused:
             self.stopTimer()
+            self.timerLabel.textColor = .systemYellow
         }
     }
 

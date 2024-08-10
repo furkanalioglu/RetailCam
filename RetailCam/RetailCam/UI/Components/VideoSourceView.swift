@@ -18,7 +18,6 @@ public class VideoSourceView: UIView, Recordable {
         let label = UILabel()
         label.text = "00:00"
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textColor = .red
         label.textAlignment = .center
         return label
     }()

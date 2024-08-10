@@ -23,6 +23,7 @@ class SplashRootView: NiblessView {
     private let loadingLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20)
+        label.text = "RetailCam"
         label.textColor = .systemGreen
         return label
     }()

@@ -30,7 +30,18 @@ class RecordViewController: NiblessViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupNavigationBar()
         self.subscribe()
+    }
+    
+    private func setupNavigationBar() {
+        let infoButton = UIBarButtonItem(
+            image: UIImage(systemName: "info.circle"),
+            primaryAction: UIAction(handler: { [weak viewModel] _ in
+                viewModel?.detailsTap()
+            })
+        )
+        navigationItem.rightBarButtonItem = infoButton
     }
     
     private func subscribe() {
