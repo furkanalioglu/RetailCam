@@ -16,7 +16,7 @@ class SplashRootView: NiblessView {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "camera.metering.center.weighted")
         imageView.contentMode = .scaleAspectFill
-        imageView.tintColor = .white
+        imageView.tintColor = .systemGreen
         return imageView
     }()
 
@@ -24,7 +24,7 @@ class SplashRootView: NiblessView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20)
         label.text = "Loading"
-        label.textColor = .white
+        label.textColor = .systemGreen
         return label
     }()
 

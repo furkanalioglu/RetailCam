@@ -25,6 +25,8 @@
 		91F6F7BB2C67557500F7D312 /* RecordRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7BA2C67557500F7D312 /* RecordRootView.swift */; };
 		91F6F7BD2C67558F00F7D312 /* NiblessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7BC2C67558F00F7D312 /* NiblessView.swift */; };
 		91F6F7BF2C6757AA00F7D312 /* SplashRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7BE2C6757AA00F7D312 /* SplashRootView.swift */; };
+		91F6F7C32C675FB900F7D312 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7C22C675FB900F7D312 /* RecordButton.swift */; };
+		91F6F7C72C675FEC00F7D312 /* Recordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7C62C675FEC00F7D312 /* Recordable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		91F6F7BA2C67557500F7D312 /* RecordRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRootView.swift; sourceTree = "<group>"; };
 		91F6F7BC2C67558F00F7D312 /* NiblessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiblessView.swift; sourceTree = "<group>"; };
 		91F6F7BE2C6757AA00F7D312 /* SplashRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRootView.swift; sourceTree = "<group>"; };
+		91F6F7C22C675FB900F7D312 /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
+		91F6F7C62C675FEC00F7D312 /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,8 +204,8 @@
 		91F6F7A92C673ABD00F7D312 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				91F6F7AB2C673AE600F7D312 /* NiblessViewController.swift */,
-				91F6F7BC2C67558F00F7D312 /* NiblessView.swift */,
+				91F6F7C52C675FDD00F7D312 /* Protocols */,
+				91F6F7C42C675FD500F7D312 /* Components */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -248,6 +252,24 @@
 				91F6F7B82C67409300F7D312 /* RecordViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		91F6F7C42C675FD500F7D312 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				91F6F7C22C675FB900F7D312 /* RecordButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		91F6F7C52C675FDD00F7D312 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				91F6F7AB2C673AE600F7D312 /* NiblessViewController.swift */,
+				91F6F7BC2C67558F00F7D312 /* NiblessView.swift */,
+				91F6F7C62C675FEC00F7D312 /* Recordable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -387,9 +409,11 @@
 				91F6F7BF2C6757AA00F7D312 /* SplashRootView.swift in Sources */,
 				91F6F7B92C67409300F7D312 /* RecordViewModel.swift in Sources */,
 				91F6F7BB2C67557500F7D312 /* RecordRootView.swift in Sources */,
+				91F6F7C72C675FEC00F7D312 /* Recordable.swift in Sources */,
 				91F6F7B72C67408C00F7D312 /* RecordViewController.swift in Sources */,
 				91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */,
 				91F6F7AF2C673D1400F7D312 /* SplashCoordinator.swift in Sources */,
+				91F6F7C32C675FB900F7D312 /* RecordButton.swift in Sources */,
 				91F6F7B22C67406700F7D312 /* RecordCoordinator.swift in Sources */,
 				91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */,
 				91F6F7A62C673A9400F7D312 /* SplashViewController.swift in Sources */,

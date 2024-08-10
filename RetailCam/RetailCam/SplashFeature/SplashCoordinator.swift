@@ -29,7 +29,7 @@ class SplashCoordinator: Coordinator {
         let splashViewController = SplashViewController(viewModel: viewModel)
         navigationController.setViewControllers([splashViewController],
                                                 animated: false)
-        viewModel.startSplashFlow()
+        viewModel.startSplashScenario()
     }
     
     func navigateToNextFeature() {
