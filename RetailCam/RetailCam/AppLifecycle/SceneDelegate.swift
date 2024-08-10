@@ -8,17 +8,19 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
+    var applicationCoordinator: ApplicationCoordinator?
 
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = ViewController()
-        window.makeKeyAndVisible()
-        self.window = window
-    }
+     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+         guard let windowScene = (scene as? UIWindowScene) else { return }
+         let window = UIWindow(windowScene: windowScene)
+         let applicationCoordinator = ApplicationCoordinator(window: window)
+         self.window = window
+         self.applicationCoordinator = applicationCoordinator
+         applicationCoordinator.start()
+         window.makeKeyAndVisible()
+     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
