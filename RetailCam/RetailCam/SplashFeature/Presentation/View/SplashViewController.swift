@@ -8,7 +8,6 @@
 import UIKit
 
 class SplashViewController: NiblessViewController {
-    
     private let viewModel: SplashViewModel
     private var rootView: SplashRootView?
     

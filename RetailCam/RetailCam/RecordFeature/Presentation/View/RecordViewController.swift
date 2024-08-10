@@ -6,14 +6,22 @@
 //
 
 import UIKit
+import Combine
 
 class RecordViewController: NiblessViewController {
-    
     private let viewModel: RecordViewModel
+    private var rootView : RecordRootView?
+    public var defaultScheduler : DispatchQueue = DispatchQueue.main
+    private var disposeBag = Set<AnyCancellable>()
     
     init(viewModel: RecordViewModel) {
         self.viewModel = viewModel
         super.init()
+    }
+    
+    override func loadView() {
+        rootView = RecordRootView(viewModel: viewModel)
+        self.view = rootView
     }
     
     required init?(coder: NSCoder) {
@@ -22,23 +30,16 @@ class RecordViewController: NiblessViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .blue
-        
-        
-        let nextFeatureButton = UIButton(type: .system)
-        nextFeatureButton.setTitle("Next Feature", for: .normal)
-        nextFeatureButton.addTarget(self, action: #selector(nextFeatureTapped), for: .touchUpInside)
-        
-        view.addSubview(nextFeatureButton)
-        nextFeatureButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            nextFeatureButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextFeatureButton.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        self.subscribe()
     }
     
-    @objc private func nextFeatureTapped() {
-        
+    private func subscribe() {
+        viewModel
+            .recordingState
+            .receive(on: defaultScheduler)
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] state in
+                self?.rootView?.recordButton.recordingState.value = state
+            })
+            .store(in: &disposeBag)
     }
 }
