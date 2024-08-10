@@ -32,6 +32,9 @@ class RecordViewController: NiblessViewController {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.subscribe()
+        
+        RetailCamera.shared.attachPreview(to: self.rootView!.videoSourceView)
+        RetailCamera.shared.startSession()
     }
     
     private func setupNavigationBar() {
