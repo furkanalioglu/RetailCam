@@ -31,6 +31,7 @@
 		91F6F7D02C67709C00F7D312 /* RecordDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7CF2C67709C00F7D312 /* RecordDetailsViewModel.swift */; };
 		91F6F7D22C6770A900F7D312 /* RecordDetailsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7D12C6770A900F7D312 /* RecordDetailsRootView.swift */; };
 		91F6F7D42C6770B200F7D312 /* RecordDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7D32C6770B200F7D312 /* RecordDetailsViewController.swift */; };
+		91F6F7D72C677B3500F7D312 /* VideoSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7D62C677B3500F7D312 /* VideoSourceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		91F6F7CF2C67709C00F7D312 /* RecordDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsViewModel.swift; sourceTree = "<group>"; };
 		91F6F7D12C6770A900F7D312 /* RecordDetailsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsRootView.swift; sourceTree = "<group>"; };
 		91F6F7D32C6770B200F7D312 /* RecordDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsViewController.swift; sourceTree = "<group>"; };
+		91F6F7D62C677B3500F7D312 /* VideoSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSourceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				91F6F7C22C675FB900F7D312 /* RecordButton.swift */,
+				91F6F7D62C677B3500F7D312 /* VideoSourceView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				91F6F7A82C673A9A00F7D312 /* SplashViewModel.swift in Sources */,
 				91F6F7AC2C673AE600F7D312 /* NiblessViewController.swift in Sources */,
 				91F6F7CB2C67707D00F7D312 /* RecordDetailsCoordinator.swift in Sources */,
+				91F6F7D72C677B3500F7D312 /* VideoSourceView.swift in Sources */,
 				91F6F7A02C67386F00F7D312 /* ApplicationCoordinator.swift in Sources */,
 				91F6F7BD2C67558F00F7D312 /* NiblessView.swift in Sources */,
 				91F6F7BF2C6757AA00F7D312 /* SplashRootView.swift in Sources */,

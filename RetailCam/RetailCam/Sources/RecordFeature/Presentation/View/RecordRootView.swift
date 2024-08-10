@@ -12,8 +12,8 @@ class RecordRootView: NiblessView {
 
     private let viewModel: RecordViewModel
 
-    private let videoSourceView: UIView = {
-        let sourceView = UIView()
+    let videoSourceView: VideoSourceView = {
+        let sourceView = VideoSourceView()
         sourceView.backgroundColor = .systemGray4
         return sourceView
     }()
@@ -65,8 +65,7 @@ class RecordRootView: NiblessView {
     private func setupBindables() {
         self.recordButton.addAction(
           UIAction(handler: { [viewModel] _ in
-//              viewModel.changeRecordingState()
-              viewModel.detailsTap()
+              viewModel.changeRecordingState()
           }),
           for: .touchUpInside
         )

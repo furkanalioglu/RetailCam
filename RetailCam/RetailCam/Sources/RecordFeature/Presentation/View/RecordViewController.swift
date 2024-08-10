@@ -40,6 +40,7 @@ class RecordViewController: NiblessViewController {
             .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] state in
                 self?.rootView?.recordButton.recordingState.value = state
                 self?.updateButtonsStack(for: state)
+                self?.rootView?.videoSourceView.updateUI(for: state)
             })
             .store(in: &disposeBag)
     }
