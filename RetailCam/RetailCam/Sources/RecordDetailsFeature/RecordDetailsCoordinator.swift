@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 import Combine
 
-final class RecordDetailsCoordinator {
+final class RecordDetailsCoordinator : Coordinator {
     
     private weak var navigationController : UINavigationController?
     
@@ -19,10 +19,9 @@ final class RecordDetailsCoordinator {
         self.navigationController = navigationController
     }
     
-    func makeViewController() -> UIViewController {
+    func start() {
         let viewModel = RecordDetailsViewModel(coordinator: self)
         let recordDetailsVC = RecordDetailsViewController(viewModel: viewModel)
-        return recordDetailsVC
+        self.navigationController?.pushViewController(recordDetailsVC, animated: true)
     }
-    
 }

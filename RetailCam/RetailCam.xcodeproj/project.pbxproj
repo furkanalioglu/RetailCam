@@ -75,7 +75,7 @@
 		91F6F7BE2C6757AA00F7D312 /* SplashRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRootView.swift; sourceTree = "<group>"; };
 		91F6F7C22C675FB900F7D312 /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		91F6F7C62C675FEC00F7D312 /* Recordable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recordable.swift; sourceTree = "<group>"; };
-		91F6F7CA2C67707D00F7D312 /* RecordDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsCoordinator.swift; sourceTree = "<group>"; };
+		91F6F7CA2C67707D00F7D312 /* RecordDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsCoordinator.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		91F6F7CF2C67709C00F7D312 /* RecordDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsViewModel.swift; sourceTree = "<group>"; };
 		91F6F7D12C6770A900F7D312 /* RecordDetailsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsRootView.swift; sourceTree = "<group>"; };
 		91F6F7D32C6770B200F7D312 /* RecordDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsViewController.swift; sourceTree = "<group>"; };

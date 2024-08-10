@@ -13,7 +13,7 @@ internal enum RecordCoordinatorDestinations : String {
     case recordDetails
 }
 
-class RecordCoordinator: RootCoordinator {
+class RecordCoordinator: Coordinator {
     private let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
@@ -29,9 +29,8 @@ class RecordCoordinator: RootCoordinator {
     func navigate(to vc: RecordCoordinatorDestinations) {
         switch vc {
         case .recordDetails:
-            let vc = RecordDetailsCoordinator(navigationController: self.navigationController)
-            let recordDetails = vc.makeViewController()
-            self.navigationController.pushViewController(recordDetails, animated: true)
+            let recordDetailsCoordinator = RecordDetailsCoordinator(navigationController: self.navigationController)
+            recordDetailsCoordinator.start()
         }
     }
 }

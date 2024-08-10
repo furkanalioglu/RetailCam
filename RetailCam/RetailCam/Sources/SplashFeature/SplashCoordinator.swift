@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Combine
 
-class SplashCoordinator: RootCoordinator {
+class SplashCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private var disposeBag = Set<AnyCancellable>()
     private let appRoot: CurrentValueSubject<Roots, Never>
