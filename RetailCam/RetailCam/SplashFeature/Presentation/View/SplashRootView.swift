@@ -14,8 +14,9 @@ class SplashRootView: NiblessView {
 
     private let cameraImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "camera.metering.center.weighted")
+        imageView.image = UIImage(systemName: "camera.metering.center.weighted")
         imageView.contentMode = .scaleAspectFill
+        imageView.tintColor = .white
         return imageView
     }()
 
@@ -23,6 +24,7 @@ class SplashRootView: NiblessView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20)
         label.text = "Loading"
+        label.textColor = .white
         return label
     }()
 
@@ -57,11 +59,32 @@ class SplashRootView: NiblessView {
 
     private func activateConstraints() {
         centeredHorizontalStack.translatesAutoresizingMaskIntoConstraints = false
+        cameraImageView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
+            cameraImageView.widthAnchor.constraint(equalToConstant: 44),
+            cameraImageView.heightAnchor.constraint(equalToConstant: 44),
+            
             centeredHorizontalStack.centerXAnchor.constraint(equalTo: centerXAnchor),
             centeredHorizontalStack.centerYAnchor.constraint(equalTo: centerYAnchor),
             centeredHorizontalStack.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.4)
         ])
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) { //TODO: - Burayi değiştir daha sağlam yap
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .regular {
+            NSLayoutConstraint.activate([
+                cameraImageView.widthAnchor.constraint(equalToConstant: 44),
+                cameraImageView.heightAnchor.constraint(equalToConstant: 44)
+            ])
+        } else {
+            NSLayoutConstraint.activate([
+                cameraImageView.widthAnchor.constraint(equalToConstant: 60),
+                cameraImageView.heightAnchor.constraint(equalToConstant: 60)
+            ])
+        }
     }
 }
 
