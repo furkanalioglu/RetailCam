@@ -32,6 +32,12 @@
 		91F6F7D22C6770A900F7D312 /* RecordDetailsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7D12C6770A900F7D312 /* RecordDetailsRootView.swift */; };
 		91F6F7D42C6770B200F7D312 /* RecordDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7D32C6770B200F7D312 /* RecordDetailsViewController.swift */; };
 		91F6F7D72C677B3500F7D312 /* VideoSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7D62C677B3500F7D312 /* VideoSourceView.swift */; };
+		91F6F7D92C67B70600F7D312 /* RecordDetailsCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7D82C67B70600F7D312 /* RecordDetailsCollectionViewModel.swift */; };
+		91F6F7DC2C67BA7100F7D312 /* UIView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7DB2C67BA7100F7D312 /* UIView++.swift */; };
+		91F6F7DF2C67BBF200F7D312 /* RecordDetailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7DE2C67BBF200F7D312 /* RecordDetailsCollectionViewCell.swift */; };
+		91F6F7E12C67BC1100F7D312 /* NiblessCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E02C67BC1100F7D312 /* NiblessCollectionViewCell.swift */; };
+		91F6F7E32C67BE8B00F7D312 /* UICollectionView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */; };
+		91F6F7E52C67BEBF00F7D312 /* Dequeuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +87,12 @@
 		91F6F7D12C6770A900F7D312 /* RecordDetailsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsRootView.swift; sourceTree = "<group>"; };
 		91F6F7D32C6770B200F7D312 /* RecordDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsViewController.swift; sourceTree = "<group>"; };
 		91F6F7D62C677B3500F7D312 /* VideoSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoSourceView.swift; sourceTree = "<group>"; };
+		91F6F7D82C67B70600F7D312 /* RecordDetailsCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsCollectionViewModel.swift; sourceTree = "<group>"; };
+		91F6F7DB2C67BA7100F7D312 /* UIView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView++.swift"; sourceTree = "<group>"; };
+		91F6F7DE2C67BBF200F7D312 /* RecordDetailsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsCollectionViewCell.swift; sourceTree = "<group>"; };
+		91F6F7E02C67BC1100F7D312 /* NiblessCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiblessCollectionViewCell.swift; sourceTree = "<group>"; };
+		91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView++.swift"; sourceTree = "<group>"; };
+		91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dequeuable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +225,7 @@
 		91F6F7A92C673ABD00F7D312 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				91F6F7DA2C67BA6900F7D312 /* Extensions */,
 				91F6F7C52C675FDD00F7D312 /* Protocols */,
 				91F6F7C42C675FD500F7D312 /* Components */,
 			);
@@ -278,6 +291,7 @@
 				91F6F7AB2C673AE600F7D312 /* NiblessViewController.swift */,
 				91F6F7BC2C67558F00F7D312 /* NiblessView.swift */,
 				91F6F7C62C675FEC00F7D312 /* Recordable.swift */,
+				91F6F7E02C67BC1100F7D312 /* NiblessCollectionViewCell.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -314,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				91F6F7CF2C67709C00F7D312 /* RecordDetailsViewModel.swift */,
+				91F6F7D82C67B70600F7D312 /* RecordDetailsCollectionViewModel.swift */,
 			);
 			name = ViewModel;
 			path = "ViewModelü";
@@ -322,10 +337,29 @@
 		91F6F7CE2C67709000F7D312 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				91F6F7DD2C67BBE000F7D312 /* Cells */,
 				91F6F7D12C6770A900F7D312 /* RecordDetailsRootView.swift */,
 				91F6F7D32C6770B200F7D312 /* RecordDetailsViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		91F6F7DA2C67BA6900F7D312 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				91F6F7DB2C67BA7100F7D312 /* UIView++.swift */,
+				91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */,
+				91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		91F6F7DD2C67BBE000F7D312 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				91F6F7DE2C67BBF200F7D312 /* RecordDetailsCollectionViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -466,16 +500,22 @@
 				91F6F7BD2C67558F00F7D312 /* NiblessView.swift in Sources */,
 				91F6F7BF2C6757AA00F7D312 /* SplashRootView.swift in Sources */,
 				91F6F7D22C6770A900F7D312 /* RecordDetailsRootView.swift in Sources */,
+				91F6F7E32C67BE8B00F7D312 /* UICollectionView++.swift in Sources */,
 				91F6F7B92C67409300F7D312 /* RecordViewModel.swift in Sources */,
+				91F6F7E12C67BC1100F7D312 /* NiblessCollectionViewCell.swift in Sources */,
 				91F6F7BB2C67557500F7D312 /* RecordRootView.swift in Sources */,
+				91F6F7DC2C67BA7100F7D312 /* UIView++.swift in Sources */,
 				91F6F7C72C675FEC00F7D312 /* Recordable.swift in Sources */,
+				91F6F7DF2C67BBF200F7D312 /* RecordDetailsCollectionViewCell.swift in Sources */,
 				91F6F7B72C67408C00F7D312 /* RecordViewController.swift in Sources */,
 				91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */,
 				91F6F7AF2C673D1400F7D312 /* SplashCoordinator.swift in Sources */,
 				91F6F7D42C6770B200F7D312 /* RecordDetailsViewController.swift in Sources */,
 				91F6F7C32C675FB900F7D312 /* RecordButton.swift in Sources */,
+				91F6F7E52C67BEBF00F7D312 /* Dequeuable.swift in Sources */,
 				91F6F7D02C67709C00F7D312 /* RecordDetailsViewModel.swift in Sources */,
 				91F6F7B22C67406700F7D312 /* RecordCoordinator.swift in Sources */,
+				91F6F7D92C67B70600F7D312 /* RecordDetailsCollectionViewModel.swift in Sources */,
 				91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */,
 				91F6F7A62C673A9400F7D312 /* SplashViewController.swift in Sources */,
 			);
@@ -668,6 +708,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.furkanalioglu.RetailCam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -697,6 +738,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.furkanalioglu.RetailCam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = targeted;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

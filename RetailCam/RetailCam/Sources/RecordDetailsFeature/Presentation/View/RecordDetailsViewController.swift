@@ -13,7 +13,7 @@ class RecordDetailsViewController : NiblessViewController {
     init(viewModel: RecordDetailsViewModel) {
         self.viewModel = viewModel
         super.init()
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = .systemBackground
     }
     
 }

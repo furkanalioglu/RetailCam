@@ -14,16 +14,16 @@ internal enum RecordCoordinatorDestinations : String {
 }
 
 class RecordCoordinator: Coordinator {
-    private let navigationController: UINavigationController
+    private weak var navigationController : UINavigationController?
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
     }
     
     func start() {
         let viewModel = RecordViewModel(coordinator: self)
         let recordViewController = RecordViewController(viewModel: viewModel)
-        navigationController.setViewControllers([recordViewController], animated: false)
+        self.navigationController?.setViewControllers([recordViewController], animated: false)
     }
     
     func navigate(to vc: RecordCoordinatorDestinations) {

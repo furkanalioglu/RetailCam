@@ -10,24 +10,21 @@ import UIKit
 import Combine
 
 class SplashCoordinator: Coordinator {
-    private let navigationController: UINavigationController
+    private weak var navigationController: UINavigationController?
     private var disposeBag = Set<AnyCancellable>()
     private let appRoot: CurrentValueSubject<Roots, Never>
-    private let scheduler: DispatchQueue
     
-    init(navigationController: UINavigationController,
-        appRoot: CurrentValueSubject<Roots, Never>,
-        scheduler: DispatchQueue = .main)
+    init(navigationController: UINavigationController?,
+        appRoot: CurrentValueSubject<Roots, Never>)
     {
         self.navigationController = navigationController
         self.appRoot = appRoot
-        self.scheduler = scheduler
     }
     
     func start() {
         let viewModel = SplashViewModel(coordinator: self)
         let splashViewController = SplashViewController(viewModel: viewModel)
-        navigationController.setViewControllers([splashViewController],
+        self.navigationController?.setViewControllers([splashViewController],
                                                 animated: false)
         viewModel.startSplashScenario()
     }
