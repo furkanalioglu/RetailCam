@@ -234,6 +234,8 @@ final class RetailCamera: NSObject {
         }
     }
     
+    //TODO: - Check iSO
+    //https://forums.developer.apple.com/forums/thread/105514
     public func setISO(_ isoValue: Float) {
          retailCameraQueue.async { [weak self] in
              guard let self = self else { return }
@@ -257,6 +259,8 @@ final class RetailCamera: NSObject {
          }
      }
      
+    //TODO: - Check Shutter
+    //https://forums.developer.apple.com/forums/thread/105514
     public func setShutterSpeed(_ shutterSpeedSliderValue: Float) {
         retailCameraQueue.async { [weak self] in
             guard let self = self else { return }
@@ -276,7 +280,9 @@ final class RetailCamera: NSObject {
                 let clampedShutterSpeedSeconds = max(min(shutterSpeedSeconds, maxDuration), minDuration)
                 let desiredDuration = CMTimeMakeWithSeconds(clampedShutterSpeedSeconds, preferredTimescale: device.activeFormat.minExposureDuration.timescale)
                 
-                device.setExposureModeCustom(duration: desiredDuration, iso: device.iso, completionHandler: nil)
+                device.setExposureModeCustom(duration: desiredDuration, iso: device.iso) { syncTime in
+                    debugPrint("Exposure set at time: \(syncTime)")
+                }
                 
             } catch {
                 DispatchQueue.main.async { [weak self] in
@@ -285,6 +291,7 @@ final class RetailCamera: NSObject {
             }
         }
     }
+
     
     private func shouldCaptureFrame() -> Bool {
         printCurrentThread("shouldCaptureFrame")
