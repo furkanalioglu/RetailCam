@@ -12,6 +12,7 @@
 		9112BD672C693F4C00791C05 /* RecordSettingsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD662C693F4C00791C05 /* RecordSettingsRootView.swift */; };
 		9112BD692C693F5900791C05 /* RecordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD682C693F5900791C05 /* RecordSettingsViewController.swift */; };
 		9112BD6B2C693F6100791C05 /* RecordSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD6A2C693F6100791C05 /* RecordSettingsViewModel.swift */; };
+		9112BD6E2C694B3C00791C05 /* RCPanmodalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD6D2C694B3C00791C05 /* RCPanmodalController.swift */; };
 		91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76D2C67359B00F7D312 /* AppDelegate.swift */; };
 		91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */; };
 		91F6F7772C67359C00F7D312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F6F7762C67359C00F7D312 /* Assets.xcassets */; };
@@ -42,7 +43,7 @@
 		91F6F7DF2C67BBF200F7D312 /* RecordDetailsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7DE2C67BBF200F7D312 /* RecordDetailsCollectionViewCell.swift */; };
 		91F6F7E12C67BC1100F7D312 /* NiblessCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E02C67BC1100F7D312 /* NiblessCollectionViewCell.swift */; };
 		91F6F7E32C67BE8B00F7D312 /* UICollectionView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */; };
-		91F6F7E52C67BEBF00F7D312 /* Dequeuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */; };
+		91F6F7E52C67BEBF00F7D312 /* Dequeuable++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E42C67BEBF00F7D312 /* Dequeuable++.swift */; };
 		91F6F7E92C67C06D00F7D312 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E82C67C06D00F7D312 /* Photo.swift */; };
 		91F6F7EC2C67C81B00F7D312 /* MetalPetal in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6F7EB2C67C81B00F7D312 /* MetalPetal */; };
 		91F6F7EF2C67C8EB00F7D312 /* RetailCameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */; };
@@ -74,6 +75,7 @@
 		9112BD662C693F4C00791C05 /* RecordSettingsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSettingsRootView.swift; sourceTree = "<group>"; };
 		9112BD682C693F5900791C05 /* RecordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSettingsViewController.swift; sourceTree = "<group>"; };
 		9112BD6A2C693F6100791C05 /* RecordSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSettingsViewModel.swift; sourceTree = "<group>"; };
+		9112BD6D2C694B3C00791C05 /* RCPanmodalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCPanmodalController.swift; sourceTree = "<group>"; };
 		91F6F76A2C67359B00F7D312 /* RetailCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetailCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F6F76D2C67359B00F7D312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,7 +110,7 @@
 		91F6F7DE2C67BBF200F7D312 /* RecordDetailsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsCollectionViewCell.swift; sourceTree = "<group>"; };
 		91F6F7E02C67BC1100F7D312 /* NiblessCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiblessCollectionViewCell.swift; sourceTree = "<group>"; };
 		91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView++.swift"; sourceTree = "<group>"; };
-		91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dequeuable.swift; sourceTree = "<group>"; };
+		91F6F7E42C67BEBF00F7D312 /* Dequeuable++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dequeuable++.swift"; sourceTree = "<group>"; };
 		91F6F7E82C67C06D00F7D312 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailCameraManager.swift; sourceTree = "<group>"; };
 		91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication++.swift"; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				91F6F7C82C67705700F7D312 /* Sources */,
+				91F6F7E62C67C05500F7D312 /* Shared */,
 				91F6F7A92C673ABD00F7D312 /* UI */,
 				91F6F79D2C6737DD00F7D312 /* Root */,
 				91F6F7AA2C673AC800F7D312 /* AppLifecycle */,
@@ -282,7 +285,6 @@
 		91F6F7A92C673ABD00F7D312 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				91F6F7E62C67C05500F7D312 /* Shared */,
 				91F6F7DA2C67BA6900F7D312 /* Extensions */,
 				91F6F7C52C675FDD00F7D312 /* Protocols */,
 				91F6F7C42C675FD500F7D312 /* Components */,
@@ -408,7 +410,7 @@
 			children = (
 				91F6F7DB2C67BA7100F7D312 /* UIView++.swift */,
 				91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */,
-				91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */,
+				91F6F7E42C67BEBF00F7D312 /* Dequeuable++.swift */,
 				91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */,
 			);
 			path = Extensions;
@@ -427,6 +429,7 @@
 			children = (
 				91F6F7ED2C67C8E000F7D312 /* Managers */,
 				91F6F7E72C67C05900F7D312 /* Entities */,
+				9112BD6D2C694B3C00791C05 /* RCPanmodalController.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -610,9 +613,10 @@
 				91F6F7B72C67408C00F7D312 /* RecordViewController.swift in Sources */,
 				91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */,
 				91F6F7AF2C673D1400F7D312 /* SplashCoordinator.swift in Sources */,
+				9112BD6E2C694B3C00791C05 /* RCPanmodalController.swift in Sources */,
 				91F6F7D42C6770B200F7D312 /* RecordDetailsViewController.swift in Sources */,
 				91F6F7C32C675FB900F7D312 /* RecordButton.swift in Sources */,
-				91F6F7E52C67BEBF00F7D312 /* Dequeuable.swift in Sources */,
+				91F6F7E52C67BEBF00F7D312 /* Dequeuable++.swift in Sources */,
 				9112BD622C693F3300791C05 /* RecordSettingsCoordinator.swift in Sources */,
 				9112BD6B2C693F6100791C05 /* RecordSettingsViewModel.swift in Sources */,
 				91F6F7D02C67709C00F7D312 /* RecordDetailsViewModel.swift in Sources */,

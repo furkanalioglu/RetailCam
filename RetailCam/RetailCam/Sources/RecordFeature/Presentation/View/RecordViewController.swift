@@ -67,7 +67,7 @@ class RecordViewController: NiblessViewController {
         let settingsButton = UIBarButtonItem(
             image: UIImage(systemName: "gearshape"),
             primaryAction: UIAction(handler: { [weak viewModel] _ in
-//                viewModel?.settingsTap()
+                viewModel?.settingsTap()
             })
         )
         

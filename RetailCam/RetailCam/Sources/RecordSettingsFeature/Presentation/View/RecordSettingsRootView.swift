@@ -12,6 +12,15 @@ class RecordSettingsRootView: NiblessView {
     
     private let viewModel: RecordSettingsViewModel
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Settings"
+        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.textAlignment = .center
+        label.textColor = .label
+        return label
+    }()
+    
     let isoSlider: UISlider = {
         let slider = UISlider()
         slider.minimumValue = 0
@@ -86,15 +95,23 @@ class RecordSettingsRootView: NiblessView {
     }
     
     private func constructHierarchy() {
+        self.addSubview(titleLabel)
         self.addSubview(mainStackView)
     }
     
     private func activateConstraints() {
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16), //TODO: - 20 Is suggested in HumanInterfaceGuidelines
+            titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+        ])
+        
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             mainStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             mainStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            mainStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            mainStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16)
         ])
     }
 }
+

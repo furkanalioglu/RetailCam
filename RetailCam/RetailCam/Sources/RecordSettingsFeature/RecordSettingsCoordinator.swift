@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class RecordSettingsCoordinator : Coordinator {
+class RecordSettingsCoordinator: Coordinator {
     
     private weak var navigationController: UINavigationController?
     
@@ -18,7 +18,18 @@ class RecordSettingsCoordinator : Coordinator {
     
     func start() {
         let viewModel = RecordSettingsViewModel(coordinator: self)
-        let recordDetailsVC = RecordSettingsViewController(viewModel: viewModel)
-        self.navigationController?.present(recordDetailsVC, animated: true)
+        let recordSettingsVC = RecordSettingsViewController(viewModel: viewModel)
+        
+        recordSettingsVC.modalPresentationStyle = .custom
+        recordSettingsVC.transitioningDelegate = recordSettingsVC
+        
+        self.navigationController?.present(recordSettingsVC, animated: true)
     }
 }
+
+extension RecordSettingsViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return RCPanmodalController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
