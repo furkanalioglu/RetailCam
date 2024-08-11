@@ -37,6 +37,17 @@ class RecordViewController: NiblessViewController {
         RetailCamera.shared.startSession()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.viewModel.handleViewWillDisappear()
+        RetailCamera.shared.stopSession()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        RetailCamera.shared.startSession()
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
@@ -52,8 +63,20 @@ class RecordViewController: NiblessViewController {
                 viewModel?.detailsTap()
             })
         )
-        navigationItem.rightBarButtonItem = infoButton
+        
+        let settingsButton = UIBarButtonItem(
+            image: UIImage(systemName: "gearshape"),
+            primaryAction: UIAction(handler: { [weak viewModel] _ in
+//                viewModel?.settingsTap()
+            })
+        )
+        
+        infoButton.tintColor = .systemGreen
+        settingsButton.tintColor = .systemGreen
+        
+        navigationItem.rightBarButtonItems = [infoButton, settingsButton]
     }
+
     
     private func subscribe() {
         //TODO: - Observe with combine
