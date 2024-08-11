@@ -30,7 +30,7 @@ final class RecordSettingsViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newValue in
                 guard self != nil else { return }
-                debugPrint("Current value",newValue)
+//                debugPrint("Current value",newValue)
                 RetailCamera.shared.setISO(newValue)
             }
             .store(in: &cancellables)
@@ -39,8 +39,8 @@ final class RecordSettingsViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newValue in
                 guard self != nil else { return }
-//                debugPrint("Current value iso",newValue)
-//                RetailCamera.shared.setShutterSpeed(newValue)
+                debugPrint("Current value shutter",newValue)
+                RetailCamera.shared.setShutterSpeed(newValue)
             }
             .store(in: &cancellables)
     }

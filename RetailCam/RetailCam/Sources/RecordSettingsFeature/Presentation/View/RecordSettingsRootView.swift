@@ -102,13 +102,14 @@ class RecordSettingsRootView: NiblessView {
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             isoSlider.minimumValue = Float(device.activeFormat.minISO)
             isoSlider.maximumValue = Float(device.activeFormat.maxISO)
+            isoSlider.value = self.viewModel.isoSliderValue
+            
             let minShutterSpeed = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
             let maxShutterSpeed = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
             shutterSpeedSlider.minimumValue = Float(minShutterSpeed)
             shutterSpeedSlider.maximumValue = Float(maxShutterSpeed)
+            shutterSpeedSlider.value = self.viewModel.shutterSpeedSliderValue
         }
-        self.isoSlider.value = self.viewModel.isoSliderValue
-        self.shutterSpeedSlider.value = self.viewModel.shutterSpeedSliderValue
     }
     
     private func activateConstraints() {

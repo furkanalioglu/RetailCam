@@ -51,11 +51,16 @@ final class RetailCamera: NSObject {
         return device.iso
     }
     
-    var currentShutterSpeed: CMTime? {
+    var currentShutterSpeed: Float? {
         guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
             return nil
         }
-        return device.exposureDuration
+        let minShutterSpeed = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
+        let maxShutterSpeed = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
+        let currentShutterSpeed = CMTimeGetSeconds(device.exposureDuration)
+        
+        let normalizedShutterSpeed = Float((currentShutterSpeed - minShutterSpeed) / (maxShutterSpeed - minShutterSpeed)) * 100.0
+        return normalizedShutterSpeed
     }
     
     private func setMetalContext() {
@@ -242,7 +247,7 @@ final class RetailCamera: NSObject {
                  defer { device.unlockForConfiguration() }
                  
                  let clampedISO = max(device.activeFormat.minISO, min(isoValue, device.activeFormat.maxISO))
-                 device.setExposureModeCustom(duration: device.exposureDuration, iso: isoValue, completionHandler: nil)
+                 device.setExposureModeCustom(duration: device.exposureDuration, iso: clampedISO, completionHandler: nil)
                  
              } catch {
                  DispatchQueue.main.async { [weak self] in
@@ -252,7 +257,7 @@ final class RetailCamera: NSObject {
          }
      }
      
-    public func setShutterSpeed(_ shutterSpeedSeconds: Float) {
+    public func setShutterSpeed(_ shutterSpeedSliderValue: Float) {
         retailCameraQueue.async { [weak self] in
             guard let self = self else { return }
             guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
@@ -264,11 +269,14 @@ final class RetailCamera: NSObject {
                 try device.lockForConfiguration()
                 defer { device.unlockForConfiguration() }
                 
-                let minDuration = device.activeFormat.minExposureDuration
-                let maxDuration = device.activeFormat.maxExposureDuration
-                let desiredDuration = CMTimeMakeWithSeconds(Float64(shutterSpeedSeconds), preferredTimescale: maxDuration.timescale)
-                let clampedShutterSpeed = CMTimeClampToRange(desiredDuration, range: CMTimeRange(start: minDuration, duration: maxDuration))
-                device.setExposureModeCustom(duration: clampedShutterSpeed, iso: device.iso, completionHandler: nil)
+                let minDuration = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
+                let maxDuration = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
+                
+                let shutterSpeedSeconds = (Float64(shutterSpeedSliderValue) / 100.0) * (maxDuration - minDuration) + minDuration
+                let clampedShutterSpeedSeconds = max(min(shutterSpeedSeconds, maxDuration), minDuration)
+                let desiredDuration = CMTimeMakeWithSeconds(clampedShutterSpeedSeconds, preferredTimescale: device.activeFormat.minExposureDuration.timescale)
+                
+                device.setExposureModeCustom(duration: desiredDuration, iso: device.iso, completionHandler: nil)
                 
             } catch {
                 DispatchQueue.main.async { [weak self] in
@@ -277,7 +285,6 @@ final class RetailCamera: NSObject {
             }
         }
     }
-
     
     private func shouldCaptureFrame() -> Bool {
         printCurrentThread("shouldCaptureFrame")
