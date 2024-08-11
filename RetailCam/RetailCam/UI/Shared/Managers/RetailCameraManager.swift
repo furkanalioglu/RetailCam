@@ -103,6 +103,28 @@ final class RetailCamera: NSObject {
             }
             
             captureSession.commitConfiguration()
+            self.updateVideoOrientation()
+        }
+    }
+    
+    func updateVideoOrientation() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            if let connection = self.previewLayer?.connection {
+                switch UIDevice.current.orientation {
+                case .portrait:
+                    connection.videoOrientation = .portrait
+                case .portraitUpsideDown:
+                    connection.videoOrientation = .portraitUpsideDown
+                case .landscapeRight:
+                    connection.videoOrientation = .landscapeLeft
+                case .landscapeLeft:
+                    connection.videoOrientation = .landscapeRight
+                default:
+                    connection.videoOrientation = .portrait
+                }
+                self.previewLayer?.frame = self.previewLayer?.superlayer?.bounds ?? .zero
+            }
         }
     }
     

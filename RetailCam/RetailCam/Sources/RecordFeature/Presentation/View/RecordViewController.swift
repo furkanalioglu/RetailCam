@@ -37,6 +37,14 @@ class RecordViewController: NiblessViewController {
         RetailCamera.shared.startSession()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    
+    @objc private func handleOrientationChange() {
+        RetailCamera.shared.updateVideoOrientation()
+    }
+
     private func setupNavigationBar() {
         let infoButton = UIBarButtonItem(
             image: UIImage(systemName: "info.circle"),
@@ -48,6 +56,13 @@ class RecordViewController: NiblessViewController {
     }
     
     private func subscribe() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleOrientationChange),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
+        
         viewModel
             .recordingState
             .receive(on: defaultScheduler)
