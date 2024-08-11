@@ -44,12 +44,17 @@ class RecordDetailsCollectionViewCell: NiblessCollectionViewCell {
 
     func setViewModel(_ viewModel: RecordDetailsCollectionViewModel) {
         self.viewModel = viewModel
-        self.capturedImageView.image = viewModel.displayImage
+        
+        RCImageLoader.shared.loadImage(from: viewModel.displayImagePath,
+                                       into: self.capturedImageView) { [weak self] image in
+            self?.capturedImageView.image = image
+        }
     }
     
     override func prepareForReuse() {
-        capturedImageView.image = nil
-    }
+          super.prepareForReuse()
+          capturedImageView.image = nil
+      }
     
     private func setupUI() {
         constructHierarchy()

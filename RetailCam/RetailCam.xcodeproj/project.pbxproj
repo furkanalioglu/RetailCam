@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9112BD5E2C69138600791C05 /* RCImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD5D2C69138600791C05 /* RCImageLoader.swift */; };
 		91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76D2C67359B00F7D312 /* AppDelegate.swift */; };
 		91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */; };
 		91F6F7772C67359C00F7D312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F6F7762C67359C00F7D312 /* Assets.xcassets */; };
@@ -64,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9112BD5D2C69138600791C05 /* RCImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCImageLoader.swift; sourceTree = "<group>"; };
 		91F6F76A2C67359B00F7D312 /* RetailCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetailCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F6F76D2C67359B00F7D312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */,
 				91F6F7F22C68CD4500F7D312 /* PermissionManager.swift */,
 				91F6F7F42C68EDB100F7D312 /* RCFileManager.swift */,
+				9112BD5D2C69138600791C05 /* RCImageLoader.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				91F6F7B22C67406700F7D312 /* RecordCoordinator.swift in Sources */,
 				91F6F7F32C68CD4500F7D312 /* PermissionManager.swift in Sources */,
 				91F6F7D92C67B70600F7D312 /* RecordDetailsCollectionViewModel.swift in Sources */,
+				9112BD5E2C69138600791C05 /* RCImageLoader.swift in Sources */,
 				91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */,
 				91F6F7A62C673A9400F7D312 /* SplashViewController.swift in Sources */,
 			);

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Combine
+import MetalPetal
 
 final class RCFileManager {
     
@@ -29,7 +30,7 @@ final class RCFileManager {
     private let fileManagerQueue = DispatchQueue(label: "com.retailcam.fileManagerQueue", qos: .utility)
     
     private init() {
-        createFolderIfNeeded()
+        self.createFolderIfNeeded()
     }
     
     deinit {
@@ -63,53 +64,33 @@ final class RCFileManager {
         return fileManagerQueue.sync { [weak self] in
             guard let self = self else { return }
             guard let folderURL = self.folderURL else { return }
-            let imageName = name ?? UUID().uuidString + ".jpg"
+            
+            var currentIndex = 0
+            do {
+                let existingFiles = try self.fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+                let imageFiles = existingFiles.filter { $0.pathExtension.lowercased() == "jpg" }
+                currentIndex = imageFiles.count
+            } catch {
+                debugPrint("Failed to get contents of directory: \(error)")
+            }
+            
+            let imageName = name ?? "Capture_\(currentIndex).jpg"
             let fileURL = folderURL.appendingPathComponent(imageName)
             
             guard let imageData = image.jpegData(compressionQuality: 1.0) else {
-                debugPrint("Failed to convert")
+                debugPrint("Failed to convert image to data")
                 return
             }
             
             do {
                 try imageData.write(to: fileURL)
                 debugPrint("Image saved to: \(fileURL.path)")
-                
             } catch {
                 debugPrint("Failed to save image: \(error)")
-                return 
             }
         }
     }
-    
-    func loadImage(named imageName: String) -> AnyPublisher<UIImage?, Never> {
-        return Future<UIImage?, Never> { [weak self] promise in
-            self?.fileManagerQueue.async { [weak self] in
-                guard let self = self else {
-                    promise(.success(nil))
-                    return
-                }
-                guard let folderURL = self.folderURL else {
-                    promise(.success(nil))
-                    return
-                }
-                let fileURL = folderURL.appendingPathComponent(imageName)
-                
-                var loadedImage: UIImage? = nil
-                if self.fileManager.fileExists(atPath: fileURL.path) {
-                    loadedImage = UIImage(contentsOfFile: fileURL.path)
-                } else {
-                    debugPrint("Image not found at path: \(fileURL.path)")
-                }
-                
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    promise(.success(loadedImage))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
-    }
+
         
     func getAllImageURLs() -> AnyPublisher<[URL]?, Never> {
         return Future<[URL]?, Never> { [weak self] promise in
@@ -158,6 +139,8 @@ final class RCFileManager {
                         try self.fileManager.removeItem(at: fileURL)
                         debugPrint("Removed file at: \(fileURL.path)")
                     }
+                    
+                    RCImageLoader.shared.clearCache()
                     promise(.success(true))
                 } catch {
                     debugPrint("Failed to remove files: \(error)")
@@ -167,6 +150,7 @@ final class RCFileManager {
         }
         .eraseToAnyPublisher()
     }
+
     
     func dispose() -> AnyPublisher<Bool, Never> {
         //TODO: - Kill instance

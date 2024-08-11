@@ -27,7 +27,7 @@ final class RetailCamera: NSObject {
     private let captureSession = AVCaptureSession()
     private let videoOutput = AVCaptureVideoDataOutput()
     
-    private let retailCameraQueue = DispatchQueue(label: "com.retailcam.processingQueue", qos: .userInitiated)
+    private let retailCameraQueue = DispatchQueue(label: "com.retailcam.cameraprocessingQueue", qos: .userInitiated)
     private var context: MTIContext?
     
     private var lastFrameTime = Date()

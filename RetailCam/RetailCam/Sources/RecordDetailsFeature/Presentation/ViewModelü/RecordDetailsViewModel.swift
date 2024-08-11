@@ -14,6 +14,7 @@ final class RecordDetailsViewModel {
     
     var photos: [Photo]
     var photosCell = [RecordDetailsCollectionViewModel]()
+    var viewDidAppeaFirstTime:Bool = false
     
     var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()
     private var disposeBag = Set<AnyCancellable>()
@@ -28,14 +29,20 @@ final class RecordDetailsViewModel {
     }
     
     func viewDidLoad() {
-        debugPrint("get photos")
-        
         RCFileManager.shared.getAllImageURLs()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] urls in
                 guard let self = self, let urls = urls else { return }
                 
-                for url in urls {
+                let sortedUrls = urls.sorted { url1, url2 in
+                    let name1 = url1.deletingPathExtension().lastPathComponent
+                    let name2 = url2.deletingPathExtension().lastPathComponent
+                    let index1 = Int(name1.replacingOccurrences(of: "Capture_", with: "")) ?? 0
+                    let index2 = Int(name2.replacingOccurrences(of: "Capture_", with: "")) ?? 0
+                    return index1 < index2
+                }
+                
+                for url in sortedUrls {
                     let dummyPhoto = Photo(
                         id: UUID(),
                         imageName: url.lastPathComponent,
@@ -51,5 +58,6 @@ final class RecordDetailsViewModel {
             }
             .store(in: &disposeBag)
     }
+
 }
 
