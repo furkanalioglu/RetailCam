@@ -12,6 +12,7 @@ public enum RecordingState {
     case didNotStart
     case started
     case paused
+    case completed
 }
 
 public protocol Recordable: AnyObject {
@@ -42,6 +43,9 @@ public extension Recordable where Self: RecordButton {
         case .paused:
             setTitle("Paused", for: .normal)
             tintColor = .systemYellow
+        case .completed:
+            setTitle("Completed", for: .normal)
+            tintColor = .systemBlue
         }
     }
 }
@@ -68,6 +72,9 @@ public extension Recordable where Self: VideoSourceView {
         case .paused:
             self.stopTimer()
             self.timerLabel.textColor = .systemYellow
+        case .completed:
+            self.stopTimer()
+            self.timerLabel.textColor = .systemBlue
         }
     }
 

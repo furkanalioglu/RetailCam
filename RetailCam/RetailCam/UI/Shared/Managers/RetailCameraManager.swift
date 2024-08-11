@@ -36,9 +36,7 @@ final class RetailCamera: NSObject {
 
     private var isRecording: Bool = false
     private var enableLogs: Bool = false
-    
-    public var capturedImages = [UIImage]()
-    
+        
     private override init() {
         super.init()
         self.setMetalContext()
@@ -72,6 +70,9 @@ final class RetailCamera: NSObject {
                     self?.stopRecording()
                 case .started:
                     self?.startRecording()
+                case .completed:
+                    debugPrint("Recording Session Completed stop recording")
+                    self?.stopRecording()
                 }
             }
             .store(in: &disposeBag)
@@ -149,6 +150,7 @@ final class RetailCamera: NSObject {
             self?.printCurrentThread("resetRecording - processingQueue.async")
             guard let self = self else { return }
             self.lastFrameTime = Date(timeIntervalSince1970: 0)
+            RCFileManager.shared.dispose()
         }
     }
     
@@ -174,11 +176,10 @@ final class RetailCamera: NSObject {
                 guard let resizedImage else { return }
                 let cgImage = try context.makeCGImage(from: resizedImage)
                 let uiImage = UIImage(cgImage: cgImage)
-                
+                RCFileManager.shared.saveImage(uiImage)
                 DispatchQueue.main.async { [weak self] in
                     self?.printCurrentThread("processImage - DispatchQueue.main.async")
                     guard let self = self else { return }
-                    self.capturedImages.append(uiImage)
                     self.delegate?.retailCamera(self, didCaptureImage: uiImage)
                 }
             } catch {
