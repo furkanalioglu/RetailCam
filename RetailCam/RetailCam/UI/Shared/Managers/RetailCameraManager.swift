@@ -150,7 +150,7 @@ final class RetailCamera: NSObject {
         }
     }
     
-    func attachPreview(to view: VideoSourceView) {
+    func attachPreview(to view: UIView) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)

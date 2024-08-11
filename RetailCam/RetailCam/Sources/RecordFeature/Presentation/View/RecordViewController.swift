@@ -33,7 +33,7 @@ class RecordViewController: NiblessViewController {
         self.setupNavigationBar()
         self.subscribe()
         
-        RetailCamera.shared.attachPreview(to: self.rootView!.videoSourceView)
+        RetailCamera.shared.attachPreview(to: self.rootView!.videoSourceView.previewView)
         RetailCamera.shared.startSession()
     }
     

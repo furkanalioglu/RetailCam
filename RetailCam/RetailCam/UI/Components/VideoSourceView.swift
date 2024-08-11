@@ -22,6 +22,12 @@ public class VideoSourceView: UIView, Recordable {
         return label
     }()
     
+    var previewView: UIView = {
+        let previewView = UIView()
+        previewView.backgroundColor = .clear
+        return previewView
+    }()
+    
     var timerSubscription: AnyCancellable?
     var secondsElapsed = 0
 
@@ -38,29 +44,28 @@ public class VideoSourceView: UIView, Recordable {
     }
     
     private func constructHierarchy() {
+        self.addSubview(previewView)
         self.addSubview(timerLabel)
         self.activateConstraints()
     }
     
     private func activateConstraints() {
+        self.previewView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            previewView.topAnchor.constraint(equalTo: topAnchor),
+            previewView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            previewView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            previewView.trailingAnchor.constraint(equalTo: trailingAnchor),
+        ])
+        
         self.timerLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             timerLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             timerLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
+        
+        self.previewView.sendSubviewToBack(self)
     }
-    
-    public func startRecording() {
-        recordingState.send(.started)
-    }
-    
 
-    public func pauseRecording() {
-        recordingState.send(.paused)
-    }
-    
-    public func resetRecording() {
-        recordingState.send(.didNotStart)
-    }
 }
 
