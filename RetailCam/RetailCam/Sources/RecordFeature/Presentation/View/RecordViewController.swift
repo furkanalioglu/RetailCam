@@ -56,6 +56,7 @@ class RecordViewController: NiblessViewController {
     }
     
     private func subscribe() {
+        //TODO: - Observe with combine
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleOrientationChange),
