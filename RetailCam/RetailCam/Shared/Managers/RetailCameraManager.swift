@@ -236,6 +236,7 @@ final class RetailCamera: NSObject {
     
     //TODO: - Check iSO
     //https://forums.developer.apple.com/forums/thread/105514
+    //https://www.youtube.com/shorts/0RixDJ_4etM
     public func setISO(_ isoValue: Float) {
          retailCameraQueue.async { [weak self] in
              guard let self = self else { return }
@@ -261,6 +262,7 @@ final class RetailCamera: NSObject {
      
     //TODO: - Check Shutter
     //https://forums.developer.apple.com/forums/thread/105514
+    //https://www.youtube.com/shorts/0RixDJ_4etM
     public func setShutterSpeed(_ shutterSpeedSliderValue: Float) {
         retailCameraQueue.async { [weak self] in
             guard let self = self else { return }
