@@ -37,6 +37,8 @@ final class RetailCamera: NSObject {
     private var isRecording: Bool = false
     private var enableLogs: Bool = false
     
+    public var capturedImages = [UIImage]()
+    
     private override init() {
         super.init()
         self.setMetalContext()
@@ -176,6 +178,7 @@ final class RetailCamera: NSObject {
                 DispatchQueue.main.async { [weak self] in
                     self?.printCurrentThread("processImage - DispatchQueue.main.async")
                     guard let self = self else { return }
+                    self.capturedImages.append(uiImage)
                     self.delegate?.retailCamera(self, didCaptureImage: uiImage)
                 }
             } catch {

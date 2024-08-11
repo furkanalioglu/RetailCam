@@ -29,10 +29,10 @@ final class RecordDetailsViewModel {
     
     func viewDidLoad() {
         debugPrint("get photos")
-        for _ in 0..<10 {
-            let dummyPhoto = Photo(imageName: nil, imagePath: nil, duration: "05:00", date: "Today")
-            self.photos.append(dummyPhoto)
-        }
+//        for i in 0..<RetailCamera.shared.capturedImages.count {
+//            let dummyPhoto = Photo(imageName: nil, imagePath: nil, duration: "05:00", date: "Today", image: RetailCamera.)
+//            self.photos.append(dummyPhoto)
+//        }
         
         let cellPhotos = self.mapToCell(entities: self.photos)
         photosSubject.send(cellPhotos)

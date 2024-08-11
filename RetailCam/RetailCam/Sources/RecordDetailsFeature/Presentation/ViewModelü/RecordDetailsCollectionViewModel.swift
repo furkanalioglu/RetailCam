@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Foundation
 
 struct RecordDetailsCollectionViewModel: Hashable {
     private let photoId: UUID

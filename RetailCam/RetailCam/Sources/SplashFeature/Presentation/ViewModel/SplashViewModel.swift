@@ -24,7 +24,7 @@ final class SplashViewModel {
     func startSplashScenario(from vc: UIViewController) {
         self.checkCameraPermission(from: vc)
     }
-    
+     //TODO: - CHANGE HERE MAKE IT BETTER
     private func checkCameraPermission(from vc: UIViewController) {
         PermissionManager.shared.checkAndRequestCameraPermission(from: vc)
             .receive(on: DispatchQueue.main)
