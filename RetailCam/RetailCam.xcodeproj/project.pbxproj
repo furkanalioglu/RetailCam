@@ -41,6 +41,8 @@
 		91F6F7E92C67C06D00F7D312 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E82C67C06D00F7D312 /* Photo.swift */; };
 		91F6F7EC2C67C81B00F7D312 /* MetalPetal in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6F7EB2C67C81B00F7D312 /* MetalPetal */; };
 		91F6F7EF2C67C8EB00F7D312 /* RetailCameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */; };
+		91F6F7F12C68CD2800F7D312 /* UIApplication++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */; };
+		91F6F7F32C68CD4500F7D312 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7F22C68CD4500F7D312 /* PermissionManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +100,8 @@
 		91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dequeuable.swift; sourceTree = "<group>"; };
 		91F6F7E82C67C06D00F7D312 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailCameraManager.swift; sourceTree = "<group>"; };
+		91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication++.swift"; sourceTree = "<group>"; };
+		91F6F7F22C68CD4500F7D312 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,6 +361,7 @@
 				91F6F7DB2C67BA7100F7D312 /* UIView++.swift */,
 				91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */,
 				91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */,
+				91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -390,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */,
+				91F6F7F22C68CD4500F7D312 /* PermissionManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -536,6 +542,7 @@
 				91F6F7E92C67C06D00F7D312 /* Photo.swift in Sources */,
 				91F6F7D72C677B3500F7D312 /* VideoSourceView.swift in Sources */,
 				91F6F7A02C67386F00F7D312 /* ApplicationCoordinator.swift in Sources */,
+				91F6F7F12C68CD2800F7D312 /* UIApplication++.swift in Sources */,
 				91F6F7BD2C67558F00F7D312 /* NiblessView.swift in Sources */,
 				91F6F7BF2C6757AA00F7D312 /* SplashRootView.swift in Sources */,
 				91F6F7D22C6770A900F7D312 /* RecordDetailsRootView.swift in Sources */,
@@ -555,6 +562,7 @@
 				91F6F7E52C67BEBF00F7D312 /* Dequeuable.swift in Sources */,
 				91F6F7D02C67709C00F7D312 /* RecordDetailsViewModel.swift in Sources */,
 				91F6F7B22C67406700F7D312 /* RecordCoordinator.swift in Sources */,
+				91F6F7F32C68CD4500F7D312 /* PermissionManager.swift in Sources */,
 				91F6F7D92C67B70600F7D312 /* RecordDetailsCollectionViewModel.swift in Sources */,
 				91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */,
 				91F6F7A62C673A9400F7D312 /* SplashViewController.swift in Sources */,

@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 final class SplashViewModel {
     private let coordinator: SplashCoordinator
@@ -19,13 +20,28 @@ final class SplashViewModel {
         self.scheduler = scheduler
     }
     
-    func startSplashScenario() {
-        Just(Void()) // TODO: - Handle splash scenario
-            .delay(for: .seconds(2),
-                   scheduler: scheduler)
-            .sink { [weak self] _ in
-                self?.coordinator.navigateToNextFeature()
+    func startSplashScenario(from vc: UIViewController) {
+        PermissionManager.shared.checkAndRequestCameraPermission(from: vc)
+            .receive(on: DispatchQueue.main)
+            .flatMap { permissionState -> AnyPublisher<PermissionState, Never> in
+                switch permissionState {
+                case .notDetermined:
+                    return PermissionManager.shared.checkAndRequestCameraPermission(from: vc)
+                default:
+                    return Just(permissionState).eraseToAnyPublisher()
+                }
+            }
+            .sink { [weak self] finalPermissionState in
+                switch finalPermissionState {
+                case .authorized:
+                    self?.coordinator.changeRootToRecord()
+                case .denied, .restricted:
+                    break
+                default:
+                    return
+                }
             }
             .store(in: &disposeBag)
     }
+
 }

@@ -22,15 +22,16 @@ class SplashCoordinator: Coordinator {
     }
     
     func start() {
-        let viewModel = SplashViewModel(coordinator: self)
-        let splashViewController = SplashViewController(viewModel: viewModel)
-        self.navigationController?.setViewControllers([splashViewController],
-                                                animated: false)
-        viewModel.startSplashScenario()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let viewModel = SplashViewModel(coordinator: self)
+            let splashViewController = SplashViewController(viewModel: viewModel)
+            self.navigationController?.setViewControllers([splashViewController],
+                                                          animated: false)
+        }
     }
     
-    func navigateToNextFeature() {
-        debugPrint("Send root to record")
+    func changeRootToRecord() {
         appRoot.send(.record)
     }
 }

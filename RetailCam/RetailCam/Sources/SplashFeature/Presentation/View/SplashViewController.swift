@@ -28,6 +28,7 @@ class SplashViewController: NiblessViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
+        self.viewModel.startSplashScenario(from: self)
     }
 }
 
