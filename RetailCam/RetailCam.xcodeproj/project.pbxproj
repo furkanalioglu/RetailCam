@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9112BD5E2C69138600791C05 /* RCImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD5D2C69138600791C05 /* RCImageLoader.swift */; };
 		91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76D2C67359B00F7D312 /* AppDelegate.swift */; };
 		91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */; };
 		91F6F7772C67359C00F7D312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F6F7762C67359C00F7D312 /* Assets.xcassets */; };
@@ -39,6 +40,11 @@
 		91F6F7E32C67BE8B00F7D312 /* UICollectionView++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */; };
 		91F6F7E52C67BEBF00F7D312 /* Dequeuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */; };
 		91F6F7E92C67C06D00F7D312 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E82C67C06D00F7D312 /* Photo.swift */; };
+		91F6F7EC2C67C81B00F7D312 /* MetalPetal in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6F7EB2C67C81B00F7D312 /* MetalPetal */; };
+		91F6F7EF2C67C8EB00F7D312 /* RetailCameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */; };
+		91F6F7F12C68CD2800F7D312 /* UIApplication++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */; };
+		91F6F7F32C68CD4500F7D312 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7F22C68CD4500F7D312 /* PermissionManager.swift */; };
+		91F6F7F52C68EDB100F7D312 /* RCFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7F42C68EDB100F7D312 /* RCFileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9112BD5D2C69138600791C05 /* RCImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCImageLoader.swift; sourceTree = "<group>"; };
 		91F6F76A2C67359B00F7D312 /* RetailCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetailCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F6F76D2C67359B00F7D312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +102,10 @@
 		91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView++.swift"; sourceTree = "<group>"; };
 		91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dequeuable.swift; sourceTree = "<group>"; };
 		91F6F7E82C67C06D00F7D312 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailCameraManager.swift; sourceTree = "<group>"; };
+		91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication++.swift"; sourceTree = "<group>"; };
+		91F6F7F22C68CD4500F7D312 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		91F6F7F42C68EDB100F7D312 /* RCFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCFileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91F6F7EC2C67C81B00F7D312 /* MetalPetal in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +365,7 @@
 				91F6F7DB2C67BA7100F7D312 /* UIView++.swift */,
 				91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */,
 				91F6F7E42C67BEBF00F7D312 /* Dequeuable.swift */,
+				91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -368,6 +381,7 @@
 		91F6F7E62C67C05500F7D312 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				91F6F7ED2C67C8E000F7D312 /* Managers */,
 				91F6F7E72C67C05900F7D312 /* Entities */,
 			);
 			path = Shared;
@@ -379,6 +393,17 @@
 				91F6F7E82C67C06D00F7D312 /* Photo.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		91F6F7ED2C67C8E000F7D312 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */,
+				91F6F7F22C68CD4500F7D312 /* PermissionManager.swift */,
+				91F6F7F42C68EDB100F7D312 /* RCFileManager.swift */,
+				9112BD5D2C69138600791C05 /* RCImageLoader.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -397,6 +422,9 @@
 			dependencies = (
 			);
 			name = RetailCam;
+			packageProductDependencies = (
+				91F6F7EB2C67C81B00F7D312 /* MetalPetal */,
+			);
 			productName = RetailCam;
 			productReference = 91F6F76A2C67359B00F7D312 /* RetailCam.app */;
 			productType = "com.apple.product-type.application";
@@ -469,6 +497,9 @@
 				Base,
 			);
 			mainGroup = 91F6F7612C67359B00F7D312;
+			packageReferences = (
+				91F6F7EA2C67C81B00F7D312 /* XCRemoteSwiftPackageReference "MetalPetal" */,
+			);
 			productRefGroup = 91F6F76B2C67359B00F7D312 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -513,13 +544,16 @@
 			files = (
 				91F6F7A82C673A9A00F7D312 /* SplashViewModel.swift in Sources */,
 				91F6F7AC2C673AE600F7D312 /* NiblessViewController.swift in Sources */,
+				91F6F7F52C68EDB100F7D312 /* RCFileManager.swift in Sources */,
 				91F6F7CB2C67707D00F7D312 /* RecordDetailsCoordinator.swift in Sources */,
 				91F6F7E92C67C06D00F7D312 /* Photo.swift in Sources */,
 				91F6F7D72C677B3500F7D312 /* VideoSourceView.swift in Sources */,
 				91F6F7A02C67386F00F7D312 /* ApplicationCoordinator.swift in Sources */,
+				91F6F7F12C68CD2800F7D312 /* UIApplication++.swift in Sources */,
 				91F6F7BD2C67558F00F7D312 /* NiblessView.swift in Sources */,
 				91F6F7BF2C6757AA00F7D312 /* SplashRootView.swift in Sources */,
 				91F6F7D22C6770A900F7D312 /* RecordDetailsRootView.swift in Sources */,
+				91F6F7EF2C67C8EB00F7D312 /* RetailCameraManager.swift in Sources */,
 				91F6F7E32C67BE8B00F7D312 /* UICollectionView++.swift in Sources */,
 				91F6F7B92C67409300F7D312 /* RecordViewModel.swift in Sources */,
 				91F6F7E12C67BC1100F7D312 /* NiblessCollectionViewCell.swift in Sources */,
@@ -535,7 +569,9 @@
 				91F6F7E52C67BEBF00F7D312 /* Dequeuable.swift in Sources */,
 				91F6F7D02C67709C00F7D312 /* RecordDetailsViewModel.swift in Sources */,
 				91F6F7B22C67406700F7D312 /* RecordCoordinator.swift in Sources */,
+				91F6F7F32C68CD4500F7D312 /* PermissionManager.swift in Sources */,
 				91F6F7D92C67B70600F7D312 /* RecordDetailsCollectionViewModel.swift in Sources */,
+				9112BD5E2C69138600791C05 /* RCImageLoader.swift in Sources */,
 				91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */,
 				91F6F7A62C673A9400F7D312 /* SplashViewController.swift in Sources */,
 			);
@@ -715,6 +751,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RetailCam/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RetailCam;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow camera";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -725,7 +762,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.furkanalioglu.RetailCam;
+				PRODUCT_BUNDLE_IDENTIFIER = com.retailCam.io;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = targeted;
@@ -745,6 +782,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RetailCam/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = RetailCam;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow camera";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -755,7 +793,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.furkanalioglu.RetailCam;
+				PRODUCT_BUNDLE_IDENTIFIER = com.retailCam.io;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = targeted;
@@ -775,7 +813,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.furkanalioglu.RetailCamTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.retailCam.io.RetailCamTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -795,7 +833,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.furkanalioglu.RetailCamTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.retailCam.io.RetailCamTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -813,7 +851,7 @@
 				DEVELOPMENT_TEAM = G853KP8PLG;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.furkanalioglu.RetailCamUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.retailCam.io.RetailCamUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -831,7 +869,7 @@
 				DEVELOPMENT_TEAM = G853KP8PLG;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.furkanalioglu.RetailCamUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.retailCam.io.RetailCamUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -880,6 +918,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		91F6F7EA2C67C81B00F7D312 /* XCRemoteSwiftPackageReference "MetalPetal" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MetalPetal/MetalPetal";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.25.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		91F6F7EB2C67C81B00F7D312 /* MetalPetal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 91F6F7EA2C67C81B00F7D312 /* XCRemoteSwiftPackageReference "MetalPetal" */;
+			productName = MetalPetal;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 91F6F7622C67359B00F7D312 /* Project object */;
 }

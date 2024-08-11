@@ -32,8 +32,19 @@ class RecordViewController: NiblessViewController {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.subscribe()
+        
+        RetailCamera.shared.attachPreview(to: self.rootView!.videoSourceView.previewView)
+        RetailCamera.shared.startSession()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+    }
+    
+    @objc private func handleOrientationChange() {
+        RetailCamera.shared.updateVideoOrientation()
+    }
+
     private func setupNavigationBar() {
         let infoButton = UIBarButtonItem(
             image: UIImage(systemName: "info.circle"),
@@ -45,6 +56,14 @@ class RecordViewController: NiblessViewController {
     }
     
     private func subscribe() {
+        //TODO: - Observe with combine
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleOrientationChange),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
+        
         viewModel
             .recordingState
             .receive(on: defaultScheduler)
@@ -52,6 +71,7 @@ class RecordViewController: NiblessViewController {
                 self?.rootView?.recordButton.recordingState.value = state
                 self?.updateButtonsStack(for: state)
                 self?.rootView?.videoSourceView.updateUI(for: state)
+                RetailCamera.shared.recordingState.send(state)
             })
             .store(in: &disposeBag)
     }

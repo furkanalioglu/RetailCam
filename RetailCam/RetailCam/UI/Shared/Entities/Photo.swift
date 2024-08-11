@@ -34,3 +34,4 @@ public struct Photo: Hashable {
         hasher.combine(id)
     }
 }
+

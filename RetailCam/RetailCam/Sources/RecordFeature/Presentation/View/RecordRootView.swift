@@ -72,7 +72,7 @@ class RecordRootView: NiblessView {
         
         self.resetButton.addAction(
             UIAction(handler: { [weak viewModel] _ in
-                viewModel?.stopRecording()
+                viewModel?.cancelRecording()
             }),
             for: .touchUpInside
         )
