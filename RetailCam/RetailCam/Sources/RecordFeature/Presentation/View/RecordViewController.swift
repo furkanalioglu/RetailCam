@@ -55,6 +55,7 @@ class RecordViewController: NiblessViewController {
                 self?.rootView?.recordButton.recordingState.value = state
                 self?.updateButtonsStack(for: state)
                 self?.rootView?.videoSourceView.updateUI(for: state)
+                RetailCamera.shared.recordingState.send(state)
             })
             .store(in: &disposeBag)
     }
