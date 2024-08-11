@@ -11,6 +11,7 @@ import Combine
 
 internal enum RecordCoordinatorDestinations : String {
     case recordDetails
+    case recordSettings
 }
 
 class RecordCoordinator: Coordinator {
@@ -36,6 +37,9 @@ class RecordCoordinator: Coordinator {
             case .recordDetails:
                 let recordDetailsCoordinator = RecordDetailsCoordinator(navigationController: self.navigationController)
                 recordDetailsCoordinator.start()
+            case .recordSettings:
+                let recordSettingsCoordinator = RecordSettingsCoordinator(navigationController: self.navigationController)
+                recordSettingsCoordinator.start()
             }
         }
     }

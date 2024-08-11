@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		9112BD5E2C69138600791C05 /* RCImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD5D2C69138600791C05 /* RCImageLoader.swift */; };
+		9112BD622C693F3300791C05 /* RecordSettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD612C693F3300791C05 /* RecordSettingsCoordinator.swift */; };
+		9112BD672C693F4C00791C05 /* RecordSettingsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD662C693F4C00791C05 /* RecordSettingsRootView.swift */; };
+		9112BD692C693F5900791C05 /* RecordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD682C693F5900791C05 /* RecordSettingsViewController.swift */; };
+		9112BD6B2C693F6100791C05 /* RecordSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD6A2C693F6100791C05 /* RecordSettingsViewModel.swift */; };
 		91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76D2C67359B00F7D312 /* AppDelegate.swift */; };
 		91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */; };
 		91F6F7772C67359C00F7D312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F6F7762C67359C00F7D312 /* Assets.xcassets */; };
@@ -66,6 +70,10 @@
 
 /* Begin PBXFileReference section */
 		9112BD5D2C69138600791C05 /* RCImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCImageLoader.swift; sourceTree = "<group>"; };
+		9112BD612C693F3300791C05 /* RecordSettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSettingsCoordinator.swift; sourceTree = "<group>"; };
+		9112BD662C693F4C00791C05 /* RecordSettingsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSettingsRootView.swift; sourceTree = "<group>"; };
+		9112BD682C693F5900791C05 /* RecordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSettingsViewController.swift; sourceTree = "<group>"; };
+		9112BD6A2C693F6100791C05 /* RecordSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSettingsViewModel.swift; sourceTree = "<group>"; };
 		91F6F76A2C67359B00F7D312 /* RetailCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetailCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F6F76D2C67359B00F7D312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +142,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9112BD602C693EFB00791C05 /* RecordSettingsFeature */ = {
+			isa = PBXGroup;
+			children = (
+				9112BD612C693F3300791C05 /* RecordSettingsCoordinator.swift */,
+				9112BD632C693F3700791C05 /* Presentation */,
+			);
+			path = RecordSettingsFeature;
+			sourceTree = "<group>";
+		};
+		9112BD632C693F3700791C05 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				9112BD642C693F3C00791C05 /* View */,
+				9112BD652C693F4000791C05 /* ViewModel */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		9112BD642C693F3C00791C05 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9112BD662C693F4C00791C05 /* RecordSettingsRootView.swift */,
+				9112BD682C693F5900791C05 /* RecordSettingsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9112BD652C693F4000791C05 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9112BD6A2C693F6100791C05 /* RecordSettingsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		91F6F7612C67359B00F7D312 = {
 			isa = PBXGroup;
 			children = (
@@ -317,6 +360,7 @@
 				91F6F7A12C673A2400F7D312 /* SplashFeature */,
 				91F6F7B02C67402600F7D312 /* RecordFeature */,
 				91F6F7C92C67705E00F7D312 /* RecordDetailsFeature */,
+				9112BD602C693EFB00791C05 /* RecordSettingsFeature */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -554,9 +598,11 @@
 				91F6F7BF2C6757AA00F7D312 /* SplashRootView.swift in Sources */,
 				91F6F7D22C6770A900F7D312 /* RecordDetailsRootView.swift in Sources */,
 				91F6F7EF2C67C8EB00F7D312 /* RetailCameraManager.swift in Sources */,
+				9112BD672C693F4C00791C05 /* RecordSettingsRootView.swift in Sources */,
 				91F6F7E32C67BE8B00F7D312 /* UICollectionView++.swift in Sources */,
 				91F6F7B92C67409300F7D312 /* RecordViewModel.swift in Sources */,
 				91F6F7E12C67BC1100F7D312 /* NiblessCollectionViewCell.swift in Sources */,
+				9112BD692C693F5900791C05 /* RecordSettingsViewController.swift in Sources */,
 				91F6F7BB2C67557500F7D312 /* RecordRootView.swift in Sources */,
 				91F6F7DC2C67BA7100F7D312 /* UIView++.swift in Sources */,
 				91F6F7C72C675FEC00F7D312 /* Recordable.swift in Sources */,
@@ -567,6 +613,8 @@
 				91F6F7D42C6770B200F7D312 /* RecordDetailsViewController.swift in Sources */,
 				91F6F7C32C675FB900F7D312 /* RecordButton.swift in Sources */,
 				91F6F7E52C67BEBF00F7D312 /* Dequeuable.swift in Sources */,
+				9112BD622C693F3300791C05 /* RecordSettingsCoordinator.swift in Sources */,
+				9112BD6B2C693F6100791C05 /* RecordSettingsViewModel.swift in Sources */,
 				91F6F7D02C67709C00F7D312 /* RecordDetailsViewModel.swift in Sources */,
 				91F6F7B22C67406700F7D312 /* RecordCoordinator.swift in Sources */,
 				91F6F7F32C68CD4500F7D312 /* PermissionManager.swift in Sources */,

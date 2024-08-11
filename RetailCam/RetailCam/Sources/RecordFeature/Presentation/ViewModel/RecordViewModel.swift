@@ -50,5 +50,8 @@ final class RecordViewModel {
         self.coordinator.navigate(to: .recordDetails)
     }
     
+    internal func settingsTap() {
+        self.coordinator.navigate(to: .recordSettings)
+    }
 }
 
