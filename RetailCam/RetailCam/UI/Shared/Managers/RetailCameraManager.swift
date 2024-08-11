@@ -82,7 +82,7 @@ final class RetailCamera: NSObject {
         retailCameraQueue.async { [weak self] in
             guard let self else { return }
             captureSession.beginConfiguration()
-            
+            //.builtInWideAngle gives 4032 x 3024 when captured
             if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
                 do {
                     let input = try AVCaptureDeviceInput(device: device)
@@ -132,7 +132,7 @@ final class RetailCamera: NSObject {
         retailCameraQueue.async { [weak self] in
             self?.printCurrentThread("startSession - processingQueue.async")
             guard let self = self else { return }
-            if !self.captureSession.isRunning {
+            if self.captureSession.isRunning == false {
                 self.captureSession.startRunning()
             }
         }
@@ -142,6 +142,7 @@ final class RetailCamera: NSObject {
         retailCameraQueue.async { [weak self] in
             self?.printCurrentThread("stopSession - processingQueue.async")
             guard let self = self else { return }
+            self.isRecording = false
             if self.captureSession.isRunning {
                 self.captureSession.stopRunning()
             }
@@ -241,8 +242,6 @@ extension RetailCamera: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         printCurrentThread("captureOutput")
         guard shouldCaptureFrame(), isRecording else { return }
-        
-        debugPrint("Captured Image")
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         processImage(from: pixelBuffer)
     }

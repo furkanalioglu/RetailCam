@@ -35,6 +35,11 @@ final class RecordViewModel {
         recordingState.send(.didNotStart)
     }
     
+    internal func handleViewWillDisappear() {
+        guard recordingState.value == .started else { return }
+        recordingState.send(.paused)
+    }
+    
     internal func cancelRecording() {
         guard recordingState.value != .didNotStart else { return }
         RCFileManager.shared.removeAllFilesInFolder()
