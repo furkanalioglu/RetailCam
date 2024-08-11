@@ -44,6 +44,20 @@ final class RetailCamera: NSObject {
         self.subscribe()
     }
     
+    var currentISO: Float? {
+        guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+            return nil
+        }
+        return device.iso
+    }
+    
+    var currentShutterSpeed: CMTime? {
+        guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+            return nil
+        }
+        return device.exposureDuration
+    }
+    
     private func setMetalContext() {
         retailCameraQueue.async { [weak self] in
             guard let device = MTLCreateSystemDefaultDevice() else {
@@ -214,6 +228,56 @@ final class RetailCamera: NSObject {
             }
         }
     }
+    
+    public func setISO(_ isoValue: Float) {
+         retailCameraQueue.async { [weak self] in
+             guard let self = self else { return }
+             guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+                 self.delegate?.retailCamera(self, didFailWithError: NSError(domain: "RetailCamera", code: -1, userInfo: [NSLocalizedDescriptionKey: "Camera device not found"]))
+                 return
+             }
+             
+             do {
+                 try device.lockForConfiguration()
+                 defer { device.unlockForConfiguration() }
+                 
+                 let clampedISO = max(device.activeFormat.minISO, min(isoValue, device.activeFormat.maxISO))
+                 device.setExposureModeCustom(duration: device.exposureDuration, iso: isoValue, completionHandler: nil)
+                 
+             } catch {
+                 DispatchQueue.main.async { [weak self] in
+                     self?.delegate?.retailCamera(self!, didFailWithError: error)
+                 }
+             }
+         }
+     }
+     
+    public func setShutterSpeed(_ shutterSpeedSeconds: Float) {
+        retailCameraQueue.async { [weak self] in
+            guard let self = self else { return }
+            guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+                self.delegate?.retailCamera(self, didFailWithError: NSError(domain: "RetailCamera", code: -1, userInfo: [NSLocalizedDescriptionKey: "Camera device not found"]))
+                return
+            }
+            
+            do {
+                try device.lockForConfiguration()
+                defer { device.unlockForConfiguration() }
+                
+                let minDuration = device.activeFormat.minExposureDuration
+                let maxDuration = device.activeFormat.maxExposureDuration
+                let desiredDuration = CMTimeMakeWithSeconds(Float64(shutterSpeedSeconds), preferredTimescale: maxDuration.timescale)
+                let clampedShutterSpeed = CMTimeClampToRange(desiredDuration, range: CMTimeRange(start: minDuration, duration: maxDuration))
+                device.setExposureModeCustom(duration: clampedShutterSpeed, iso: device.iso, completionHandler: nil)
+                
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.delegate?.retailCamera(self!, didFailWithError: error)
+                }
+            }
+        }
+    }
+
     
     private func shouldCaptureFrame() -> Bool {
         printCurrentThread("shouldCaptureFrame")

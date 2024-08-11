@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreMedia
 
 class RecordSettingsCoordinator: Coordinator {
     
@@ -17,19 +18,14 @@ class RecordSettingsCoordinator: Coordinator {
     }
     
     func start() {
-        let viewModel = RecordSettingsViewModel(coordinator: self)
+        let currentISO = RetailCamera.shared.currentISO ?? 50.0
+        let currentShutterSpeed = Float(CMTimeGetSeconds(RetailCamera.shared.currentShutterSpeed ?? CMTimeMake(value: 1, timescale: 60)))
+        let viewModel = RecordSettingsViewModel(coordinator: self, initialISO: currentISO, initialShutterSpeed: currentShutterSpeed)
         let recordSettingsVC = RecordSettingsViewController(viewModel: viewModel)
-        
         recordSettingsVC.modalPresentationStyle = .custom
         recordSettingsVC.transitioningDelegate = recordSettingsVC
-        
         self.navigationController?.present(recordSettingsVC, animated: true)
     }
 }
 
-extension RecordSettingsViewController: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return RCPanmodalController(presentedViewController: presented, presenting: presenting)
-    }
-}
 

@@ -46,3 +46,10 @@ class RecordSettingsViewController: NiblessViewController {
     }
 }
 
+extension RecordSettingsViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return RCPanmodalController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+

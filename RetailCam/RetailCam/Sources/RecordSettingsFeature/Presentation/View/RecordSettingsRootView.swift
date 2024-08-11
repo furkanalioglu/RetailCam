@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 class RecordSettingsRootView: NiblessView {
     
@@ -50,9 +51,6 @@ class RecordSettingsRootView: NiblessView {
     
     let shutterSpeedSlider: UISlider = {
         let slider = UISlider()
-        slider.minimumValue = 0
-        slider.maximumValue = 100
-        slider.value = 50
         slider.tintColor = .systemGreen
         return slider
     }()
@@ -91,12 +89,26 @@ class RecordSettingsRootView: NiblessView {
         
         self.backgroundColor = .secondarySystemBackground
         self.constructHierarchy()
+        self.configureSliders()
         self.activateConstraints()
     }
     
     private func constructHierarchy() {
         self.addSubview(titleLabel)
         self.addSubview(mainStackView)
+    }
+    
+    private func configureSliders() {
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+            isoSlider.minimumValue = Float(device.activeFormat.minISO)
+            isoSlider.maximumValue = Float(device.activeFormat.maxISO)
+            let minShutterSpeed = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
+            let maxShutterSpeed = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
+            shutterSpeedSlider.minimumValue = Float(minShutterSpeed)
+            shutterSpeedSlider.maximumValue = Float(maxShutterSpeed)
+        }
+        self.isoSlider.value = self.viewModel.isoSliderValue
+        self.shutterSpeedSlider.value = self.viewModel.shutterSpeedSliderValue
     }
     
     private func activateConstraints() {
@@ -114,4 +126,5 @@ class RecordSettingsRootView: NiblessView {
         ])
     }
 }
+
 

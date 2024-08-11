@@ -6,18 +6,22 @@
 //
 
 import Foundation
+import UIKit
 import Combine
+import CoreMedia
 
 final class RecordSettingsViewModel {
-    @Published var isoSliderValue: Float = 50.0
-    @Published var shutterSpeedSliderValue: Float = 50.0
+    @Published var isoSliderValue: Float
+    @Published var shutterSpeedSliderValue: Float
     
     var coordinator: RecordSettingsCoordinator
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(coordinator: RecordSettingsCoordinator) {
+    init(coordinator: RecordSettingsCoordinator, initialISO: Float, initialShutterSpeed: Float) {
         self.coordinator = coordinator
+        self.isoSliderValue = initialISO
+        self.shutterSpeedSliderValue = initialShutterSpeed
         self.subscribe()
     }
     
@@ -26,7 +30,8 @@ final class RecordSettingsViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newValue in
                 guard self != nil else { return }
-                print("ISO Slider Value changed to: \(newValue)")
+                debugPrint("Current value",newValue)
+                RetailCamera.shared.setISO(newValue)
             }
             .store(in: &cancellables)
         
@@ -34,10 +39,12 @@ final class RecordSettingsViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newValue in
                 guard self != nil else { return }
-                print("Shutter Speed Slider Value changed to: \(newValue)")
+//                debugPrint("Current value iso",newValue)
+//                RetailCamera.shared.setShutterSpeed(newValue)
             }
             .store(in: &cancellables)
-        
     }
 }
+
+
 
