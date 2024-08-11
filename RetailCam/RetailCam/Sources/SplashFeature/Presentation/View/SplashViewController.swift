@@ -6,10 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 class SplashViewController: NiblessViewController {
     private let viewModel: SplashViewModel
     private var rootView: SplashRootView?
+    public var defaultScheduler : DispatchQueue = DispatchQueue.main
+    private var disposeBag = Set<AnyCancellable>()
+
     
     init(viewModel: SplashViewModel) {
         self.viewModel = viewModel
@@ -27,8 +31,21 @@ class SplashViewController: NiblessViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.subscribe()
         view.backgroundColor = .secondarySystemBackground
         self.viewModel.startSplashScenario(from: self)
     }
+    
+    private func subscribe() {
+        self.viewModel
+            .permissionState
+            .receive(on: defaultScheduler)
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                self.rootView?.enableCameraButton.isHidden = !(state == .denied || state == .restricted)
+            }
+            .store(in: &disposeBag)
+    }
+
 }
 

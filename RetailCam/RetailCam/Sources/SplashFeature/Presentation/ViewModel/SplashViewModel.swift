@@ -11,6 +11,7 @@ import UIKit
 
 final class SplashViewModel {
     private let coordinator: SplashCoordinator
+    public let permissionState = CurrentValueSubject<PermissionState, Never>(.notDetermined)
     private var disposeBag = Set<AnyCancellable>()
     private let scheduler: DispatchQueue
     
@@ -21,6 +22,10 @@ final class SplashViewModel {
     }
     
     func startSplashScenario(from vc: UIViewController) {
+        self.checkCameraPermission(from: vc)
+    }
+    
+    private func checkCameraPermission(from vc: UIViewController) {
         PermissionManager.shared.checkAndRequestCameraPermission(from: vc)
             .receive(on: DispatchQueue.main)
             .flatMap { permissionState -> AnyPublisher<PermissionState, Never> in
@@ -32,16 +37,23 @@ final class SplashViewModel {
                 }
             }
             .sink { [weak self] finalPermissionState in
-                switch finalPermissionState {
-                case .authorized:
-                    self?.coordinator.changeRootToRecord()
-                case .denied, .restricted:
-                    break
-                default:
-                    return
-                }
+                self?.handlePermissionState(finalPermissionState)
             }
             .store(in: &disposeBag)
     }
-
+    
+    func retryCameraPermission(from vc: UIViewController) {
+        checkCameraPermission(from: vc)
+    }
+    
+    private func handlePermissionState(_ state: PermissionState) {
+        switch state {
+        case .authorized:
+            coordinator.changeRootToRecord()
+        case .denied, .restricted:
+            permissionState.send(state)
+        default:
+            return
+        }
+    }
 }

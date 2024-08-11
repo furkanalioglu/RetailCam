@@ -34,11 +34,12 @@ class SplashRootView: NiblessView {
         config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20)
         button.setTitle("Enable Cam", for: .normal)
         button.configuration = config
+        button.isHidden = true
         return button
     }()
     
     private lazy var centeredVerticalStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [cameraImageView, loadingLabel])
+        let stack = UIStackView(arrangedSubviews: [cameraImageView, loadingLabel, enableCameraButton])
         stack.alignment = .center
         stack.axis = .vertical
         return stack
@@ -65,12 +66,16 @@ class SplashRootView: NiblessView {
     
     private func setupBindables() {
         self.enableCameraButton.addAction(
-            UIAction(handler: { [weak viewModel] _ in
-                viewModel
+            UIAction(handler: { [weak self] _ in
+                guard let self = self else { return }
+                if let rootViewController = self.window?.rootViewController {
+                    self.viewModel.retryCameraPermission(from: rootViewController)
+                }
             }),
             for: .touchUpInside
         )
     }
+
     
     private func constructHierarchy() {
         addSubview(centeredHorizontalStack)

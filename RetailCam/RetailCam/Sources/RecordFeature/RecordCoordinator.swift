@@ -21,16 +21,22 @@ class RecordCoordinator: Coordinator {
     }
     
     func start() {
-        let viewModel = RecordViewModel(coordinator: self)
-        let recordViewController = RecordViewController(viewModel: viewModel)
-        self.navigationController?.setViewControllers([recordViewController], animated: false)
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let viewModel = RecordViewModel(coordinator: self)
+            let recordViewController = RecordViewController(viewModel: viewModel)
+            self.navigationController?.setViewControllers([recordViewController], animated: false)
+        }
     }
     
     func navigate(to vc: RecordCoordinatorDestinations) {
-        switch vc {
-        case .recordDetails:
-            let recordDetailsCoordinator = RecordDetailsCoordinator(navigationController: self.navigationController)
-            recordDetailsCoordinator.start()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            switch vc {
+            case .recordDetails:
+                let recordDetailsCoordinator = RecordDetailsCoordinator(navigationController: self.navigationController)
+                recordDetailsCoordinator.start()
+            }
         }
     }
 }
