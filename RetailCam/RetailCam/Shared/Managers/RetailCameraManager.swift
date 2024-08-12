@@ -55,12 +55,8 @@ final class RetailCamera: NSObject {
         guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
             return nil
         }
-        let minShutterSpeed = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
-        let maxShutterSpeed = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
         let currentShutterSpeed = CMTimeGetSeconds(device.exposureDuration)
-        
-        let normalizedShutterSpeed = Float((currentShutterSpeed - minShutterSpeed) / (maxShutterSpeed - minShutterSpeed)) * 100.0
-        return normalizedShutterSpeed
+        return Float(currentShutterSpeed)
     }
     
     private func setMetalContext() {
@@ -234,35 +230,37 @@ final class RetailCamera: NSObject {
         }
     }
     
-    //TODO: - Check iSO
-    //https://forums.developer.apple.com/forums/thread/105514
-    //https://www.youtube.com/shorts/0RixDJ_4etM
     public func setISO(_ isoValue: Float) {
-         retailCameraQueue.async { [weak self] in
-             guard let self = self else { return }
-             guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
-                 self.delegate?.retailCamera(self, didFailWithError: NSError(domain: "RetailCamera", code: -1, userInfo: [NSLocalizedDescriptionKey: "Camera device not found"]))
-                 return
-             }
-             
-             do {
-                 try device.lockForConfiguration()
-                 defer { device.unlockForConfiguration() }
-                 
-                 let clampedISO = max(device.activeFormat.minISO, min(isoValue, device.activeFormat.maxISO))
-                 device.setExposureModeCustom(duration: device.exposureDuration, iso: clampedISO, completionHandler: nil)
-                 
-             } catch {
-                 DispatchQueue.main.async { [weak self] in
-                     self?.delegate?.retailCamera(self!, didFailWithError: error)
-                 }
-             }
-         }
-     }
-     
-    //TODO: - Check Shutter
-    //https://forums.developer.apple.com/forums/thread/105514
-    //https://www.youtube.com/shorts/0RixDJ_4etM
+        retailCameraQueue.async { [weak self] in
+            guard let self = self else { return }
+            guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+                self.delegate?.retailCamera(self, didFailWithError: NSError(domain: "RetailCamera", code: -1, userInfo: [NSLocalizedDescriptionKey: "Camera device not found"]))
+                return
+            }
+            
+            let minISO = Float(device.activeFormat.minISO)
+            let maxISO = Float(device.activeFormat.maxISO)
+            
+            guard isoValue >= minISO && isoValue <= maxISO else {
+                debugPrint("Error: passed value to \(#function) Value not valid!")
+                return
+            }
+            
+            do {
+                try device.lockForConfiguration() //NSLock()?
+                defer { device.unlockForConfiguration() }
+                
+                device.setExposureModeCustom(duration: device.exposureDuration, iso: isoValue, completionHandler: nil)
+                debugPrint("Current iso is",isoValue)
+                
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.delegate?.retailCamera(self!, didFailWithError: error)
+                }
+            }
+        }
+    }
+    
     public func setShutterSpeed(_ shutterSpeedSliderValue: Float) {
         retailCameraQueue.async { [weak self] in
             guard let self = self else { return }
