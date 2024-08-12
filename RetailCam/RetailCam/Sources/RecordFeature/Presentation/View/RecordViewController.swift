@@ -50,9 +50,6 @@ class RecordViewController: NiblessViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-    }
-    
-    @objc private func handleOrientationChange() {
         RetailCamera.shared.updateVideoOrientation()
     }
 
