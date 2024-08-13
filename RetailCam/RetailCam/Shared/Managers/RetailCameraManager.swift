@@ -269,7 +269,7 @@ final class RetailCamera: NSObject {
                 self.delegate?.retailCamera(self, didFailWithError: NSError(domain: "RetailCamera", code: -1, userInfo: [NSLocalizedDescriptionKey: "Camera device not found"]))
                 return
             }
-            debugPrint("Iset",Int32(shutterSpeedSliderValue))
+
             let desiredDuration = CMTimeMake(value: 1, timescale: Int32(shutterSpeedSliderValue))
             
             do {

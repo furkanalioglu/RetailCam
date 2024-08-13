@@ -26,49 +26,51 @@ final class RecordSettingsViewModel {
         self.subscribe()
     }
     
-    let defaultIsoRange : [Float] = [32, 50, 64, 80, 100, 125, 160, 200, 250, 320, 400, 500, 640, 800, 1000, 1250, 1600, 1800]
-    let defaultShutterRange : [Float] = [1, 2, 4, 8, 15, 30, 60, 125, 250, 500, 1000, 2000, 4000, 8000]
+    private var minISOValue : Float = 34
+    private var maxISOValue : Float = 3000
+    private var minShutterValue : Float = 25
+    private var maxShutterValue : Float = 50000
     
-    var isoSliderMinValue: Float {
+    var supportedIsoMinValue: Float {
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                    for: .video,
                                                    position: .back)
         else { return 0.0 }
-        let minISO = Float(device.activeFormat.minISO)
-        return defaultIsoRange.filter { $0 >= minISO }.min() ?? minISO
+        
+        let minISO = max(minISOValue, Float(device.activeFormat.minISO))
+        return minISO
     }
-    
-    var isoSliderMaxValue: Float {
+
+    var supportedIsoMaxValue: Float {
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                    for: .video,
                                                    position: .back)
         else { return 0.0 }
-        let maxISO = Float(device.activeFormat.maxISO)
-        return self.defaultIsoRange.filter { $0 <= maxISO }.max() ?? maxISO
+        
+        let maxISO = min(maxISOValue, Float(device.activeFormat.maxISO))
+        return maxISO
     }
-    
-    var shutterSpeedSliderMinValue: Float {
+
+    var supportedShutterSpeedMinValue: Float {
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                    for: .video,
                                                    position: .back)
         else { return 0.0 }
-        let minShutterSpeed = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
-        return self.defaultShutterRange.filter {
-            let seconds = 1.0 / Float64($0)
-            return seconds >= minShutterSpeed
-        }.min() ?? Float(minShutterSpeed)
+        
+        let minShutterSpeedSeconds = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
+        let minShutterSpeed = Float(1.0 / minShutterSpeedSeconds)
+        return max(minShutterValue, minShutterSpeed)
     }
-    
-    var shutterSpeedSliderMaxValue: Float {
+
+    var supportedShutterSpeedMaxValue: Float {
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                    for: .video,
                                                    position: .back)
         else { return 0.0 }
-        let maxShutterSpeed = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
-        return self.defaultShutterRange.filter {
-            let seconds = 1.0 / Float64($0)
-            return seconds <= maxShutterSpeed
-        }.max() ?? Float(maxShutterSpeed)
+        
+        let maxShutterSpeedSeconds = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
+        let maxShutterSpeed = Float(1.0 / maxShutterSpeedSeconds)
+        return 25
     }
     
     func subscribe() {
@@ -84,7 +86,6 @@ final class RecordSettingsViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newValue in
                 guard self != nil else { return }
-                debugPrint("Received shutter speed is ",newValue)
                 RetailCamera.shared.setShutterSpeed(newValue)
             }
             .store(in: &cancellables)

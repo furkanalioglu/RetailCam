@@ -100,16 +100,16 @@ class RecordSettingsRootView: NiblessView {
     
     //https://stackoverflow.com/questions/40604334/correct-iso-value-for-avfoundation-camera
     private func configureSliders() {
-        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-            
-            isoSlider.minimumValue = viewModel.isoSliderMinValue
-            isoSlider.maximumValue = viewModel.isoSliderMaxValue
-            isoSlider.value = viewModel.isoSliderValue
-            
-            shutterSpeedSlider.minimumValue = 30
-            shutterSpeedSlider.maximumValue = 25000
-            shutterSpeedSlider.value = self.viewModel.shutterSpeedSliderValue
-        }
+        isoSlider.minimumValue = self.viewModel.supportedIsoMinValue
+        isoSlider.maximumValue = self.viewModel.supportedIsoMaxValue
+        isoSlider.value = viewModel.isoSliderValue
+        
+        shutterSpeedSlider.minimumValue = self.viewModel.supportedShutterSpeedMaxValue
+        shutterSpeedSlider.maximumValue = self.viewModel.supportedShutterSpeedMinValue
+        shutterSpeedSlider.value = self.viewModel.shutterSpeedSliderValue
+        
+        debugPrint("max shutter value",self.viewModel.supportedShutterSpeedMaxValue)
+        debugPrint("min shutter value",self.viewModel.supportedShutterSpeedMinValue)
     }
     
     private func activateConstraints() {
