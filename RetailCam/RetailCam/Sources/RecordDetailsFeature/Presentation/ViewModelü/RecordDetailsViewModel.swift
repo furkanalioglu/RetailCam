@@ -13,7 +13,11 @@ final class RecordDetailsViewModel {
     private let coordinator: RecordDetailsCoordinator
     
     var photos: [Photo]
-    var photosCell = [RecordDetailsCollectionViewModel]()
+    var photosCell = [RecordDetailsCollectionViewModel]() {
+        didSet {
+            self.photosSubject.send(photosCell)
+        }
+    }
     var viewDidAppeaFirstTime:Bool = false
     
     var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()

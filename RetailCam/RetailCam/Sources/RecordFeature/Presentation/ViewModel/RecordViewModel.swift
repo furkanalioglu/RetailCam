@@ -42,7 +42,7 @@ final class RecordViewModel {
     
     internal func cancelRecording() {
         guard recordingState.value != .didNotStart else { return }
-        RCFileManager.shared.removeAllFilesInFolder()
+//        RCFileManager.shared.removeAllFilesInFolder()
         recordingState.send(.didNotStart)
     }
         
