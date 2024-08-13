@@ -51,14 +51,45 @@ final class RetailCamera: NSObject {
         return device.iso
     }
     
-    var currentShutterSpeed: Float? {
+    var currentShutterSpeed: Int? {
         guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
             return nil
         }
-        let currentShutterSpeed = CMTimeGetSeconds(device.exposureDuration)
-        debugPrint("Current shutter speed ")
-        return Float(currentShutterSpeed)
+        
+        let currentShutterSpeedInSeconds = CMTimeGetSeconds(device.exposureDuration)
+        let currentShutterSpeed = Int(round(1.0 / currentShutterSpeedInSeconds))
+        
+        debugPrint("Current shutter speed set: \(currentShutterSpeed)")
+        return currentShutterSpeed
     }
+    
+//    func printShutters() {
+//        guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+//            return
+//        }
+//        
+//        var shutters: [Float] = [1, 2, 4, 8, 15, 30, 60, 125, 250, 500, 1000, 2000, 4000, 8000]
+//        var shutters_available: [Float] = []
+//            
+//        let min_seconds = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
+//        let max_seconds = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
+//            
+//        for one_shutter in shutters {
+//            let seconds = 1.0 / Float64(one_shutter)
+//            if seconds >= min_seconds && seconds <= max_seconds {
+//                shutters_available.append(one_shutter)
+//            }
+//        }
+//        
+//        debugPrint("Available shutters: \(shutters_available)")
+//        
+//        // Randomly select one shutter speed
+//        if let randomShutter = shutters_available.randomElement() {
+//            setShutterSpeed(randomShutter)
+//            debugPrint("Randomly selected shutter speed: \(randomShutter)")
+//        }
+//    }
+
 
     
     private func setMetalContext() {
@@ -271,6 +302,7 @@ final class RetailCamera: NSObject {
             }
 
             let desiredDuration = CMTimeMake(value: 1, timescale: Int32(shutterSpeedSliderValue))
+            debugPrint("Desired duration set",desiredDuration)
             
             do {
                 try device.lockForConfiguration()

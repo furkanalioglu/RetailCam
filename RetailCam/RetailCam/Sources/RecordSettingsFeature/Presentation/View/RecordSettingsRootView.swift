@@ -100,16 +100,15 @@ class RecordSettingsRootView: NiblessView {
     
     //https://stackoverflow.com/questions/40604334/correct-iso-value-for-avfoundation-camera
     private func configureSliders() {
-        isoSlider.minimumValue = self.viewModel.supportedIsoMinValue
-        isoSlider.maximumValue = self.viewModel.supportedIsoMaxValue
+        isoSlider.minimumValue = viewModel.supportedIsoMinValue
+        isoSlider.maximumValue = viewModel.supportedIsoMaxValue
         isoSlider.value = viewModel.isoSliderValue
         
-        shutterSpeedSlider.minimumValue = self.viewModel.supportedShutterSpeedMaxValue
-        shutterSpeedSlider.maximumValue = self.viewModel.supportedShutterSpeedMinValue
-        shutterSpeedSlider.value = self.viewModel.shutterSpeedSliderValue
+        shutterSpeedSlider.minimumValue = 4
+        shutterSpeedSlider.maximumValue = 2000
+        shutterSpeedSlider.value = Float(Int(viewModel.shutterSpeedSliderValue))
         
-        debugPrint("max shutter value",self.viewModel.supportedShutterSpeedMaxValue)
-        debugPrint("min shutter value",self.viewModel.supportedShutterSpeedMinValue)
+        debugPrint("Shutter speed slider configured with min: \(shutterSpeedSlider.minimumValue) max: \(shutterSpeedSlider.maximumValue)")
     }
     
     private func activateConstraints() {

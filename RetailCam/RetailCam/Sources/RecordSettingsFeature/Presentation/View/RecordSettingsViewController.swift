@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 class RecordSettingsViewController: NiblessViewController {
     
@@ -32,6 +33,10 @@ class RecordSettingsViewController: NiblessViewController {
         self.bindViewModel()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     private func bindViewModel() {
         rootView?.isoSlider.addTarget(self, action: #selector(isoSliderChanged(_:)), for: .valueChanged)
         rootView?.shutterSpeedSlider.addTarget(self, action: #selector(shutterSpeedSliderChanged(_:)), for: .valueChanged)
@@ -42,7 +47,7 @@ class RecordSettingsViewController: NiblessViewController {
     }
     
     @objc private func shutterSpeedSliderChanged(_ sender: UISlider) {
-        self.viewModel.shutterSpeedSliderValue = sender.value
+        self.viewModel.shutterSpeedSliderValue = Int(sender.value)
     }
 }
 

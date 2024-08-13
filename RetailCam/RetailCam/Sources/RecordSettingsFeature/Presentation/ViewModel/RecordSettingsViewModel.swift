@@ -13,13 +13,13 @@ import AVFoundation
 
 final class RecordSettingsViewModel {
     @Published var isoSliderValue: Float
-    @Published var shutterSpeedSliderValue: Float
+    @Published var shutterSpeedSliderValue: Int
     
     var coordinator: RecordSettingsCoordinator
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(coordinator: RecordSettingsCoordinator, initialISO: Float, initialShutterSpeed: Float) {
+    init(coordinator: RecordSettingsCoordinator, initialISO: Float, initialShutterSpeed: Int) {
         self.coordinator = coordinator
         self.isoSliderValue = initialISO
         self.shutterSpeedSliderValue = initialShutterSpeed
@@ -86,7 +86,7 @@ final class RecordSettingsViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] newValue in
                 guard self != nil else { return }
-                RetailCamera.shared.setShutterSpeed(newValue)
+                RetailCamera.shared.setShutterSpeed(Float(newValue))
             }
             .store(in: &cancellables)
     }
