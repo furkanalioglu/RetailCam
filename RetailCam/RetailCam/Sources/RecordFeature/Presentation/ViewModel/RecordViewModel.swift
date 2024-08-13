@@ -35,6 +35,11 @@ final class RecordViewModel {
         recordingState.send(.didNotStart)
     }
     
+    internal func handleViewWillDisappear() {
+        guard recordingState.value == .started else { return }
+        recordingState.send(.paused)
+    }
+    
     internal func cancelRecording() {
         guard recordingState.value != .didNotStart else { return }
         RCFileManager.shared.removeAllFilesInFolder()
@@ -45,5 +50,8 @@ final class RecordViewModel {
         self.coordinator.navigate(to: .recordDetails)
     }
     
+    internal func settingsTap() {
+        self.coordinator.navigate(to: .recordSettings)
+    }
 }
 

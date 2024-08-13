@@ -44,6 +44,54 @@ final class RetailCamera: NSObject {
         self.subscribe()
     }
     
+    var currentISO: Float? {
+        guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+            return nil
+        }
+        return device.iso
+    }
+    
+    var currentShutterSpeed: Int? {
+        guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+            return nil
+        }
+        
+        let currentShutterSpeedInSeconds = CMTimeGetSeconds(device.exposureDuration)
+        let currentShutterSpeed = Int(round(1.0 / currentShutterSpeedInSeconds))
+        
+        debugPrint("Current shutter speed set: \(currentShutterSpeed)")
+        return currentShutterSpeed
+    }
+    
+//    func printShutters() {
+//        guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+//            return
+//        }
+//        
+//        var shutters: [Float] = [1, 2, 4, 8, 15, 30, 60, 125, 250, 500, 1000, 2000, 4000, 8000]
+//        var shutters_available: [Float] = []
+//            
+//        let min_seconds = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
+//        let max_seconds = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
+//            
+//        for one_shutter in shutters {
+//            let seconds = 1.0 / Float64(one_shutter)
+//            if seconds >= min_seconds && seconds <= max_seconds {
+//                shutters_available.append(one_shutter)
+//            }
+//        }
+//        
+//        debugPrint("Available shutters: \(shutters_available)")
+//        
+//        // Randomly select one shutter speed
+//        if let randomShutter = shutters_available.randomElement() {
+//            setShutterSpeed(randomShutter)
+//            debugPrint("Randomly selected shutter speed: \(randomShutter)")
+//        }
+//    }
+
+
+    
     private func setMetalContext() {
         retailCameraQueue.async { [weak self] in
             guard let device = MTLCreateSystemDefaultDevice() else {
@@ -82,7 +130,7 @@ final class RetailCamera: NSObject {
         retailCameraQueue.async { [weak self] in
             guard let self else { return }
             captureSession.beginConfiguration()
-            
+            //.builtInWideAngle gives 4032 x 3024 when captured
             if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
                 do {
                     let input = try AVCaptureDeviceInput(device: device)
@@ -132,7 +180,7 @@ final class RetailCamera: NSObject {
         retailCameraQueue.async { [weak self] in
             self?.printCurrentThread("startSession - processingQueue.async")
             guard let self = self else { return }
-            if !self.captureSession.isRunning {
+            if self.captureSession.isRunning == false {
                 self.captureSession.startRunning()
             }
         }
@@ -142,6 +190,7 @@ final class RetailCamera: NSObject {
         retailCameraQueue.async { [weak self] in
             self?.printCurrentThread("stopSession - processingQueue.async")
             guard let self = self else { return }
+            self.isRecording = false
             if self.captureSession.isRunning {
                 self.captureSession.stopRunning()
             }
@@ -214,6 +263,62 @@ final class RetailCamera: NSObject {
         }
     }
     
+    public func setISO(_ isoValue: Float) {
+        retailCameraQueue.async { [weak self] in
+            guard let self = self else { return }
+            guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+                self.delegate?.retailCamera(self, didFailWithError: NSError(domain: "RetailCamera", code: -1, userInfo: [NSLocalizedDescriptionKey: "Camera device not found"]))
+                return
+            }
+            
+            let minISO = Float(device.activeFormat.minISO)
+            let maxISO = Float(device.activeFormat.maxISO)
+            
+            guard isoValue >= minISO && isoValue <= maxISO else {
+                debugPrint("Error: passed value to \(#function) Value not valid!")
+                return
+            }
+            
+            do {
+                try device.lockForConfiguration()
+                defer { device.unlockForConfiguration() }
+                
+                device.setExposureModeCustom(duration: device.exposureDuration, iso: isoValue, completionHandler: nil)
+                
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.delegate?.retailCamera(self!, didFailWithError: error)
+                }
+            }
+        }
+    }
+    
+    public func setShutterSpeed(_ shutterSpeedSliderValue: Float) {
+        retailCameraQueue.async { [weak self] in
+            guard let self = self else { return }
+            guard let device = self.captureSession.inputs.compactMap({ $0 as? AVCaptureDeviceInput }).first?.device else {
+                self.delegate?.retailCamera(self, didFailWithError: NSError(domain: "RetailCamera", code: -1, userInfo: [NSLocalizedDescriptionKey: "Camera device not found"]))
+                return
+            }
+
+            let desiredDuration = CMTimeMake(value: 1, timescale: Int32(shutterSpeedSliderValue))
+            debugPrint("Desired duration set",desiredDuration)
+            
+            do {
+                try device.lockForConfiguration()
+                defer { device.unlockForConfiguration() }
+                device.setExposureModeCustom(duration: desiredDuration, iso: device.iso, completionHandler: nil)
+                
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.delegate?.retailCamera(self!, didFailWithError: error)
+                }
+            }
+        }
+    }
+
+
+    
     private func shouldCaptureFrame() -> Bool {
         printCurrentThread("shouldCaptureFrame")
         let currentTime = Date()
@@ -241,8 +346,6 @@ extension RetailCamera: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         printCurrentThread("captureOutput")
         guard shouldCaptureFrame(), isRecording else { return }
-        
-        debugPrint("Captured Image")
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
         processImage(from: pixelBuffer)
     }
