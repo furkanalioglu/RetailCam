@@ -12,7 +12,8 @@ import Combine
 class RecordDetailsRootView: NiblessView {
     
     private let viewModel : RecordDetailsViewModel
-    
+    var rootViewSubject = PassthroughSubject<Void, Never>()
+
     private lazy var collectionView : UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -98,7 +99,8 @@ class RecordDetailsRootView: NiblessView {
         viewModel.photosSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] photos in
-                self?.applySnapshot(photos: photos)
+                 self?.applySnapshot(photos: photos)
+                 self?.rootViewSubject.send()
             }
             .store(in: &disposeBag)
     }
@@ -113,7 +115,7 @@ class RecordDetailsRootView: NiblessView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
       collectionView.collectionViewLayout.invalidateLayout()
     }
-
+    
 }
 
 extension RecordDetailsRootView : UICollectionViewDelegateFlowLayout {

@@ -62,6 +62,11 @@ final class RecordDetailsViewModel {
             }
             .store(in: &disposeBag)
     }
+    
+    func resetCells() {
+         self.photos.removeAll()
+         self.photosCell.removeAll()
+     }
 
 }
 
