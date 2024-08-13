@@ -36,6 +36,7 @@ class RecordDetailsViewController : NiblessViewController {
         let removeButton = UIBarButtonItem(
             image: UIImage(systemName: "trash.circle.fill"),
             primaryAction: UIAction(handler: { _ in
+                CoreDataManager.shared.deleteAllPhotos()
                 RCFileManager.shared.removeAllFilesInFolder()
                 self.viewModel.resetCells()
             })
@@ -48,8 +49,9 @@ class RecordDetailsViewController : NiblessViewController {
     
     private func subscribe() {
         rootView?.rootViewSubject
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.navigationItem.title = "Photo Count: \(self?.viewModel.photos.count ?? 0)"
+                self?.navigationItem.title = "Photo Count: \(self?.viewModel.photosCell.count ?? 0)"
             }
             .store(in: &disposeBag)
     }

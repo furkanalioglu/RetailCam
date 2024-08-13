@@ -12,7 +12,6 @@ import UIKit
 final class RecordDetailsViewModel {
     private let coordinator: RecordDetailsCoordinator
     
-    var photos: [Photo]
     var photosCell = [RecordDetailsCollectionViewModel]() {
         didSet {
             self.photosSubject.send(photosCell)
@@ -25,48 +24,41 @@ final class RecordDetailsViewModel {
     
     init(coordinator: RecordDetailsCoordinator) {
         self.coordinator = coordinator
-        self.photos = []
     }
     
-    private func mapToCell(entities: [Photo]) -> [RecordDetailsCollectionViewModel] {
-        return entities.map { RecordDetailsCollectionViewModel(photo: $0) }
+    private func mapToCell(entities: [PhotoEntity]) -> [RecordDetailsCollectionViewModel] {
+        return entities.map { entity in
+            RecordDetailsCollectionViewModel(
+                photo: Photo(
+                    id: UUID(),
+                    imageName: entity.imagePath ?? "",
+                    imagePath: (RCFileManager.shared.folderURL?.appendingPathComponent(entity.imagePath ?? "").path) ?? "",
+                    duration: "05:00",
+                    date: entity.imageDate ?? "Unknown Date"
+                )
+            )
+        }
     }
     
     func viewDidLoad() {
-        RCFileManager.shared.getAllImageURLs()
+        CoreDataManager.shared.fetchAllPhotos()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] urls in
-                guard let self = self, let urls = urls else { return }
-                
-                let sortedUrls = urls.sorted { url1, url2 in
-                    let name1 = url1.deletingPathExtension().lastPathComponent
-                    let name2 = url2.deletingPathExtension().lastPathComponent
-                    let index1 = Int(name1.replacingOccurrences(of: "Capture_", with: "")) ?? 0
-                    let index2 = Int(name2.replacingOccurrences(of: "Capture_", with: "")) ?? 0
-                    return index1 < index2
+            .sink { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    print("Failed to fetch photos: \(error)")
+                case .finished:
+                    break
                 }
-                
-                for url in sortedUrls {
-                    let dummyPhoto = Photo(
-                        id: UUID(),
-                        imageName: url.lastPathComponent,
-                        imagePath: url.path,
-                        duration: "05:00",
-                        date: "Today"
-                    )
-                    self.photos.append(dummyPhoto)
-                }
-                
-                let cellPhotos = self.mapToCell(entities: self.photos)
-                self.photosSubject.send(cellPhotos)
+            } receiveValue: { [weak self] photoEntities in
+                guard let self = self else { return }
+                self.photosCell = self.mapToCell(entities: photoEntities)
             }
             .store(in: &disposeBag)
     }
     
     func resetCells() {
-         self.photos.removeAll()
-         self.photosCell.removeAll()
-     }
-
+        self.photosCell.removeAll()
+    }
 }
 

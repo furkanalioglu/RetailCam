@@ -37,7 +37,7 @@ final class RCFileManager {
         debugPrint("RCFileManager instance is being deallocated.")
     }
         
-    private var folderURL: URL? {
+    var folderURL: URL? {
         guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return nil
         }
@@ -84,6 +84,8 @@ final class RCFileManager {
             
             do {
                 try imageData.write(to: fileURL)
+                CoreDataManager.shared.savePhoto(imagePath: imageName,
+                                                 imageDate: Date.getCurrentDate())
                 debugPrint("Image saved to: \(fileURL.path)")
             } catch {
                 debugPrint("Failed to save image: \(error)")

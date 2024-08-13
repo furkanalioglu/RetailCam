@@ -13,6 +13,11 @@
 		9112BD692C693F5900791C05 /* RecordSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD682C693F5900791C05 /* RecordSettingsViewController.swift */; };
 		9112BD6B2C693F6100791C05 /* RecordSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD6A2C693F6100791C05 /* RecordSettingsViewModel.swift */; };
 		9112BD6E2C694B3C00791C05 /* RCPanmodalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9112BD6D2C694B3C00791C05 /* RCPanmodalController.swift */; };
+		9123A1CC2C6BE6B2004E28F9 /* RetailCamPersistantContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9123A1CA2C6BE6B2004E28F9 /* RetailCamPersistantContainer.xcdatamodeld */; };
+		9123A1D22C6BE74F004E28F9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9123A1D12C6BE74F004E28F9 /* CoreDataManager.swift */; };
+		9123A1D92C6BE8CA004E28F9 /* PhotoEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9123A1D72C6BE8CA004E28F9 /* PhotoEntity+CoreDataClass.swift */; };
+		9123A1DA2C6BE8CA004E28F9 /* PhotoEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9123A1D82C6BE8CA004E28F9 /* PhotoEntity+CoreDataProperties.swift */; };
+		9123A1DC2C6BEA4B004E28F9 /* Date++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9123A1DB2C6BEA4B004E28F9 /* Date++.swift */; };
 		91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76D2C67359B00F7D312 /* AppDelegate.swift */; };
 		91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */; };
 		91F6F7772C67359C00F7D312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F6F7762C67359C00F7D312 /* Assets.xcassets */; };
@@ -76,6 +81,11 @@
 		9112BD682C693F5900791C05 /* RecordSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSettingsViewController.swift; sourceTree = "<group>"; };
 		9112BD6A2C693F6100791C05 /* RecordSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSettingsViewModel.swift; sourceTree = "<group>"; };
 		9112BD6D2C694B3C00791C05 /* RCPanmodalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCPanmodalController.swift; sourceTree = "<group>"; };
+		9123A1CB2C6BE6B2004E28F9 /* RetailCamPersistantContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RetailCamPersistantContainer.xcdatamodel; sourceTree = "<group>"; };
+		9123A1D12C6BE74F004E28F9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		9123A1D72C6BE8CA004E28F9 /* PhotoEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9123A1D82C6BE8CA004E28F9 /* PhotoEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9123A1DB2C6BEA4B004E28F9 /* Date++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date++.swift"; sourceTree = "<group>"; };
 		91F6F76A2C67359B00F7D312 /* RetailCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetailCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F6F76D2C67359B00F7D312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -177,6 +187,16 @@
 				9112BD6A2C693F6100791C05 /* RecordSettingsViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9123A1C92C6BE687004E28F9 /* Persistance */ = {
+			isa = PBXGroup;
+			children = (
+				9123A1D72C6BE8CA004E28F9 /* PhotoEntity+CoreDataClass.swift */,
+				9123A1D82C6BE8CA004E28F9 /* PhotoEntity+CoreDataProperties.swift */,
+				9123A1CA2C6BE6B2004E28F9 /* RetailCamPersistantContainer.xcdatamodeld */,
+			);
+			path = Persistance;
 			sourceTree = "<group>";
 		};
 		91F6F7612C67359B00F7D312 = {
@@ -412,6 +432,7 @@
 				91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */,
 				91F6F7E42C67BEBF00F7D312 /* Dequeuable++.swift */,
 				91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */,
+				9123A1DB2C6BEA4B004E28F9 /* Date++.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -427,6 +448,7 @@
 		91F6F7E62C67C05500F7D312 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				9123A1C92C6BE687004E28F9 /* Persistance */,
 				91F6F7ED2C67C8E000F7D312 /* Managers */,
 				91F6F7E72C67C05900F7D312 /* Entities */,
 				9112BD6D2C694B3C00791C05 /* RCPanmodalController.swift */,
@@ -449,6 +471,7 @@
 				91F6F7F22C68CD4500F7D312 /* PermissionManager.swift */,
 				91F6F7F42C68EDB100F7D312 /* RCFileManager.swift */,
 				9112BD5D2C69138600791C05 /* RCImageLoader.swift */,
+				9123A1D12C6BE74F004E28F9 /* CoreDataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -590,9 +613,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				91F6F7A82C673A9A00F7D312 /* SplashViewModel.swift in Sources */,
+				9123A1CC2C6BE6B2004E28F9 /* RetailCamPersistantContainer.xcdatamodeld in Sources */,
 				91F6F7AC2C673AE600F7D312 /* NiblessViewController.swift in Sources */,
 				91F6F7F52C68EDB100F7D312 /* RCFileManager.swift in Sources */,
 				91F6F7CB2C67707D00F7D312 /* RecordDetailsCoordinator.swift in Sources */,
+				9123A1D92C6BE8CA004E28F9 /* PhotoEntity+CoreDataClass.swift in Sources */,
 				91F6F7E92C67C06D00F7D312 /* Photo.swift in Sources */,
 				91F6F7D72C677B3500F7D312 /* VideoSourceView.swift in Sources */,
 				91F6F7A02C67386F00F7D312 /* ApplicationCoordinator.swift in Sources */,
@@ -610,7 +635,10 @@
 				91F6F7DC2C67BA7100F7D312 /* UIView++.swift in Sources */,
 				91F6F7C72C675FEC00F7D312 /* Recordable.swift in Sources */,
 				91F6F7DF2C67BBF200F7D312 /* RecordDetailsCollectionViewCell.swift in Sources */,
+				9123A1D22C6BE74F004E28F9 /* CoreDataManager.swift in Sources */,
 				91F6F7B72C67408C00F7D312 /* RecordViewController.swift in Sources */,
+				9123A1DC2C6BEA4B004E28F9 /* Date++.swift in Sources */,
+				9123A1DA2C6BE8CA004E28F9 /* PhotoEntity+CoreDataProperties.swift in Sources */,
 				91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */,
 				91F6F7AF2C673D1400F7D312 /* SplashCoordinator.swift in Sources */,
 				9112BD6E2C694B3C00791C05 /* RCPanmodalController.swift in Sources */,
@@ -989,6 +1017,19 @@
 			productName = MetalPetal;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		9123A1CA2C6BE6B2004E28F9 /* RetailCamPersistantContainer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9123A1CB2C6BE6B2004E28F9 /* RetailCamPersistantContainer.xcdatamodel */,
+			);
+			currentVersion = 9123A1CB2C6BE6B2004E28F9 /* RetailCamPersistantContainer.xcdatamodel */;
+			path = RetailCamPersistantContainer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 91F6F7622C67359B00F7D312 /* Project object */;
 }

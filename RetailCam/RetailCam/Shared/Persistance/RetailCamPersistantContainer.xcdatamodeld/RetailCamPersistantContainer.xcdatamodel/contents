@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="PhotoEntity" representedClassName="PhotoEntity" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imageDate" optional="YES" attributeType="String"/>
+        <attribute name="imagePath" optional="YES" attributeType="String"/>
+    </entity>
+</model>
