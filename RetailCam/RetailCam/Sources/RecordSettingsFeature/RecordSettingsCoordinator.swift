@@ -19,7 +19,7 @@ class RecordSettingsCoordinator: Coordinator {
     
     func start() {
         let currentISO = RetailCamera.shared.currentISO ?? 50.0
-        let currentShutterSpeed = RetailCamera.shared.currentShutterSpeed ?? 0.0
+        let currentShutterSpeed = RetailCamera.shared.currentShutterSpeed ?? 1
         let viewModel = RecordSettingsViewModel(coordinator: self, initialISO: currentISO, initialShutterSpeed: currentShutterSpeed)
         let recordSettingsVC = RecordSettingsViewController(viewModel: viewModel)
         recordSettingsVC.modalPresentationStyle = .custom

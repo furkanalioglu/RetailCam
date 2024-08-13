@@ -56,8 +56,10 @@ final class RetailCamera: NSObject {
             return nil
         }
         let currentShutterSpeed = CMTimeGetSeconds(device.exposureDuration)
+        debugPrint("Current shutter speed ")
         return Float(currentShutterSpeed)
     }
+
     
     private func setMetalContext() {
         retailCameraQueue.async { [weak self] in
@@ -247,11 +249,10 @@ final class RetailCamera: NSObject {
             }
             
             do {
-                try device.lockForConfiguration() //NSLock()?
+                try device.lockForConfiguration()
                 defer { device.unlockForConfiguration() }
                 
                 device.setExposureModeCustom(duration: device.exposureDuration, iso: isoValue, completionHandler: nil)
-                debugPrint("Current iso is",isoValue)
                 
             } catch {
                 DispatchQueue.main.async { [weak self] in
@@ -268,21 +269,13 @@ final class RetailCamera: NSObject {
                 self.delegate?.retailCamera(self, didFailWithError: NSError(domain: "RetailCamera", code: -1, userInfo: [NSLocalizedDescriptionKey: "Camera device not found"]))
                 return
             }
+            debugPrint("Iset",Int32(shutterSpeedSliderValue))
+            let desiredDuration = CMTimeMake(value: 1, timescale: Int32(shutterSpeedSliderValue))
             
             do {
                 try device.lockForConfiguration()
                 defer { device.unlockForConfiguration() }
-                
-                let minDuration = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
-                let maxDuration = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
-                
-                let shutterSpeedSeconds = (Float64(shutterSpeedSliderValue) / 100.0) * (maxDuration - minDuration) + minDuration
-                let clampedShutterSpeedSeconds = max(min(shutterSpeedSeconds, maxDuration), minDuration)
-                let desiredDuration = CMTimeMakeWithSeconds(clampedShutterSpeedSeconds, preferredTimescale: device.activeFormat.minExposureDuration.timescale)
-                
-                device.setExposureModeCustom(duration: desiredDuration, iso: device.iso) { syncTime in
-                    debugPrint("Exposure set at time: \(syncTime)")
-                }
+                device.setExposureModeCustom(duration: desiredDuration, iso: device.iso, completionHandler: nil)
                 
             } catch {
                 DispatchQueue.main.async { [weak self] in
@@ -291,6 +284,7 @@ final class RetailCamera: NSObject {
             }
         }
     }
+
 
     
     private func shouldCaptureFrame() -> Bool {

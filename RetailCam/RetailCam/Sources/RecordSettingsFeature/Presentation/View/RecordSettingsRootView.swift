@@ -106,10 +106,8 @@ class RecordSettingsRootView: NiblessView {
             isoSlider.maximumValue = viewModel.isoSliderMaxValue
             isoSlider.value = viewModel.isoSliderValue
             
-            let minShutterSpeed = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
-            let maxShutterSpeed = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
-            shutterSpeedSlider.minimumValue = Float(minShutterSpeed)
-            shutterSpeedSlider.maximumValue = Float(maxShutterSpeed)
+            shutterSpeedSlider.minimumValue = 30
+            shutterSpeedSlider.maximumValue = 25000
             shutterSpeedSlider.value = self.viewModel.shutterSpeedSliderValue
         }
     }
