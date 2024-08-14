@@ -44,7 +44,7 @@ class RecordDetailsCollectionViewCell: NiblessCollectionViewCell {
 
     func setViewModel(_ viewModel: RecordDetailsCollectionViewModel) {
         self.viewModel = viewModel
-        
+        self.capturedImageView.image = nil
         RCImageLoader.shared.loadImage(from: viewModel.displayImagePath,
                                        into: self.capturedImageView) { [weak self] image in
             self?.capturedImageView.image = image
