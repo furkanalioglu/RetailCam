@@ -99,6 +99,12 @@ class RecordViewController: NiblessViewController {
                 self?.navigationItem.leftBarButtonItem?.isEnabled = lastCapturedImage != nil
                 self?.viewModel.lastCapturedImage = lastCapturedImage
             }.store(in: &disposeBag)
+        
+        viewModel.$elapsedTime
+            .receive(on: defaultScheduler)
+            .sink { [weak self] elapsedTime in
+                self?.rootView?.videoSourceView.updateTimerLabel(with: elapsedTime)
+            }.store(in: &disposeBag)
     }
     
     private func updateButtonsStack(for state: RecordingState) {

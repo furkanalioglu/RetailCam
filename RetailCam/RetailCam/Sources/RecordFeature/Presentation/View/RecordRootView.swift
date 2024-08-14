@@ -65,7 +65,7 @@ class RecordRootView: NiblessView {
     private func setupBindables() {
         self.recordButton.addAction(
             UIAction(handler: { [weak viewModel] _ in
-                viewModel?.changeRecordingState()
+                viewModel?.toggleRecordingState()
             }),
             for: .touchUpInside
         )
