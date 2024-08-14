@@ -11,7 +11,7 @@ import UIKit
 
 final class RecordDetailsViewModel {
     
-    private weak var coordinator: RecordDetailsCoordinator?
+    private var coordinator: RecordDetailsCoordinator?
     
     var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()
     private var disposeBag = Set<AnyCancellable>()
