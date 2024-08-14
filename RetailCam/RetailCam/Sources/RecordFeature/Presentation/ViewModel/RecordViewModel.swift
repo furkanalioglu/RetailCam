@@ -13,6 +13,8 @@ final class RecordViewModel {
     public let recordingState = CurrentValueSubject<RecordingState, Never>(.didNotStart)
     private var disposeBag = Set<AnyCancellable>()
     
+    var lastCapturedImage: Photo?
+    
     init(coordinator: RecordCoordinator) {
         self.coordinator = coordinator
     }
@@ -52,6 +54,11 @@ final class RecordViewModel {
     
     internal func settingsTap() {
         self.coordinator.navigate(to: .recordSettings)
+    }
+    
+    internal func lastImageCapturedImagePresentTap() {
+        guard let lastCapturedImage else { return }
+        self.coordinator.navigate(to: .lastCapturedImagePreview(photo: lastCapturedImage))
     }
 }
 

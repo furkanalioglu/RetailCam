@@ -8,13 +8,20 @@
 import Foundation
 import UIKit
 
+enum SinglePhotoDetailPresentType : Int {
+    case push, present
+}
+
 class SinglePhotoDetailCoordinator: Coordinator {
     
     private weak var navigationController: UINavigationController?
+    var presentType: SinglePhotoDetailPresentType
     var photo: Photo
     
-    init(navigationController: UINavigationController? = nil,
+    init(presentType: SinglePhotoDetailPresentType = .push,
+         navigationController: UINavigationController? = nil,
          photo: Photo) {
+        self.presentType = presentType
         self.navigationController = navigationController
         self.photo = photo
     }
@@ -22,6 +29,11 @@ class SinglePhotoDetailCoordinator: Coordinator {
     func start() {
         let viewModel = SinglePhotoDetailViewModel(coordinator: self, photo: photo)
         let singlePhotoDetailVc = SinglePhotoDetailViewController(viewModel: viewModel)
-        self.navigationController?.pushViewController(singlePhotoDetailVc, animated: true)
+        switch presentType {
+        case .push:
+            self.navigationController?.pushViewController(singlePhotoDetailVc, animated: true)
+        case .present:
+            self.navigationController?.present(singlePhotoDetailVc, animated: true)
+        }
     }
 }

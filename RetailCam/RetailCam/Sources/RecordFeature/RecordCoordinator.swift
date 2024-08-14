@@ -9,9 +9,10 @@ import Foundation
 import UIKit
 import Combine
 
-internal enum RecordCoordinatorDestinations : String {
+internal enum RecordCoordinatorDestinations {
     case recordDetails
     case recordSettings
+    case lastCapturedImagePreview(photo: Photo)
 }
 
 class RecordCoordinator: Coordinator {
@@ -36,6 +37,12 @@ class RecordCoordinator: Coordinator {
         case .recordSettings:
             let recordSettingsCoordinator = RecordSettingsCoordinator(navigationController: self.navigationController)
             recordSettingsCoordinator.start()
+        case .lastCapturedImagePreview(let photo):
+            let recordDetailsCoordinator = SinglePhotoDetailCoordinator(
+                presentType: .present,
+                navigationController: self.navigationController,
+                photo: photo)
+            recordDetailsCoordinator.start()
         }
     }
 }

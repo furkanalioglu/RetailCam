@@ -29,6 +29,8 @@ final class RCFileManager {
     private let folderName = "CAPTURED_IMAGES"
     private let fileManagerQueue = DispatchQueue(label: "com.retailcam.fileManagerQueue", qos: .utility)
     
+    @Published var lastCapturedImage : Photo? = nil
+    
     private init() {
         self.createFolderIfNeeded()
     }
@@ -36,7 +38,7 @@ final class RCFileManager {
     deinit {
         debugPrint("RCFileManager instance is being deallocated.")
     }
-        
+    
     var folderURL: URL? {
         guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return nil
@@ -84,16 +86,22 @@ final class RCFileManager {
             
             do {
                 try imageData.write(to: fileURL)
+                let dateNow = Date.getCurrentDate()
+                self.lastCapturedImage = Photo(imageName: imageName,
+                                               imagePath:  self.folderURL?.appendingPathComponent(imageName).path,
+                                               duration: "05:00",
+                                               date: dateNow)
+                
                 CoreDataManager.shared.savePhoto(imagePath: imageName,
-                                                 imageDate: Date.getCurrentDate())
+                                                 imageDate: dateNow)
                 debugPrint("Image saved to: \(fileURL.path)")
             } catch {
                 debugPrint("Failed to save image: \(error)")
             }
         }
     }
-
-        
+    
+    
     func getAllImageURLs() -> AnyPublisher<[URL]?, Never> {
         return Future<[URL]?, Never> { [weak self] promise in
             self?.fileManagerQueue.async { [weak self] in
@@ -115,14 +123,14 @@ final class RCFileManager {
                 }
                 
                 DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
+                    guard self != nil else { return }
                     promise(.success(fileURLs))
                 }
             }
         }
         .eraseToAnyPublisher()
     }
-        
+    
     func removeAllFilesInFolder() -> AnyPublisher<Bool, Never> {
         return Future<Bool, Never> { [weak self] promise in
             self?.fileManagerQueue.async { [weak self] in
@@ -141,7 +149,7 @@ final class RCFileManager {
                         try self.fileManager.removeItem(at: fileURL)
                         debugPrint("Removed file at: \(fileURL.path)")
                     }
-                    
+                    self.lastCapturedImage = nil
                     RCImageLoader.shared.clearCache()
                     promise(.success(true))
                 } catch {
@@ -152,7 +160,7 @@ final class RCFileManager {
         }
         .eraseToAnyPublisher()
     }
-
+    
     
     func dispose() -> AnyPublisher<Bool, Never> {
         //TODO: - Kill instance
