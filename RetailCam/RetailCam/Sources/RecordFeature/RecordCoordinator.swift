@@ -22,25 +22,20 @@ class RecordCoordinator: Coordinator {
     }
     
     func start() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            let viewModel = RecordViewModel(coordinator: self)
-            let recordViewController = RecordViewController(viewModel: viewModel)
-            self.navigationController?.setViewControllers([recordViewController], animated: false)
-        }
+        let viewModel = RecordViewModel(coordinator: self)
+        let recordViewController = RecordViewController(viewModel: viewModel)
+        self.navigationController?.setViewControllers([recordViewController], animated: false)
     }
     
     func navigate(to vc: RecordCoordinatorDestinations) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            switch vc {
-            case .recordDetails:
-                let recordDetailsCoordinator = RecordDetailsCoordinator(navigationController: self.navigationController)
-                recordDetailsCoordinator.start()
-            case .recordSettings:
-                let recordSettingsCoordinator = RecordSettingsCoordinator(navigationController: self.navigationController)
-                recordSettingsCoordinator.start()
-            }
+        switch vc {
+        case .recordDetails:
+            debugPrint("Details tap geldi")
+            let recordDetailsCoordinator = RecordDetailsCoordinator(navigationController: self.navigationController)
+            recordDetailsCoordinator.start()
+        case .recordSettings:
+            let recordSettingsCoordinator = RecordSettingsCoordinator(navigationController: self.navigationController)
+            recordSettingsCoordinator.start()
         }
     }
 }

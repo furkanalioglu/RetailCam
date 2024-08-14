@@ -120,6 +120,6 @@ class RecordDetailsRootView: NiblessView {
 
 extension RecordDetailsRootView : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        debugPrint("date is",self.viewModel.photosCell[indexPath.row].displayDate)
+        self.viewModel.didSelectItemAt(at: indexPath)
     }
 }

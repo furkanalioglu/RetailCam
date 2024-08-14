@@ -10,33 +10,40 @@ import Combine
 import UIKit
 
 final class RecordDetailsViewModel {
+    
     private let coordinator: RecordDetailsCoordinator
     
+    var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()
+    private var disposeBag = Set<AnyCancellable>()
+    
+    var viewDidAppeaFirstTime: Bool = false
+    
+    var photos = [Photo]()
     var photosCell = [RecordDetailsCollectionViewModel]() {
         didSet {
             self.photosSubject.send(photosCell)
         }
     }
-    var viewDidAppeaFirstTime:Bool = false
-    
-    var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()
-    private var disposeBag = Set<AnyCancellable>()
     
     init(coordinator: RecordDetailsCoordinator) {
         self.coordinator = coordinator
     }
     
-    private func mapToCell(entities: [PhotoEntity]) -> [RecordDetailsCollectionViewModel] {
+    private func mapToPhoto(entities: [PhotoEntity]) -> [Photo] {
         return entities.map { entity in
-            RecordDetailsCollectionViewModel(
-                photo: Photo(
-                    id: UUID(),
-                    imageName: entity.imagePath ?? "",
-                    imagePath: (RCFileManager.shared.folderURL?.appendingPathComponent(entity.imagePath ?? "").path) ?? "",
-                    duration: "05:00",
-                    date: entity.imageDate ?? "Unknown Date"
-                )
+            Photo(
+                id: UUID(),
+                imageName: entity.imagePath ?? "",
+                imagePath: (RCFileManager.shared.folderURL?.appendingPathComponent(entity.imagePath ?? "").path) ?? "",
+                duration: "05:00",
+                date: entity.imageDate ?? "Unknown Date"
             )
+        }
+    }
+    
+    private func mapToCell(photos: [Photo]) -> [RecordDetailsCollectionViewModel] {
+        return photos.map { photo in
+            RecordDetailsCollectionViewModel(photo: photo)
         }
     }
     
@@ -44,21 +51,29 @@ final class RecordDetailsViewModel {
         CoreDataManager.shared.fetchAllPhotos()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
+                guard self != nil else { return }
                 switch completion {
                 case .failure(let error):
-                    print("Failed to fetch photos: \(error)")
+                    debugPrint("Failed to fetch photos: \(error)")
                 case .finished:
                     break
                 }
             } receiveValue: { [weak self] photoEntities in
                 guard let self = self else { return }
-                self.photosCell = self.mapToCell(entities: photoEntities)
+                self.photos = self.mapToPhoto(entities: photoEntities)
+                self.photosCell = self.mapToCell(photos: photos)
             }
             .store(in: &disposeBag)
     }
     
+    func didSelectItemAt(at indexPath: IndexPath) {
+        let selectedPhoto = self.photos[indexPath.row]
+        self.coordinator.navigate(to: .singlePhotoDetail(photo: selectedPhoto))
+    }
+    
     func resetCells() {
         self.photosCell.removeAll()
+        self.photos.removeAll()
     }
 }
 

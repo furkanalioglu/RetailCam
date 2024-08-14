@@ -23,7 +23,6 @@ final class CoreDataManager {
             }
         }
         self.context = persistentContainer.newBackgroundContext()
-        self.context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
 
     func savePhoto(imagePath: String, imageDate: String) {
@@ -46,6 +45,9 @@ final class CoreDataManager {
         return Future<[PhotoEntity], Error> { [weak self] promise in
             self?.context.perform {
                 let fetchRequest: NSFetchRequest<PhotoEntity> = PhotoEntity.fetchRequest()
+                
+                let sortDescriptor = NSSortDescriptor(key: "imageDate", ascending: false)
+                fetchRequest.sortDescriptors = [sortDescriptor]
                 
                 do {
                     let results = try self?.context.fetch(fetchRequest) ?? []

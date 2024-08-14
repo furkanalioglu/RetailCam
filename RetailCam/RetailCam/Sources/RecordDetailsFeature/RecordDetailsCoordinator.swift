@@ -6,10 +6,12 @@
 //
 
 import Foundation
-
-import Foundation
 import UIKit
 import Combine
+
+internal enum RecordDetailsCoordinatorDestinations {
+    case singlePhotoDetail(photo: Photo)
+}
 
 final class RecordDetailsCoordinator : Coordinator {
     
@@ -23,5 +25,14 @@ final class RecordDetailsCoordinator : Coordinator {
         let viewModel = RecordDetailsViewModel(coordinator: self)
         let recordDetailsVC = RecordDetailsViewController(viewModel: viewModel)
         self.navigationController?.pushViewController(recordDetailsVC, animated: true)
+    }
+    
+    func navigate(to vc: RecordDetailsCoordinatorDestinations) {
+        switch vc {
+        case .singlePhotoDetail(let photo):
+            let recordDetailsCoordinator = SinglePhotoDetailCoordinator(navigationController: self.navigationController,
+                                                                        photo: photo)
+            recordDetailsCoordinator.start()
+        }
     }
 }

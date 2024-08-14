@@ -24,7 +24,7 @@ final class RCImageLoader {
             
             guard let imagePath = imagePath else {
                 DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
+                    guard self != nil else { return }
                     completion?(nil)
                 }
                 return
@@ -53,7 +53,7 @@ final class RCImageLoader {
                 }
             } else {
                 DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
+                    guard self != nil else { return }
                     completion?(nil)
                 }
             }
