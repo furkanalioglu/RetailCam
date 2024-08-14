@@ -30,7 +30,12 @@ class SinglePhotoDetailViewController : NiblessViewController {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.subscribe()
-        RCImageLoader.shared.loadImage(from: self.viewModel.photo.imagePath, into: self.rootView!.imageView)
+        RCImageLoader.shared.loadImage(from: self.viewModel.photo.imagePath, into: self.rootView!.imageView.bounds.size) { loadedImage in
+            if let image = loadedImage {
+                self.rootView!.imageView.image = loadedImage
+            }
+        }
+
     }
     
     private func setupNavigationBar() {

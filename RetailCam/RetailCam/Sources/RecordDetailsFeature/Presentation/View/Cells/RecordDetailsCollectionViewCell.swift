@@ -41,18 +41,20 @@ class RecordDetailsCollectionViewCell: NiblessCollectionViewCell {
         setupUI()
     }
     
-    var viewModel : RecordDetailsCollectionViewModel? {
+    var viewModel: RecordDetailsCollectionViewModel? {
         didSet {
+            self.layoutIfNeeded()
             if let path = viewModel?.displayImagePath {
-                self.capturedImageView.image = UIImage(systemName: "poweroutlet.type.f.square.fill")
-                UIImage.loadImage(from: path) { image in
+                self.capturedImageView.image = UIImage(systemName: "arrow.down.circle.fill")
+                RCImageLoader.shared.loadImage(from: path, into: self.bounds.size) { image in
                     if path == self.viewModel?.displayImagePath {
-                                self.capturedImageView.image = image
+                        self.capturedImageView.image = image
                     }
                 }
             }
         }
     }
+    
     
     override func prepareForReuse() {
           super.prepareForReuse()
@@ -130,4 +132,9 @@ extension UIImage {
         image.draw(in: CGRect(origin: .zero, size: targetSize))
         return UIGraphicsGetImageFromCurrentImageContext()
     }
+    
+    static func clearCache() {
+        imageCache.removeAllObjects()
+    }
+    
 }
