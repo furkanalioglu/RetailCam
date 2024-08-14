@@ -11,7 +11,7 @@ import UIKit
 
 final class RecordDetailsViewModel {
     
-    private let coordinator: RecordDetailsCoordinator
+    private weak var coordinator: RecordDetailsCoordinator?
     
     var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()
     private var disposeBag = Set<AnyCancellable>()
@@ -68,7 +68,7 @@ final class RecordDetailsViewModel {
     
     func didSelectItemAt(at indexPath: IndexPath) {
         let selectedPhoto = self.photos[indexPath.row]
-        self.coordinator.navigate(to: .singlePhotoDetail(photo: selectedPhoto))
+        self.coordinator?.navigate(to: .singlePhotoDetail(photo: selectedPhoto))
     }
     
     func resetCells() {

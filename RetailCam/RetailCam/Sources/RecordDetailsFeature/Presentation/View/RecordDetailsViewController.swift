@@ -35,10 +35,10 @@ class RecordDetailsViewController : NiblessViewController {
     private func setupNavigationBar() {
         let removeButton = UIBarButtonItem(
             image: UIImage(systemName: "trash.circle.fill"),
-            primaryAction: UIAction(handler: { _ in
+            primaryAction: UIAction(handler: { [weak self] _ in
                 CoreDataManager.shared.deleteAllPhotos()
                 RCFileManager.shared.removeAllFilesInFolder()
-                self.viewModel.resetCells()
+                self?.viewModel.resetCells()
             })
         )
         

@@ -99,8 +99,8 @@ class RecordDetailsRootView: NiblessView {
         viewModel.photosSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] photos in
-                 self?.applySnapshot(photos: photos)
-                 self?.rootViewSubject.send()
+                self?.applySnapshot(photos: photos)
+                self?.rootViewSubject.send()
             }
             .store(in: &disposeBag)
     }
