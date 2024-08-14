@@ -69,9 +69,6 @@ class RecordViewController: NiblessViewController {
             })
         )
         
-        infoButton.tintColor = .systemGreen
-        settingsButton.tintColor = .systemGreen
-        
         navigationItem.rightBarButtonItems = [infoButton, settingsButton]
     }
 

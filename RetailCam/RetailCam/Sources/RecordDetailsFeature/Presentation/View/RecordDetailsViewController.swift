@@ -42,8 +42,6 @@ class RecordDetailsViewController : NiblessViewController {
             })
         )
         
-        navigationController?.navigationBar.tintColor = .systemGreen
-        removeButton.tintColor = .systemGreen
         navigationItem.rightBarButtonItems = [removeButton]
     }
     

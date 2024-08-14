@@ -41,7 +41,6 @@ class SinglePhotoDetailViewController : NiblessViewController {
             })
         )
         
-        rotateButton.tintColor = .systemGreen
         navigationItem.rightBarButtonItems = [rotateButton]
     }
     
