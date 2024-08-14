@@ -36,6 +36,7 @@ final class RCImageLoader {
                 DispatchQueue.main.async { [weak self] in
                     guard self != nil else { return }
                     imageView.image = cachedImage
+                    debugPrint("Loading image")
                     completion?(cachedImage)
                 }
                 return
@@ -49,6 +50,7 @@ final class RCImageLoader {
                 DispatchQueue.main.async { [weak self] in
                     guard self != nil else { return }
                     imageView.image = resizedImage
+                    debugPrint("Loading image 2")
                     completion?(resizedImage)
                 }
             } else {

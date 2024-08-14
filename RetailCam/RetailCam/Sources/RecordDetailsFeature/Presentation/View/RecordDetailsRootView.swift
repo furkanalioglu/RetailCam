@@ -90,7 +90,7 @@ class RecordDetailsRootView: NiblessView {
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView,
                                                         cellProvider: { collectionView, indexPath, viewModel in
             let cell = collectionView.dequeueReusableCell(with: RecordDetailsCollectionViewCell.self, for: indexPath)
-            cell.setViewModel(viewModel)
+            cell.viewModel = viewModel
             return cell
         })
     }
