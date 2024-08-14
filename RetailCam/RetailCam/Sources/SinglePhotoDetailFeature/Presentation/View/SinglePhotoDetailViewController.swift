@@ -41,6 +41,7 @@ class SinglePhotoDetailViewController : NiblessViewController {
             })
         )
         
+        navigationItem.title = "Created at: \(self.viewModel.photo.date ?? "??:??:??")"
         navigationItem.rightBarButtonItems = [rotateButton]
     }
     
