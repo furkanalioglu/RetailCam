@@ -1,5 +1,4 @@
 # RetailCam
-RetailCam
 ![Orta IMG_9934](https://github.com/user-attachments/assets/74acce70-c484-404a-ab16-b1c4891d586a)
 ![Orta IMG_9940](https://github.com/user-attachments/assets/421e91bb-2bdf-4b34-9217-62acdbdb9772)
 ![Orta IMG_9939](https://github.com/user-attachments/assets/0452e95f-9ce8-4304-9cc2-8d917bba4594)
