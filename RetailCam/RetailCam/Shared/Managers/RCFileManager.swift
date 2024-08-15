@@ -129,10 +129,8 @@ final class RCFileManager {
                 if !self.fileManager.fileExists(atPath: folderURL.path) {
                     do {
                         try self.fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
-                        debugPrint("Created missing folder at: \(folderURL.path)")
                         promise(.success(true))
                     } catch {
-                        debugPrint("Failed to create missing folder: \(error)")
                         promise(.success(false))
                     }
                     return
@@ -142,14 +140,12 @@ final class RCFileManager {
                     let fileURLs = try self.fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
                     for fileURL in fileURLs {
                         try self.fileManager.removeItem(at: fileURL)
-                        debugPrint("Removed file at: \(fileURL.path)")
                     }
                     self.lastCapturedImage = nil
                     RCImageLoader.shared.clearCache()
                     
                     if !self.fileManager.fileExists(atPath: folderURL.path) {
                         try self.fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
-                        debugPrint("Re-created folder after removing files at: \(folderURL.path)")
                     }
                     
                     promise(.success(true))
