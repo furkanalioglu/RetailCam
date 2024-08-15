@@ -36,6 +36,7 @@ class SplashRootView: NiblessView {
         config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
         button.configuration = config
         button.setTitle("EnableCam", for: .normal)
+        button.isHidden = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

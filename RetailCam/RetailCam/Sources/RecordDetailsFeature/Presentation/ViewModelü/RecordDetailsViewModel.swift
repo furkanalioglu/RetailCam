@@ -14,6 +14,7 @@ final class RecordDetailsViewModel {
     private var coordinator: RecordDetailsCoordinator?
     
     var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()
+    let resetHeaderSubject = PassthroughSubject<Void, Never>()
     private var disposeBag = Set<AnyCancellable>()
     
     var onRetake: (() -> Void)?
@@ -21,6 +22,7 @@ final class RecordDetailsViewModel {
     
     var viewDidAppearFirstTime: Bool = false
     var recordViewState : RecordingState
+    var currentDuration: String
     
     var photos = [Photo]()
     var photosCell = [RecordDetailsCollectionViewModel]() {
@@ -31,10 +33,12 @@ final class RecordDetailsViewModel {
     
     init(coordinator: RecordDetailsCoordinator,
          recordViewState : RecordingState,
+         currentDuration: String,
          onRetake: (() -> Void)? = nil,
          onUpload: (() -> Void)? = nil) {
         self.coordinator = coordinator
         self.recordViewState = recordViewState
+        self.currentDuration = currentDuration
         self.onRetake = onRetake
         self.onUpload = onUpload
     }

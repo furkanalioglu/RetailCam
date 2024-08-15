@@ -34,6 +34,7 @@ class RecordCoordinator: Coordinator {
         case .recordDetails:
             let recordDetailsCoordinator = RecordDetailsCoordinator(navigationController: self.navigationController,
                                                                     onRetakeTap: self.viewModel.handleRetake,
+                                                                    currentDuration: self.viewModel.getDurationInfo(),
                                                                     recordViewState: self.viewModel.recordingState.value)
             recordDetailsCoordinator.start()
         case .recordSettings:

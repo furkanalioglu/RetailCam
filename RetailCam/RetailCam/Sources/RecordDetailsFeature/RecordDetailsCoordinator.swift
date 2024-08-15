@@ -20,13 +20,16 @@ final class RecordDetailsCoordinator: Coordinator {
     var onRetakeTap: (() -> Void)?
     var onDismiss: (() -> Void)?
     var recordViewState: RecordingState
+    var currentDuration: String
     
     init(navigationController: UINavigationController? = nil,
          onRetakeTap: (() -> Void)? = nil,
          onDismiss: (() -> Void)? = nil,
+         currentDuration: String,
          recordViewState: RecordingState) {
         self.navigationController = navigationController
         self.recordViewState = recordViewState
+        self.currentDuration = currentDuration
         self.onRetakeTap = onRetakeTap
         self.onDismiss = onDismiss
     }
@@ -34,6 +37,7 @@ final class RecordDetailsCoordinator: Coordinator {
     func start() {
         let viewModel = RecordDetailsViewModel(coordinator: self,
                                                recordViewState: recordViewState,
+                                               currentDuration: currentDuration,
                                                onRetake: self.handleRetake,
                                                onUpload: self.handleRetake) //TODO: - Change with actual upload logic
         let recordDetailsVC = RecordDetailsViewController(viewModel: viewModel)

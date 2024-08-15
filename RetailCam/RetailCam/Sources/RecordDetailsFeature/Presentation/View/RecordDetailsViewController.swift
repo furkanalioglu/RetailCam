@@ -29,7 +29,6 @@ class RecordDetailsViewController : NiblessViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.viewModel.viewDidLoad()
-        self.subscribe()
         self.setupNavigationBar()
     }
         
@@ -40,19 +39,10 @@ class RecordDetailsViewController : NiblessViewController {
                 CoreDataManager.shared.deleteAllPhotoEntities()
                 let _ = RCFileManager.shared.removeAllFilesInFolder()
                 self?.viewModel.resetCells()
+                self?.viewModel.resetHeaderSubject.send()
             })
         )
         
         navigationItem.rightBarButtonItems = [removeButton]
-    }
-    
-    private func subscribe() {
-        rootView?.rootViewSubject
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.navigationItem.title = "Photo Count: \(self?.viewModel.photosCell.count ?? 0)"
-                self?.navigationItem.rightBarButtonItem?.isEnabled = self?.viewModel.photosCell.count ?? 0 > 0
-            }
-            .store(in: &disposeBag)
     }
 }

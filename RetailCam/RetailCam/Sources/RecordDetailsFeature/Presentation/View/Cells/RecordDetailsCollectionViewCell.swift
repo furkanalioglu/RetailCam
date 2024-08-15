@@ -55,7 +55,6 @@ class RecordDetailsCollectionViewCell: NiblessCollectionViewCell {
         }
     }
     
-    
     override func prepareForReuse() {
           super.prepareForReuse()
           capturedImageView.image = nil
@@ -83,58 +82,4 @@ class RecordDetailsCollectionViewCell: NiblessCollectionViewCell {
             centeredHorizontalStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-}
-
-import UIKit
-
-extension UIImage {
-    static let imageProcessingQueue = DispatchQueue(label: "com.retailcam.imageLoaderQueue", qos: .userInitiated)
-    static let imageCache = NSCache<NSString, UIImage>()
-
-    static func loadImage(from imagePath: String?, targetSize: CGSize = CGSize(width: 200, height: 200), completion: @escaping (UIImage?) -> Void) {
-        
-        imageProcessingQueue.async {
-            guard let imagePath = imagePath else {
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-                return
-            }
-            
-            let cacheKey = "\(imagePath)-\(targetSize.width)x\(targetSize.height)" as NSString
-            
-            if let cachedImage = imageCache.object(forKey: cacheKey) {
-                DispatchQueue.main.async {
-                    completion(cachedImage)
-                }
-                return
-            }
-            
-            if let originalImage = UIImage(contentsOfFile: imagePath),
-               let resizedImage = resizeImage(image: originalImage, to: targetSize) {
-                
-                imageCache.setObject(resizedImage, forKey: cacheKey)
-                
-                DispatchQueue.main.async {
-                    completion(resizedImage)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-            }
-        }
-    }
-    
-    private static func resizeImage(image: UIImage, to targetSize: CGSize) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(targetSize, false, 0.0)
-        defer { UIGraphicsEndImageContext() }
-        image.draw(in: CGRect(origin: .zero, size: targetSize))
-        return UIGraphicsGetImageFromCurrentImageContext()
-    }
-    
-    static func clearCache() {
-        imageCache.removeAllObjects()
-    }
-    
 }
