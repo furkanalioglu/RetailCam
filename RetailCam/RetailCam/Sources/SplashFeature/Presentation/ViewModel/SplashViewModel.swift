@@ -83,7 +83,9 @@ final class SplashViewModel {
         RCFileManager.shared.removeAllFilesInFolder()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] success in
-                self?.didRemoveAllFilesInFileManager = success
+                // Force to true without checking successs
+                debugPrint("Removing all files with response:",success)
+                self?.didRemoveAllFilesInFileManager = true
             }
             .store(in: &disposeBag)
     }

@@ -29,7 +29,7 @@ final class RCFileManager {
     private let folderName = "CAPTURED_IMAGES"
     private let fileManagerQueue = DispatchQueue(label: "com.retailcam.fileManagerQueue", qos: .utility)
     
-    @Published var lastCapturedImage : Photo? = nil
+    @Published var lastCapturedImage: Photo? = nil
     
     private init() {}
     
@@ -61,6 +61,9 @@ final class RCFileManager {
             let imageName = name ?? "Capture_\(currentIndex).jpg"
             let fileURL = folderURL.appendingPathComponent(imageName)
             
+            debugPrint("Attempting to save image at directory: \(folderURL.path)") // Print directory path
+            debugPrint("Full file path: \(fileURL.path)") // Print full file path
+            
             guard let imageData = image.jpegData(compressionQuality: 1.0) else {
                 debugPrint("Failed to convert image to data")
                 return
@@ -70,11 +73,9 @@ final class RCFileManager {
                 try imageData.write(to: fileURL)
                 let dateNow = Date.getCurrentDate()
                 self.lastCapturedImage = Photo(imageName: imageName,
-                                               imagePath:  self.folderURL?.appendingPathComponent(imageName).path,
+                                               imagePath: fileURL.path, // use path directly
                                                date: dateNow)
                 
-                debugPrint("Image saved to: \(fileURL.path)")
-
                 CoreDataManager.shared.savePhoto(imagePath: imageName,
                                                  imageDate: dateNow)
             } catch {
@@ -82,7 +83,7 @@ final class RCFileManager {
             }
         }
     }
-    
+
     
     func getAllImageURLs() -> AnyPublisher<[URL]?, Never> {
         return Future<[URL]?, Never> { [weak self] promise in
@@ -96,16 +97,18 @@ final class RCFileManager {
                     return
                 }
                 
+                debugPrint("Checking contents of directory at: \(folderURL.path)")
+                
                 var fileURLs: [URL]? = nil
                 do {
                     fileURLs = try self.fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
                     fileURLs = fileURLs?.filter { $0.pathExtension.lowercased() == "jpg" }
+                    debugPrint("Found files: \(fileURLs?.map { $0.path } ?? [])")
                 } catch {
-                    debugPrint("Failed to get contents of directory: \(error)")
+                    debugPrint("Failed to get contents of directory at \(folderURL.path): \(error)")
                 }
                 
-                DispatchQueue.main.async { [weak self] in
-                    guard self != nil else { return }
+                DispatchQueue.main.async {
                     promise(.success(fileURLs))
                 }
             }
@@ -125,7 +128,7 @@ final class RCFileManager {
                     promise(.success(false))
                     return
                 }
-                
+                                
                 if !self.fileManager.fileExists(atPath: folderURL.path) {
                     do {
                         try self.fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
@@ -162,3 +165,4 @@ final class RCFileManager {
         .eraseToAnyPublisher()
     }
 }
+
