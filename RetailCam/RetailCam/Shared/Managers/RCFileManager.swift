@@ -29,35 +29,19 @@ final class RCFileManager {
     private let folderName = "CAPTURED_IMAGES"
     private let fileManagerQueue = DispatchQueue(label: "com.retailcam.fileManagerQueue", qos: .utility)
     
-    private init() {
-        self.createFolderIfNeeded()
-    }
+    @Published var lastCapturedImage: Photo? = nil
+    
+    private init() {}
     
     deinit {
         debugPrint("RCFileManager instance is being deallocated.")
     }
-        
-    private var folderURL: URL? {
+    
+    var folderURL: URL? {
         guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             return nil
         }
         return documentsURL.appendingPathComponent(folderName)
-    }
-    
-    private func createFolderIfNeeded() {
-        return fileManagerQueue.sync { [weak self] in
-            guard let self = self else { return }
-            guard let folderURL = folderURL else { return }
-            
-            if !fileManager.fileExists(atPath: folderURL.path) {
-                do {
-                    try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
-                    debugPrint("Created folder at: \(folderURL.path)")
-                } catch {
-                    debugPrint("Failed to create folder: \(error)")
-                }
-            }
-        }
     }
     
     func saveImage(_ image: UIImage, withName name: String? = nil) {
@@ -84,14 +68,20 @@ final class RCFileManager {
             
             do {
                 try imageData.write(to: fileURL)
-                debugPrint("Image saved to: \(fileURL.path)")
+                let dateNow = Date.getCurrentDate()
+                self.lastCapturedImage = Photo(imageName: imageName,
+                                               imagePath: fileURL.path, // use path directly
+                                               date: dateNow)
+                
+                CoreDataManager.shared.savePhoto(imagePath: imageName,
+                                                 imageDate: dateNow)
             } catch {
                 debugPrint("Failed to save image: \(error)")
             }
         }
     }
 
-        
+    
     func getAllImageURLs() -> AnyPublisher<[URL]?, Never> {
         return Future<[URL]?, Never> { [weak self] promise in
             self?.fileManagerQueue.async { [weak self] in
@@ -104,23 +94,25 @@ final class RCFileManager {
                     return
                 }
                 
+                debugPrint("Checking contents of directory at: \(folderURL.path)")
+                
                 var fileURLs: [URL]? = nil
                 do {
                     fileURLs = try self.fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
                     fileURLs = fileURLs?.filter { $0.pathExtension.lowercased() == "jpg" }
+                    debugPrint("Found files: \(fileURLs?.map { $0.path } ?? [])")
                 } catch {
-                    debugPrint("Failed to get contents of directory: \(error)")
+                    debugPrint("Failed to get contents of directory at \(folderURL.path): \(error)")
                 }
                 
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
+                DispatchQueue.main.async {
                     promise(.success(fileURLs))
                 }
             }
         }
         .eraseToAnyPublisher()
     }
-        
+    
     func removeAllFilesInFolder() -> AnyPublisher<Bool, Never> {
         return Future<Bool, Never> { [weak self] promise in
             self?.fileManagerQueue.async { [weak self] in
@@ -128,8 +120,21 @@ final class RCFileManager {
                     promise(.success(false))
                     return
                 }
+                
                 guard let folderURL = self.folderURL else {
                     promise(.success(false))
+                    return
+                }
+                                
+                if !self.fileManager.fileExists(atPath: folderURL.path) {
+                    do {
+                        try self.fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
+                        debugPrint("Created missing folder at: \(folderURL.path)")
+                        promise(.success(true))
+                    } catch {
+                        debugPrint("Failed to create missing folder: \(error)")
+                        promise(.success(false))
+                    }
                     return
                 }
                 
@@ -139,21 +144,22 @@ final class RCFileManager {
                         try self.fileManager.removeItem(at: fileURL)
                         debugPrint("Removed file at: \(fileURL.path)")
                     }
-                    
+                    self.lastCapturedImage = nil
                     RCImageLoader.shared.clearCache()
+                    
+                    if !self.fileManager.fileExists(atPath: folderURL.path) {
+                        try self.fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
+                        debugPrint("Re-created folder after removing files at: \(folderURL.path)")
+                    }
+                    
                     promise(.success(true))
                 } catch {
-                    debugPrint("Failed to remove files: \(error)")
+                    debugPrint("Failed to remove files or recreate folder: \(error)")
                     promise(.success(false))
                 }
             }
         }
         .eraseToAnyPublisher()
     }
-
-    
-    func dispose() -> AnyPublisher<Bool, Never> {
-        //TODO: - Kill instance
-        return removeAllFilesInFolder()
-    }
 }
+

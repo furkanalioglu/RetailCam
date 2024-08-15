@@ -9,23 +9,33 @@ import Foundation
 import UIKit
 import Combine
 
+import UIKit
+
 final class RCImageLoader {
     static let shared = RCImageLoader()
     
     private let imageProcessingQueue = DispatchQueue(label: "com.retailcam.imageLoaderQueue", qos: .userInitiated)
     private var cache = NSCache<NSString, UIImage>()
     
-    private init() {}
+    private init() {
+        cache.countLimit = 10_000
+        cache.totalCostLimit = calculateTotalCostLimit(forImageSize: CGSize(width: 77, height: 77))
+    }
     
-    func loadImage(from imagePath: String?, into imageView: UIImageView, with targetSize: CGSize = CGSize(width: 200, height: 200), completion: ((UIImage?) -> Void)? = nil) {
+    private func calculateTotalCostLimit(forImageSize size: CGSize) -> Int {
+        let bytesPerImage = Int(size.width * size.height * 4)
+        return bytesPerImage * 10_000
+    }
+    
+    func loadImage(from imagePath: String?, into frame: CGSize, completion: @escaping (UIImage?) -> Void) {
+        let targetSize = frame == .zero ? CGSize(width: 77, height: 77) : frame
         
         imageProcessingQueue.async { [weak self] in
             guard let self = self else { return }
             
             guard let imagePath = imagePath else {
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
-                    completion?(nil)
+                DispatchQueue.main.async {
+                    completion(nil)
                 }
                 return
             }
@@ -33,10 +43,8 @@ final class RCImageLoader {
             let cacheKey = "\(imagePath)-\(targetSize.width)x\(targetSize.height)" as NSString
             
             if let cachedImage = self.cache.object(forKey: cacheKey) {
-                DispatchQueue.main.async { [weak self] in
-                    guard self != nil else { return }
-                    imageView.image = cachedImage
-                    completion?(cachedImage)
+                DispatchQueue.main.async {
+                    completion(cachedImage)
                 }
                 return
             }
@@ -46,15 +54,12 @@ final class RCImageLoader {
                 
                 self.cache.setObject(resizedImage, forKey: cacheKey)
                 
-                DispatchQueue.main.async { [weak self] in
-                    guard self != nil else { return }
-                    imageView.image = resizedImage
-                    completion?(resizedImage)
+                DispatchQueue.main.async {
+                    completion(resizedImage)
                 }
             } else {
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
-                    completion?(nil)
+                DispatchQueue.main.async {
+                    completion(nil)
                 }
             }
         }
@@ -67,8 +72,7 @@ final class RCImageLoader {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
-    public func clearCache() {
+    func clearCache() {
         cache.removeAllObjects()
     }
 }
-

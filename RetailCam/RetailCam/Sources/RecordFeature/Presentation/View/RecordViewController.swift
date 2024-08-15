@@ -41,7 +41,6 @@ class RecordViewController: NiblessViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.viewModel.handleViewWillDisappear()
-        RetailCamera.shared.stopSession()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,9 +68,14 @@ class RecordViewController: NiblessViewController {
             })
         )
         
-        infoButton.tintColor = .systemGreen
-        settingsButton.tintColor = .systemGreen
+        let lastImagePresentButton = UIBarButtonItem(
+            image: UIImage(systemName: "photo.on.rectangle.angled"),
+            primaryAction: UIAction(handler: { [weak viewModel] _ in
+                viewModel?.lastImageCapturedImagePresentTap()
+            })
+        )
         
+        navigationItem.leftBarButtonItems = [lastImagePresentButton]
         navigationItem.rightBarButtonItems = [infoButton, settingsButton]
     }
 
@@ -87,12 +91,25 @@ class RecordViewController: NiblessViewController {
                 RetailCamera.shared.recordingState.send(state)
             })
             .store(in: &disposeBag)
+        
+        RCFileManager.shared.$lastCapturedImage
+            .receive(on: defaultScheduler)
+            .sink { [weak self] lastCapturedImage in
+                self?.navigationItem.leftBarButtonItem?.isEnabled = lastCapturedImage != nil
+                self?.viewModel.lastCapturedImage = lastCapturedImage
+            }.store(in: &disposeBag)
+        
+        viewModel.$elapsedTime
+            .receive(on: defaultScheduler)
+            .sink { [weak self] elapsedTime in
+                self?.rootView?.videoSourceView.updateTimerLabel(with: elapsedTime)
+            }.store(in: &disposeBag)
     }
     
     private func updateButtonsStack(for state: RecordingState) {
         guard let rootView = rootView else { return }
         
-        if state == .didNotStart {
+        if state == .didNotStart || state == .completed {
             rootView.resetButton.isHidden = true
         } else {
             rootView.resetButton.isHidden = false

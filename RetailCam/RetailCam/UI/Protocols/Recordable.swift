@@ -64,40 +64,25 @@ public extension Recordable where Self: VideoSourceView {
     func updateUI(for state: RecordingState) {
         switch state {
         case .didNotStart:
-            self.resetTimer()
-            self.timerLabel.textColor = .systemGreen
+            resetTimer()
+            timerLabel.textColor = .systemGreen
         case .started:
-            self.startTimer()
-            self.timerLabel.textColor = .systemRed
+            timerLabel.textColor = .systemRed
         case .paused:
-            self.stopTimer()
-            self.timerLabel.textColor = .systemYellow
+            timerLabel.textColor = .systemYellow
         case .completed:
-            self.stopTimer()
-            self.timerLabel.textColor = .systemBlue
+            timerLabel.textColor = .systemBlue
         }
     }
-
-    private func startTimer() {
-        timerSubscription = Timer.publish(every: 1.0, on: .main, in: .common)
-            .autoconnect()
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                self.secondsElapsed += 1
-                let minutes = self.secondsElapsed / 60
-                let seconds = self.secondsElapsed % 60
-                self.timerLabel.text = String(format: "%02d:%02d", minutes, seconds)
-            }
-    }
-
-    private func stopTimer() {
-        self.timerSubscription?.cancel()
-        self.timerSubscription = nil
+    
+    func updateTimerLabel(with secondsElapsed: Int) {
+        let minutes = secondsElapsed / 60
+        let seconds = secondsElapsed % 60
+        timerLabel.text = String(format: "%02d:%02d", minutes, seconds)
     }
 
     private func resetTimer() {
-        self.stopTimer()
-        self.secondsElapsed = 0
-        self.timerLabel.text = "00:00"
+        updateTimerLabel(with: 0)
     }
 }
+

@@ -16,6 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
          guard let windowScene = (scene as? UIWindowScene) else { return }
          let window = UIWindow(windowScene: windowScene)
          let applicationCoordinator = ApplicationCoordinator(window: window)
+         UINavigationBar.appearance().tintColor = .systemGreen
          self.window = window
          self.applicationCoordinator = applicationCoordinator
          applicationCoordinator.start()

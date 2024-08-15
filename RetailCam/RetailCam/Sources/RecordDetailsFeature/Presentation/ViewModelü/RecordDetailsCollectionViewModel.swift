@@ -12,14 +12,12 @@ struct RecordDetailsCollectionViewModel: Hashable {
     let photoId: UUID
     let displayImageName: String?
     let displayImagePath: String?
-    let displayDuration: String?
     let displayDate: String?
 
     public init(photo: Photo) {
         self.photoId = photo.id
         self.displayImageName = photo.imageName ?? "Invalid_Image_Name"
         self.displayImagePath = photo.imagePath
-        self.displayDuration = photo.duration ?? "??:??:??"
         self.displayDate = photo.date ?? "??/??/????"
     }
 

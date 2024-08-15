@@ -9,38 +9,46 @@ import Foundation
 import UIKit
 import Combine
 
-internal enum RecordCoordinatorDestinations : String {
+internal enum RecordCoordinatorDestinations {
     case recordDetails
     case recordSettings
+    case lastCapturedImagePreview(photo: Photo)
 }
 
 class RecordCoordinator: Coordinator {
-    private weak var navigationController : UINavigationController?
+    private weak var navigationController: UINavigationController?
+    private var viewModel: RecordViewModel!
     
     init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
+        self.viewModel = RecordViewModel(coordinator: self)
     }
     
     func start() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            let viewModel = RecordViewModel(coordinator: self)
-            let recordViewController = RecordViewController(viewModel: viewModel)
-            self.navigationController?.setViewControllers([recordViewController], animated: false)
-        }
+        let recordViewController = RecordViewController(viewModel: viewModel)
+        self.navigationController?.setViewControllers([recordViewController], animated: false)
     }
     
     func navigate(to vc: RecordCoordinatorDestinations) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            switch vc {
-            case .recordDetails:
-                let recordDetailsCoordinator = RecordDetailsCoordinator(navigationController: self.navigationController)
-                recordDetailsCoordinator.start()
-            case .recordSettings:
-                let recordSettingsCoordinator = RecordSettingsCoordinator(navigationController: self.navigationController)
-                recordSettingsCoordinator.start()
-            }
+        switch vc {
+        case .recordDetails:
+            let recordDetailsCoordinator = RecordDetailsCoordinator(navigationController: self.navigationController,
+                                                                    onRetakeTap: self.viewModel.handleRetake,
+                                                                    recordViewState: self.viewModel.recordingState.value)
+            recordDetailsCoordinator.start()
+        case .recordSettings:
+            let recordSettingsCoordinator = RecordSettingsCoordinator(navigationController: self.navigationController)
+            recordSettingsCoordinator.start()
+        case .lastCapturedImagePreview(let photo):
+            let singlePhotoDetailCoordinator = SinglePhotoDetailCoordinator(
+                presentType: .present,
+                navigationController: self.navigationController,
+                photo: photo) { [weak self] in
+                    guard let self = self else { return }
+                    self.viewModel.handlePhotoDetailDismissed()
+                }
+            singlePhotoDetailCoordinator.start()
         }
     }
 }
+

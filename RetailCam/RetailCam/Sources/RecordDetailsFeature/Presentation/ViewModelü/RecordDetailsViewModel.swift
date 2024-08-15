@@ -10,54 +10,87 @@ import Combine
 import UIKit
 
 final class RecordDetailsViewModel {
-    private let coordinator: RecordDetailsCoordinator
     
-    var photos: [Photo]
-    var photosCell = [RecordDetailsCollectionViewModel]()
-    var viewDidAppeaFirstTime:Bool = false
+    private var coordinator: RecordDetailsCoordinator?
     
     var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()
     private var disposeBag = Set<AnyCancellable>()
     
-    init(coordinator: RecordDetailsCoordinator) {
-        self.coordinator = coordinator
-        self.photos = []
+    var onRetake: (() -> Void)?
+    var onUpload: (() -> Void)?
+    
+    var viewDidAppearFirstTime: Bool = false
+    var recordViewState : RecordingState
+    
+    var photos = [Photo]()
+    var photosCell = [RecordDetailsCollectionViewModel]() {
+        didSet {
+            self.photosSubject.send(photosCell)
+        }
     }
     
-    private func mapToCell(entities: [Photo]) -> [RecordDetailsCollectionViewModel] {
-        return entities.map { RecordDetailsCollectionViewModel(photo: $0) }
+    init(coordinator: RecordDetailsCoordinator,
+         recordViewState : RecordingState,
+         onRetake: (() -> Void)? = nil,
+         onUpload: (() -> Void)? = nil) {
+        self.coordinator = coordinator
+        self.recordViewState = recordViewState
+        self.onRetake = onRetake
+        self.onUpload = onUpload
+    }
+    
+    private func mapToPhoto(entities: [PhotoEntity]) -> [Photo] {
+        return entities.map { entity in
+            Photo(
+                id: UUID(),
+                imageName: entity.imagePath ?? "",
+                imagePath: (RCFileManager.shared.folderURL?.appendingPathComponent(entity.imagePath ?? "").path) ?? "",
+                date: entity.imageDate ?? "Unknown Date"
+            )
+        }
+    }
+    
+    private func mapToCell(photos: [Photo]) -> [RecordDetailsCollectionViewModel] {
+        return photos.map { photo in
+            RecordDetailsCollectionViewModel(photo: photo)
+        }
     }
     
     func viewDidLoad() {
-        RCFileManager.shared.getAllImageURLs()
+        CoreDataManager.shared.fetchAllPhotos()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] urls in
-                guard let self = self, let urls = urls else { return }
-                
-                let sortedUrls = urls.sorted { url1, url2 in
-                    let name1 = url1.deletingPathExtension().lastPathComponent
-                    let name2 = url2.deletingPathExtension().lastPathComponent
-                    let index1 = Int(name1.replacingOccurrences(of: "Capture_", with: "")) ?? 0
-                    let index2 = Int(name2.replacingOccurrences(of: "Capture_", with: "")) ?? 0
-                    return index1 < index2
+            .sink { [weak self] completion in
+                guard self != nil else { return }
+                switch completion {
+                case .failure(let error):
+                    debugPrint("Failed to fetch photos: \(error)")
+                case .finished:
+                    break
                 }
-                
-                for url in sortedUrls {
-                    let dummyPhoto = Photo(
-                        id: UUID(),
-                        imageName: url.lastPathComponent,
-                        imagePath: url.path,
-                        duration: "05:00",
-                        date: "Today"
-                    )
-                    self.photos.append(dummyPhoto)
-                }
-                
-                let cellPhotos = self.mapToCell(entities: self.photos)
-                self.photosSubject.send(cellPhotos)
+            } receiveValue: { [weak self] photoEntities in
+                guard let self = self else { return }
+                self.photos = self.mapToPhoto(entities: photoEntities)
+                self.photosCell = self.mapToCell(photos: photos)
             }
             .store(in: &disposeBag)
     }
-
+    
+    func didSelectItemAt(at indexPath: IndexPath) {
+        let selectedPhoto = self.photos[indexPath.row]
+        self.coordinator?.navigate(to: .singlePhotoDetail(photo: selectedPhoto))
+    }
+    
+    func resetCells() {
+        self.photosCell.removeAll()
+        self.photos.removeAll()
+    }
+    
+    func retakeAction() {
+        onRetake?()
+    }
+    
+    func uploadAction() {
+        onUpload?()
+    }
 }
 

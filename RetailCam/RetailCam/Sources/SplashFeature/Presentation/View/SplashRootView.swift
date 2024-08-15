@@ -31,10 +31,12 @@ class SplashRootView: NiblessView {
     let enableCameraButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
-        config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20)
-        button.setTitle("Enable Cam", for: .normal)
+        config.baseBackgroundColor = .systemGreen
+        config.cornerStyle = .dynamic
+        config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
         button.configuration = config
-        button.isHidden = true
+        button.setTitle("EnableCam", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -42,6 +44,7 @@ class SplashRootView: NiblessView {
         let stack = UIStackView(arrangedSubviews: [cameraImageView, loadingLabel, enableCameraButton])
         stack.alignment = .center
         stack.axis = .vertical
+        stack.spacing = 12
         return stack
     }()
     
@@ -96,7 +99,7 @@ class SplashRootView: NiblessView {
         ])
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) { //TODO: - Deprecated change with something else
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
         if traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .regular {

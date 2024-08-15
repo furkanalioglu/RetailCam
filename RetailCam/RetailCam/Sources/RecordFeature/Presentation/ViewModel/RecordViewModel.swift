@@ -7,45 +7,54 @@
 
 import Combine
 
+import Combine
+import UIKit
+
 final class RecordViewModel {
-    
     private let coordinator: RecordCoordinator
+    
     public let recordingState = CurrentValueSubject<RecordingState, Never>(.didNotStart)
     private var disposeBag = Set<AnyCancellable>()
+    
+    private var timerSubscription: Cancellable? = nil
+    
+    private var recordDuration: Int = 60
+    @Published var elapsedTime: Int = 0
+    
+    var lastCapturedImage: Photo?
     
     init(coordinator: RecordCoordinator) {
         self.coordinator = coordinator
     }
     
-    internal func changeRecordingState() {
-        switch recordingState.value {
-        case .didNotStart:
-            recordingState.send(.started)
-        case .paused:
-            recordingState.send(.started)
-        case .started:
-            recordingState.send(.paused)
-        case .completed:
-            recordingState.send(.completed)
-        }
+    func startRecording() {
+        recordingState.send(.started)
     }
     
-    internal func stopRecording() {
-        guard recordingState.value != .didNotStart else { return }
-        recordingState.send(.didNotStart)
+    func pauseRecording() {
+        recordingState.send(.paused)
+    }
+    
+    func stopRecording() {
+        recordingState.send(.completed)
     }
     
     internal func handleViewWillDisappear() {
         guard recordingState.value == .started else { return }
+        self.stopTimer()
         recordingState.send(.paused)
+        RetailCamera.shared.stopSession()
     }
     
-    internal func cancelRecording() {
-        guard recordingState.value != .didNotStart else { return }
-        RCFileManager.shared.removeAllFilesInFolder()
-        recordingState.send(.didNotStart)
+    func handlePhotoDetailDismissed() {
+        RetailCamera.shared.startSession()
     }
-        
+    
+    func handleRetake() {
+        self.cancelRecording()
+        self.toggleRecordingState()
+    }
+    
     internal func detailsTap() {
         self.coordinator.navigate(to: .recordDetails)
     }
@@ -53,5 +62,58 @@ final class RecordViewModel {
     internal func settingsTap() {
         self.coordinator.navigate(to: .recordSettings)
     }
+    
+    internal func lastImageCapturedImagePresentTap() {
+        guard let lastCapturedImage else { return }
+        self.handleViewWillDisappear()
+        self.coordinator.navigate(to: .lastCapturedImagePreview(photo: lastCapturedImage))
+    }
+    
+    internal func toggleRecordingState() {
+        switch recordingState.value {
+        case .didNotStart, .paused, .completed:
+            if recordingState.value == .completed {
+                self.resetTimer()
+            }
+            
+            self.startTimer()
+            recordingState.send(.started)
+        case .started:
+            recordingState.send(.paused)
+            self.stopTimer()
+        }
+    }
+    
+    internal func cancelRecording() {
+        guard recordingState.value != .didNotStart else { return }
+        //        RCFileManager.shared.removeAllFilesInFolder()
+        self.resetTimer()
+        recordingState.send(.didNotStart)
+    }
+    
+    private func startTimer() {
+        timerSubscription = Timer.publish(every: 1.0, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                self.elapsedTime += 1
+                
+                if self.elapsedTime >= self.recordDuration {
+                    self.stopTimer()
+                    self.recordingState.send(.completed)
+                }
+            }
+    }
+    
+    private func stopTimer() {
+        timerSubscription?.cancel()
+        timerSubscription = nil
+    }
+    
+    private func resetTimer() {
+        stopTimer()
+        elapsedTime = 0
+    }
 }
+
 
