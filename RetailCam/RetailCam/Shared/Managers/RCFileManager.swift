@@ -157,5 +157,53 @@ final class RCFileManager {
         }
         .eraseToAnyPublisher()
     }
+    
+    func getCapturedImagesInfoPublisher() -> AnyPublisher<(fileSize: String, imageCount: Int), Never> {
+        return Future<(fileSize: String, imageCount: Int), Never> { promise in
+            self.fileManagerQueue.async {
+                let info = self.calculateCapturedImagesInfo()
+                promise(.success(info))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private func calculateCapturedImagesInfo() -> (fileSize: String, imageCount: Int) {
+        let fileManager = FileManager.default
+        let capturedImagesDirectory = "CAPTURED_IMAGES"
+        
+        do {
+            let documentsURL = try fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            let capturedImagesURL = documentsURL.appendingPathComponent(capturedImagesDirectory)
+            let files = try fileManager.contentsOfDirectory(at: capturedImagesURL, includingPropertiesForKeys: [.fileSizeKey], options: [])
+            
+            let totalSize = files.reduce(0) { (result, fileURL) -> Int64 in
+                do {
+                    let attributes = try fileURL.resourceValues(forKeys: [.fileSizeKey])
+                    let fileSize = attributes.fileSize ?? 0
+                    return result + Int64(fileSize)
+                } catch {
+                    print("Failed to get file size for \(fileURL): \(error)")
+                    return result
+                }
+            }
+            
+            let fileSizeString = format(size: totalSize)
+            let imageCount = files.count
+            
+            return (fileSize: fileSizeString, imageCount: imageCount)
+            
+        } catch {
+            debugPrint("Failed to calculate size of CAPTURED_IMAGES: \(error)")
+            return ("Error calculating size", 0)
+        }
+    }
+    
+    private func format(size: Int64) -> String {
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = [.useKB, .useMB, .useGB]
+        formatter.countStyle = .file
+        return formatter.string(fromByteCount: size)
+    }
 }
 

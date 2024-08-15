@@ -23,6 +23,7 @@
 		91DBA1902C6D2BA100FD9CC2 /* SinglePhotoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DBA18F2C6D2BA100FD9CC2 /* SinglePhotoDetailViewModel.swift */; };
 		91DBA1942C6D6A8C00FD9CC2 /* RCFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DBA1932C6D6A8C00FD9CC2 /* RCFileManager.swift */; };
 		91DBA1962C6D6AB000FD9CC2 /* RCImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DBA1952C6D6AB000FD9CC2 /* RCImageLoader.swift */; };
+		91EE28CB2C6EA9FD007EEF3E /* RecordDetailsSessionInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EE28CA2C6EA9FD007EEF3E /* RecordDetailsSessionInfoHeader.swift */; };
 		91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76D2C67359B00F7D312 /* AppDelegate.swift */; };
 		91F6F7702C67359B00F7D312 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */; };
 		91F6F7772C67359C00F7D312 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F6F7762C67359C00F7D312 /* Assets.xcassets */; };
@@ -57,7 +58,6 @@
 		91F6F7E92C67C06D00F7D312 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7E82C67C06D00F7D312 /* Photo.swift */; };
 		91F6F7EC2C67C81B00F7D312 /* MetalPetal in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6F7EB2C67C81B00F7D312 /* MetalPetal */; };
 		91F6F7EF2C67C8EB00F7D312 /* RetailCameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */; };
-		91F6F7F12C68CD2800F7D312 /* UIApplication++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */; };
 		91F6F7F32C68CD4500F7D312 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6F7F22C68CD4500F7D312 /* PermissionManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +95,7 @@
 		91DBA18F2C6D2BA100FD9CC2 /* SinglePhotoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePhotoDetailViewModel.swift; sourceTree = "<group>"; };
 		91DBA1932C6D6A8C00FD9CC2 /* RCFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RCFileManager.swift; sourceTree = "<group>"; };
 		91DBA1952C6D6AB000FD9CC2 /* RCImageLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RCImageLoader.swift; sourceTree = "<group>"; };
+		91EE28CA2C6EA9FD007EEF3E /* RecordDetailsSessionInfoHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailsSessionInfoHeader.swift; sourceTree = "<group>"; };
 		91F6F76A2C67359B00F7D312 /* RetailCam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetailCam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F6F76D2C67359B00F7D312 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91F6F76F2C67359B00F7D312 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,7 +133,6 @@
 		91F6F7E42C67BEBF00F7D312 /* Dequeuable++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dequeuable++.swift"; sourceTree = "<group>"; };
 		91F6F7E82C67C06D00F7D312 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		91F6F7EE2C67C8EB00F7D312 /* RetailCameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetailCameraManager.swift; sourceTree = "<group>"; };
-		91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication++.swift"; sourceTree = "<group>"; };
 		91F6F7F22C68CD4500F7D312 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -240,6 +240,14 @@
 				91DBA18F2C6D2BA100FD9CC2 /* SinglePhotoDetailViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		91EE28C92C6EA937007EEF3E /* HeaderFooter */ = {
+			isa = PBXGroup;
+			children = (
+				91EE28CA2C6EA9FD007EEF3E /* RecordDetailsSessionInfoHeader.swift */,
+			);
+			path = HeaderFooter;
 			sourceTree = "<group>";
 		};
 		91F6F7612C67359B00F7D312 = {
@@ -462,6 +470,7 @@
 		91F6F7CE2C67709000F7D312 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				91EE28C92C6EA937007EEF3E /* HeaderFooter */,
 				91F6F7DD2C67BBE000F7D312 /* Cells */,
 				91F6F7D12C6770A900F7D312 /* RecordDetailsRootView.swift */,
 				91F6F7D32C6770B200F7D312 /* RecordDetailsViewController.swift */,
@@ -475,7 +484,6 @@
 				91F6F7DB2C67BA7100F7D312 /* UIView++.swift */,
 				91F6F7E22C67BE8B00F7D312 /* UICollectionView++.swift */,
 				91F6F7E42C67BEBF00F7D312 /* Dequeuable++.swift */,
-				91F6F7F02C68CD2800F7D312 /* UIApplication++.swift */,
 				9123A1DB2C6BEA4B004E28F9 /* Date++.swift */,
 			);
 			path = Extensions;
@@ -664,7 +672,6 @@
 				91F6F7E92C67C06D00F7D312 /* Photo.swift in Sources */,
 				91F6F7D72C677B3500F7D312 /* VideoSourceView.swift in Sources */,
 				91F6F7A02C67386F00F7D312 /* ApplicationCoordinator.swift in Sources */,
-				91F6F7F12C68CD2800F7D312 /* UIApplication++.swift in Sources */,
 				91F6F7BD2C67558F00F7D312 /* NiblessView.swift in Sources */,
 				91DBA1942C6D6A8C00FD9CC2 /* RCFileManager.swift in Sources */,
 				91F6F7BF2C6757AA00F7D312 /* SplashRootView.swift in Sources */,
@@ -684,6 +691,7 @@
 				9123A1D22C6BE74F004E28F9 /* CoreDataManager.swift in Sources */,
 				91DBA18C2C6D2B8A00FD9CC2 /* SinglePhotoDetailRootView.swift in Sources */,
 				91F6F7B72C67408C00F7D312 /* RecordViewController.swift in Sources */,
+				91EE28CB2C6EA9FD007EEF3E /* RecordDetailsSessionInfoHeader.swift in Sources */,
 				9123A1DC2C6BEA4B004E28F9 /* Date++.swift in Sources */,
 				9123A1DA2C6BE8CA004E28F9 /* PhotoEntity+CoreDataProperties.swift in Sources */,
 				91F6F76E2C67359B00F7D312 /* AppDelegate.swift in Sources */,

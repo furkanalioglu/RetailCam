@@ -12,13 +12,11 @@ import Combine
 class RecordDetailsRootView: NiblessView {
     
     private let viewModel: RecordDetailsViewModel
-    var rootViewSubject = PassthroughSubject<Void, Never>()
     
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        let layout = createCompositionalLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)  // Add bottom space to avoid overlapping with buttons
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 80, right: 0)
         return collectionView
     }()
     
@@ -84,7 +82,6 @@ class RecordDetailsRootView: NiblessView {
     private func setupUI() {
         self.addToHierarchy()
         self.activateConstraints()
-        self.setupFlowLayout()
         self.setupCollectionView()
         self.setupCollectionDataSource()
         self.addBindings()
@@ -123,7 +120,13 @@ class RecordDetailsRootView: NiblessView {
         ])
     }
     
-    private func setupFlowLayout() {
+    private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+            return self?.createSection()
+        }
+    }
+    
+    private func createSection() -> NSCollectionLayoutSection {
         let itemsPerRow: CGFloat = 5
         let spacing: CGFloat = 1
         let itemWidth = (1.0 / itemsPerRow)
@@ -148,25 +151,56 @@ class RecordDetailsRootView: NiblessView {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         section.interGroupSpacing = spacing
-
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        collectionView.collectionViewLayout = layout
+        
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(60)
+        )
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        header.pinToVisibleBounds = false
+        header.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        section.boundarySupplementaryItems = [header]
+        
+        return section
     }
     
     private func setupCollectionView() {
-        collectionView.registerCell(cellType: RecordDetailsCollectionViewCell.self)
         collectionView.delegate = self
         collectionView.contentInsetAdjustmentBehavior = .always
         collectionView.backgroundColor = .systemBackground
+        collectionView.register(RecordDetailsCollectionViewCell.self, forCellWithReuseIdentifier: "RecordDetailsCollectionViewCell")
+        collectionView.register(RecordDetailsSessionInfoHeader.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: "RecordDetailsSessionInfoHeader")
     }
     
     private func setupCollectionDataSource() {
-        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView,
-                                                        cellProvider: { collectionView, indexPath, viewModel in
-            let cell = collectionView.dequeueReusableCell(with: RecordDetailsCollectionViewCell.self, for: indexPath)
-            cell.viewModel = viewModel
-            return cell
-        })
+        dataSource = UICollectionViewDiffableDataSource<SectionRecordDetails, RecordDetailsCollectionViewModel>(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, viewModel in
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecordDetailsCollectionViewCell", for: indexPath) as! RecordDetailsCollectionViewCell
+                cell.viewModel = viewModel
+                return cell
+            }
+        )
+        
+        dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
+            if kind == UICollectionView.elementKindSectionHeader {
+                let headerView = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: "RecordDetailsSessionInfoHeader",
+                    for: indexPath) as! RecordDetailsSessionInfoHeader
+                headerView.viewModel = self.viewModel
+                headerView.backgroundColor = .systemGray6
+                return headerView
+            } else {
+                return nil
+            }
+        }
     }
     
     private func subscribe() {
@@ -174,7 +208,6 @@ class RecordDetailsRootView: NiblessView {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] photos in
                 self?.applySnapshot(photos: photos)
-                self?.rootViewSubject.send()
             }
             .store(in: &disposeBag)
     }
@@ -182,8 +215,8 @@ class RecordDetailsRootView: NiblessView {
     private func applySnapshot(photos: [RecordDetailsCollectionViewModel]) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
-        snapshot.appendItems(photos)
-        dataSource?.apply(snapshot, animatingDifferences: true)
+        snapshot.appendItems(photos, toSection: .main)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -191,9 +224,10 @@ class RecordDetailsRootView: NiblessView {
     }
 }
 
-extension RecordDetailsRootView: UICollectionViewDelegateFlowLayout {
+extension RecordDetailsRootView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.viewModel.didSelectItemAt(at: indexPath)
     }
 }
+
 

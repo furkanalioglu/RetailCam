@@ -86,7 +86,8 @@ final class RecordViewModel {
     
     internal func cancelRecording() {
         guard recordingState.value != .didNotStart else { return }
-        //        RCFileManager.shared.removeAllFilesInFolder()
+        CoreDataManager.shared.deleteAllPhotoEntities()
+        let _ = RCFileManager.shared.removeAllFilesInFolder()
         self.resetTimer()
         recordingState.send(.didNotStart)
     }
@@ -113,6 +114,12 @@ final class RecordViewModel {
     private func resetTimer() {
         stopTimer()
         elapsedTime = 0
+    }
+    
+    func getDurationInfo() -> String {
+        let minutes = self.elapsedTime / 60
+        let seconds = self.elapsedTime % 60
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 }
 
