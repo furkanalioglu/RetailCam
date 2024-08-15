@@ -38,7 +38,7 @@ class RecordDetailsViewController : NiblessViewController {
             image: UIImage(systemName: "trash.circle.fill"),
             primaryAction: UIAction(handler: { [weak self] _ in
                 CoreDataManager.shared.deleteAllPhotos()
-                RCFileManager.shared.removeAllFilesInFolder()
+                let _ = RCFileManager.shared.removeAllFilesInFolder()
                 self?.viewModel.resetCells()
             })
         )

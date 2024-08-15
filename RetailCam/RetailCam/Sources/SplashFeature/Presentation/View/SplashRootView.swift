@@ -98,7 +98,7 @@ class SplashRootView: NiblessView {
         ])
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) { //TODO: - Deprecated change with something else
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
         if traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .regular {

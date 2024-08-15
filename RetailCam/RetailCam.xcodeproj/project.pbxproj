@@ -270,8 +270,8 @@
 				91F6F7A92C673ABD00F7D312 /* UI */,
 				91F6F79D2C6737DD00F7D312 /* Root */,
 				91F6F7AA2C673AC800F7D312 /* AppLifecycle */,
-				91F6F77B2C67359C00F7D312 /* Info.plist */,
 				91F6F79E2C67385500F7D312 /* Resources */,
+				91F6F77B2C67359C00F7D312 /* Info.plist */,
 			);
 			path = RetailCam;
 			sourceTree = "<group>";
