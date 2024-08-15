@@ -31,11 +31,12 @@ class SplashRootView: NiblessView {
     let enableCameraButton: UIButton = {
         let button = UIButton()
         var config = UIButton.Configuration.filled()
-        config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20)
-        button.setTitle("Enable Cam", for: .normal)
+        config.baseBackgroundColor = .systemGreen
+        config.cornerStyle = .dynamic
+        config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
         button.configuration = config
-        button.backgroundColor = .systemGreen
-        button.isHidden = true
+        button.setTitle("EnableCam", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     

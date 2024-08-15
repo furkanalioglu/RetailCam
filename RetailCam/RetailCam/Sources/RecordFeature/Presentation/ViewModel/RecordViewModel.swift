@@ -17,8 +17,10 @@ final class RecordViewModel {
     private var disposeBag = Set<AnyCancellable>()
     
     private var timerSubscription: Cancellable? = nil
+    
+    private var recordDuration: Int = 60
     @Published var elapsedTime: Int = 0
-
+    
     var lastCapturedImage: Photo?
     
     init(coordinator: RecordCoordinator) {
@@ -84,7 +86,7 @@ final class RecordViewModel {
     
     internal func cancelRecording() {
         guard recordingState.value != .didNotStart else { return }
-//        RCFileManager.shared.removeAllFilesInFolder()
+        //        RCFileManager.shared.removeAllFilesInFolder()
         self.resetTimer()
         recordingState.send(.didNotStart)
     }
@@ -96,22 +98,22 @@ final class RecordViewModel {
                 guard let self = self else { return }
                 self.elapsedTime += 1
                 
-                if self.elapsedTime >= 10 {
+                if self.elapsedTime >= self.recordDuration {
                     self.stopTimer()
                     self.recordingState.send(.completed)
                 }
             }
     }
-
+    
     private func stopTimer() {
         timerSubscription?.cancel()
         timerSubscription = nil
     }
-
+    
     private func resetTimer() {
-         stopTimer()
-         elapsedTime = 0
-     }
+        stopTimer()
+        elapsedTime = 0
+    }
 }
 
 

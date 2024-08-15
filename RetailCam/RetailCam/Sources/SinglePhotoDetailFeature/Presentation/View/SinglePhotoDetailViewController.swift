@@ -32,6 +32,12 @@ class SinglePhotoDetailViewController : NiblessViewController {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.subscribe()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard self.viewModel.didLayoutSubviewsFirstTime == false else { return }
+        self.viewModel.didLayoutSubviewsFirstTime = true
         RCImageLoader.shared.loadImage(from: self.viewModel.photo.imagePath, into: self.rootView!.imageView.bounds.size) { [weak self] loadedImage in
             guard let self else { return }
             guard let image = loadedImage else { return }
@@ -43,10 +49,8 @@ class SinglePhotoDetailViewController : NiblessViewController {
         super.viewWillDisappear(animated)    
         guard self.isBeingDismissed || self.isMovingFromParent else { return }
         self.onDismiss?()
-        
     }
 
-    
     private func setupNavigationBar() {
         let rotateButton = UIBarButtonItem(
             image: UIImage(systemName: "goforward.90"),

@@ -28,7 +28,8 @@ final class RCImageLoader {
     }
     
     func loadImage(from imagePath: String?, into frame: CGSize, completion: @escaping (UIImage?) -> Void) {
-        let targetSize = frame == .zero ? CGSize(width: 200, height: 200) : frame
+        debugPrint("Load image zero mu geldi",frame)
+        let targetSize = frame == .zero ? CGSize(width: 77, height: 77) : frame
         
         imageProcessingQueue.async { [weak self] in
             guard let self = self else { return }

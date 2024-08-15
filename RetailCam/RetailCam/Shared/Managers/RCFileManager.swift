@@ -31,9 +31,7 @@ final class RCFileManager {
     
     @Published var lastCapturedImage : Photo? = nil
     
-    private init() {
-        self.createFolderIfNeeded()
-    }
+    private init() {}
     
     deinit {
         debugPrint("RCFileManager instance is being deallocated.")
@@ -44,21 +42,6 @@ final class RCFileManager {
             return nil
         }
         return documentsURL.appendingPathComponent(folderName)
-    }
-    
-    private func createFolderIfNeeded() {
-        return fileManagerQueue.sync { [weak self] in
-            guard let self = self else { return }
-            guard let folderURL = folderURL else { return }
-            
-            if !fileManager.fileExists(atPath: folderURL.path) {
-                do {
-                    try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    debugPrint("Failed to create folder: \(error)")
-                }
-            }
-        }
     }
     
     func saveImage(_ image: UIImage, withName name: String? = nil) {
@@ -150,6 +133,13 @@ final class RCFileManager {
                     }
                     self.lastCapturedImage = nil
                     RCImageLoader.shared.clearCache()
+                    if !fileManager.fileExists(atPath: folderURL.path) {
+                        do {
+                            try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
+                        } catch {
+                            debugPrint("Failed to create folder: \(error)")
+                        }
+                    }
                     promise(.success(true))
                 } catch {
                     debugPrint("Failed to remove files: \(error)")

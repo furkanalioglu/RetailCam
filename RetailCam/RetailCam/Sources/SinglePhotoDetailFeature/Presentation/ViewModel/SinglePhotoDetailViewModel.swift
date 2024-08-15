@@ -13,6 +13,7 @@ final class SinglePhotoDetailViewModel {
     var coordinator: SinglePhotoDetailCoordinator
     var photo: Photo
     var rotateSubject = PassthroughSubject<Void, Never>()
+    var didLayoutSubviewsFirstTime: Bool = false
     
     init(coordinator: SinglePhotoDetailCoordinator,
          photo: Photo) {

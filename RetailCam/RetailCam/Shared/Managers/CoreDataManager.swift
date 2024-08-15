@@ -60,7 +60,7 @@ final class CoreDataManager {
         .eraseToAnyPublisher()
     }
 
-    func deleteAllPhotos() {
+    func deleteAllPhotoEntities() {
         context.perform { [weak self] in
             guard let self = self else { return }
             

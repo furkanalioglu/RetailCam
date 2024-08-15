@@ -11,6 +11,10 @@ import UIKit
 
 final class SplashViewModel {
     private let coordinator: SplashCoordinator
+    
+    @Published var didRemoveAllFilesInFileManager: Bool = false
+    @Published var didCameraAccessGranted: Bool = false
+    
     public let permissionState = CurrentValueSubject<PermissionState, Never>(.notDetermined)
     private var disposeBag = Set<AnyCancellable>()
     private let scheduler: DispatchQueue
@@ -19,12 +23,24 @@ final class SplashViewModel {
          scheduler: DispatchQueue = .main) {
         self.coordinator = coordinator
         self.scheduler = scheduler
+        
+        setupBindings()
     }
     
     func startSplashScenario(from vc: UIViewController) {
         self.checkCameraPermission(from: vc)
+        self.removeAllFiles()
     }
-     //TODO: - CHANGE HERE MAKE IT BETTER
+    
+    private func setupBindings() {
+        Publishers.CombineLatest($didRemoveAllFilesInFileManager, $didCameraAccessGranted)
+            .filter { $0 && $1 }
+            .sink { [weak self] _ in
+                self?.coordinator.changeRootToRecord()
+            }
+            .store(in: &disposeBag)
+    }
+    
     private func checkCameraPermission(from vc: UIViewController) {
         PermissionManager.shared.checkAndRequestCameraPermission(from: vc)
             .receive(on: DispatchQueue.main)
@@ -42,18 +58,29 @@ final class SplashViewModel {
             .store(in: &disposeBag)
     }
     
-    func retryCameraPermission(from vc: UIViewController) {
-        checkCameraPermission(from: vc)
-    }
-    
     private func handlePermissionState(_ state: PermissionState) {
         switch state {
         case .authorized:
-            coordinator.changeRootToRecord()
+            didCameraAccessGranted = true
         case .denied, .restricted:
             permissionState.send(state)
         default:
             return
         }
     }
+    
+    private func removeAllFiles() {
+        CoreDataManager.shared.deleteAllPhotoEntities()
+        RCFileManager.shared.removeAllFilesInFolder()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] success in
+                self?.didRemoveAllFilesInFileManager = success
+            }
+            .store(in: &disposeBag)
+    }
+    
+    func retryCameraPermission(from vc: UIViewController) {
+        checkCameraPermission(from: vc)
+    }
 }
+
