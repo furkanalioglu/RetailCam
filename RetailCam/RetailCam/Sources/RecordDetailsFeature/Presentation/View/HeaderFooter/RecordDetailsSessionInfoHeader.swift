@@ -135,7 +135,7 @@ class RecordDetailsSessionInfoHeader: UICollectionReusableView {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] info in
                 self?.sizeValueLabel.text = info.fileSize
-                self?.imageCountValueLabel.text t= "\(info.imageCount)"
+                self?.imageCountValueLabel.text = "\(info.imageCount)"
             }
             .store(in: &disposeBag)
         
