@@ -160,10 +160,4 @@ final class RCFileManager {
         }
         .eraseToAnyPublisher()
     }
-    
-    
-    func dispose() -> AnyPublisher<Bool, Never> {
-        //TODO: - Kill instance
-        return removeAllFilesInFolder()
-    }
 }

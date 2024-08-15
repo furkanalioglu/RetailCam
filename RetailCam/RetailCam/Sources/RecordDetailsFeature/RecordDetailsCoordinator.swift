@@ -16,19 +16,24 @@ internal enum RecordDetailsCoordinatorDestinations {
 final class RecordDetailsCoordinator: Coordinator {
     
     private weak var navigationController: UINavigationController?
+    
     var onRetakeTap: (() -> Void)?
     var onDismiss: (() -> Void)?
+    var recordViewState: RecordingState
     
     init(navigationController: UINavigationController? = nil,
          onRetakeTap: (() -> Void)? = nil,
-         onDismiss: (() -> Void)? = nil) {
+         onDismiss: (() -> Void)? = nil,
+         recordViewState: RecordingState) {
         self.navigationController = navigationController
+        self.recordViewState = recordViewState
         self.onRetakeTap = onRetakeTap
         self.onDismiss = onDismiss
     }
     
     func start() {
         let viewModel = RecordDetailsViewModel(coordinator: self,
+                                               recordViewState: recordViewState,
                                                onRetake: self.handleRetake,
                                                onUpload: self.handleRetake) //TODO: - Change with actual upload logic
         let recordDetailsVC = RecordDetailsViewController(viewModel: viewModel)

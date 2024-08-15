@@ -51,6 +51,7 @@ class RecordDetailsViewController : NiblessViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.navigationItem.title = "Photo Count: \(self?.viewModel.photosCell.count ?? 0)"
+                self?.navigationItem.rightBarButtonItem?.isEnabled = self?.viewModel.photosCell.count ?? 0 > 0
             }
             .store(in: &disposeBag)
     }

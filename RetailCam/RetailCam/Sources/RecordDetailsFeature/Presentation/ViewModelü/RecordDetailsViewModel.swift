@@ -13,13 +13,14 @@ final class RecordDetailsViewModel {
     
     private var coordinator: RecordDetailsCoordinator?
     
-    var onRetake: (() -> Void)?
-    var onUpload: (() -> Void)?
-    
     var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()
     private var disposeBag = Set<AnyCancellable>()
     
+    var onRetake: (() -> Void)?
+    var onUpload: (() -> Void)?
+    
     var viewDidAppearFirstTime: Bool = false
+    var recordViewState : RecordingState
     
     var photos = [Photo]()
     var photosCell = [RecordDetailsCollectionViewModel]() {
@@ -29,9 +30,11 @@ final class RecordDetailsViewModel {
     }
     
     init(coordinator: RecordDetailsCoordinator,
+         recordViewState : RecordingState,
          onRetake: (() -> Void)? = nil,
          onUpload: (() -> Void)? = nil) {
         self.coordinator = coordinator
+        self.recordViewState = recordViewState
         self.onRetake = onRetake
         self.onUpload = onUpload
     }

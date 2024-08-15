@@ -32,6 +32,7 @@ class RecordDetailsRootView: NiblessView {
         button.configuration = config
         button.setTitle("Retake", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = self.viewModel.recordViewState != .completed
         return button
     }()
     
@@ -45,6 +46,7 @@ class RecordDetailsRootView: NiblessView {
         button.configuration = config
         button.setTitle("Upload", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.isHidden = self.viewModel.recordViewState != .completed
         return button
     }()
     

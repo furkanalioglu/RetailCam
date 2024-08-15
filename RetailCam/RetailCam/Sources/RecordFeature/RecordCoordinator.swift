@@ -33,7 +33,8 @@ class RecordCoordinator: Coordinator {
         switch vc {
         case .recordDetails:
             let recordDetailsCoordinator = RecordDetailsCoordinator(navigationController: self.navigationController,
-                                                                    onRetakeTap: self.viewModel.handleRetake)
+                                                                    onRetakeTap: self.viewModel.handleRetake,
+                                                                    recordViewState: self.viewModel.recordingState.value)
             recordDetailsCoordinator.start()
         case .recordSettings:
             let recordSettingsCoordinator = RecordSettingsCoordinator(navigationController: self.navigationController)

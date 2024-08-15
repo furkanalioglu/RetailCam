@@ -189,7 +189,6 @@ final class RetailCamera: NSObject {
             self?.printCurrentThread("resetRecording - processingQueue.async")
             guard let self = self else { return }
             self.lastFrameTime = Date(timeIntervalSince1970: 0)
-            RCFileManager.shared.dispose()
         }
     }
     
