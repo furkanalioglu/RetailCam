@@ -120,8 +120,21 @@ final class RCFileManager {
                     promise(.success(false))
                     return
                 }
+                
                 guard let folderURL = self.folderURL else {
                     promise(.success(false))
+                    return
+                }
+                
+                if !self.fileManager.fileExists(atPath: folderURL.path) {
+                    do {
+                        try self.fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
+                        debugPrint("Created missing folder at: \(folderURL.path)")
+                        promise(.success(true))
+                    } catch {
+                        debugPrint("Failed to create missing folder: \(error)")
+                        promise(.success(false))
+                    }
                     return
                 }
                 
@@ -133,16 +146,15 @@ final class RCFileManager {
                     }
                     self.lastCapturedImage = nil
                     RCImageLoader.shared.clearCache()
-                    if !fileManager.fileExists(atPath: folderURL.path) {
-                        do {
-                            try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
-                        } catch {
-                            debugPrint("Failed to create folder: \(error)")
-                        }
+                    
+                    if !self.fileManager.fileExists(atPath: folderURL.path) {
+                        try self.fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
+                        debugPrint("Re-created folder after removing files at: \(folderURL.path)")
                     }
+                    
                     promise(.success(true))
                 } catch {
-                    debugPrint("Failed to remove files: \(error)")
+                    debugPrint("Failed to remove files or recreate folder: \(error)")
                     promise(.success(false))
                 }
             }

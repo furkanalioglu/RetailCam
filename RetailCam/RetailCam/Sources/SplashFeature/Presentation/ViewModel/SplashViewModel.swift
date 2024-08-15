@@ -15,6 +15,8 @@ final class SplashViewModel {
     @Published var didRemoveAllFilesInFileManager: Bool = false
     @Published var didCameraAccessGranted: Bool = false
     
+    var freshStart: Bool = true
+    
     public let permissionState = CurrentValueSubject<PermissionState, Never>(.notDetermined)
     private var disposeBag = Set<AnyCancellable>()
     private let scheduler: DispatchQueue
@@ -28,12 +30,19 @@ final class SplashViewModel {
     }
     
     func startSplashScenario(from vc: UIViewController) {
-        self.checkCameraPermission(from: vc)
-        self.removeAllFiles()
+        switch freshStart {
+        case true:
+            self.removeAllFiles()
+            self.checkCameraPermission(from: vc)
+        case false:
+            self.didRemoveAllFilesInFileManager = true // Set to true without removing
+            self.checkCameraPermission(from: vc)
+        }
     }
     
     private func setupBindings() {
         Publishers.CombineLatest($didRemoveAllFilesInFileManager, $didCameraAccessGranted)
+            .receive(on: DispatchQueue.main)
             .filter { $0 && $1 }
             .sink { [weak self] _ in
                 self?.coordinator.changeRootToRecord()
