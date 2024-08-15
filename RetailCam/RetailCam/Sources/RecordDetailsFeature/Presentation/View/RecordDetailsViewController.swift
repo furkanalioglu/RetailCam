@@ -39,6 +39,7 @@ class RecordDetailsViewController : NiblessViewController {
                 CoreDataManager.shared.deleteAllPhotoEntities()
                 let _ = RCFileManager.shared.removeAllFilesInFolder()
                 self?.viewModel.resetCells()
+                self?.viewModel.resetHeaderSubject.send()
             })
         )
         

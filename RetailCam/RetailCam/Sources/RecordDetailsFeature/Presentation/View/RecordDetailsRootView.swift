@@ -216,7 +216,7 @@ class RecordDetailsRootView: NiblessView {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(photos, toSection: .main)
-        dataSource?.apply(snapshot, animatingDifferences: false)
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

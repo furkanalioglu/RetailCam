@@ -134,9 +134,8 @@ class RecordDetailsSessionInfoHeader: UICollectionReusableView {
         RCFileManager.shared.getCapturedImagesInfoPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] info in
-                debugPrint("geLDİ KOYDM")
                 self?.sizeValueLabel.text = info.fileSize
-                self?.imageCountValueLabel.text = "\(info.imageCount)"
+                self?.imageCountValueLabel.text t= "\(info.imageCount)"
             }
             .store(in: &disposeBag)
         
