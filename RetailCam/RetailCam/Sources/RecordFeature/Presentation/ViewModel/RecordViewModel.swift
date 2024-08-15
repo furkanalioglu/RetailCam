@@ -49,7 +49,8 @@ final class RecordViewModel {
     }
     
     func handleRetake() {
-        debugPrint("Retake now")
+        self.cancelRecording()
+        self.toggleRecordingState()
     }
     
     internal func detailsTap() {
@@ -95,7 +96,7 @@ final class RecordViewModel {
                 guard let self = self else { return }
                 self.elapsedTime += 1
                 
-                if self.elapsedTime >= 60 {
+                if self.elapsedTime >= 10 {
                     self.stopTimer()
                     self.recordingState.send(.completed)
                 }

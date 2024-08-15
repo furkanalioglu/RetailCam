@@ -45,7 +45,6 @@ final class RecordDetailsViewModel {
                 id: UUID(),
                 imageName: entity.imagePath ?? "",
                 imagePath: (RCFileManager.shared.folderURL?.appendingPathComponent(entity.imagePath ?? "").path) ?? "",
-                duration: "05:00",
                 date: entity.imageDate ?? "Unknown Date"
             )
         }

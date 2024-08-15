@@ -54,7 +54,6 @@ final class RCFileManager {
             if !fileManager.fileExists(atPath: folderURL.path) {
                 do {
                     try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
-                    debugPrint("Created folder at: \(folderURL.path)")
                 } catch {
                     debugPrint("Failed to create folder: \(error)")
                 }
@@ -89,12 +88,12 @@ final class RCFileManager {
                 let dateNow = Date.getCurrentDate()
                 self.lastCapturedImage = Photo(imageName: imageName,
                                                imagePath:  self.folderURL?.appendingPathComponent(imageName).path,
-                                               duration: "05:00",
                                                date: dateNow)
                 
+                debugPrint("Image saved to: \(fileURL.path)")
+
                 CoreDataManager.shared.savePhoto(imagePath: imageName,
                                                  imageDate: dateNow)
-                debugPrint("Image saved to: \(fileURL.path)")
             } catch {
                 debugPrint("Failed to save image: \(error)")
             }

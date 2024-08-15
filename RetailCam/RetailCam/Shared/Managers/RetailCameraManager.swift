@@ -269,7 +269,6 @@ final class RetailCamera: NSObject {
             }
 
             let desiredDuration = CMTimeMake(value: 1, timescale: Int32(shutterSpeedSliderValue))
-            debugPrint("Desired duration set",desiredDuration)
             
             do {
                 try device.lockForConfiguration()

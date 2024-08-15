@@ -11,18 +11,15 @@ public struct Photo: Hashable {
     public let id: UUID
     public let imageName: String?
     public let imagePath: String?
-    public let duration: String?
     public let date: String?
     
     public init(id: UUID = UUID(),
                 imageName: String?,
                 imagePath: String?,
-                duration: String?,
                 date: String?) {
         self.id = id
         self.imageName = imageName
         self.imagePath = imagePath
-        self.duration = duration
         self.date = date
     }
     
