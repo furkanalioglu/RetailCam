@@ -34,6 +34,7 @@ class SplashRootView: NiblessView {
         config.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20)
         button.setTitle("Enable Cam", for: .normal)
         button.configuration = config
+        button.backgroundColor = .systemGreen
         button.isHidden = true
         return button
     }()
@@ -42,6 +43,7 @@ class SplashRootView: NiblessView {
         let stack = UIStackView(arrangedSubviews: [cameraImageView, loadingLabel, enableCameraButton])
         stack.alignment = .center
         stack.axis = .vertical
+        stack.spacing = 12
         return stack
     }()
     

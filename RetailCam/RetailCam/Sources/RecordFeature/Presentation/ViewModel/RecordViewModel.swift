@@ -39,7 +39,17 @@ final class RecordViewModel {
     
     internal func handleViewWillDisappear() {
         guard recordingState.value == .started else { return }
+        self.stopTimer()
         recordingState.send(.paused)
+        RetailCamera.shared.stopSession()
+    }
+    
+    func handlePhotoDetailDismissed() {
+        RetailCamera.shared.startSession()
+    }
+    
+    func handleRetake() {
+        debugPrint("Retake now")
     }
     
     internal func detailsTap() {
@@ -52,6 +62,7 @@ final class RecordViewModel {
     
     internal func lastImageCapturedImagePresentTap() {
         guard let lastCapturedImage else { return }
+        self.handleViewWillDisappear()
         self.coordinator.navigate(to: .lastCapturedImagePreview(photo: lastCapturedImage))
     }
     

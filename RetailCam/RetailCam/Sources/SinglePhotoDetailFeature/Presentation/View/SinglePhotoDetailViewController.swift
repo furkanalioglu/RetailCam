@@ -11,6 +11,8 @@ import Combine
 
 class SinglePhotoDetailViewController : NiblessViewController {
     
+    var onDismiss: (() -> Void)?
+    
     var viewModel: SinglePhotoDetailViewModel
     private var rootView : SinglePhotoDetailRootView?
     public var defaultScheduler : DispatchQueue = DispatchQueue.main
@@ -30,13 +32,20 @@ class SinglePhotoDetailViewController : NiblessViewController {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.subscribe()
-        RCImageLoader.shared.loadImage(from: self.viewModel.photo.imagePath, into: self.rootView!.imageView.bounds.size) { loadedImage in
-            if let image = loadedImage {
-                self.rootView!.imageView.image = loadedImage
-            }
+        RCImageLoader.shared.loadImage(from: self.viewModel.photo.imagePath, into: self.rootView!.imageView.bounds.size) { [weak self] loadedImage in
+            guard let self else { return }
+            guard let image = loadedImage else { return }
+            self.rootView!.imageView.image = image
         }
-
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)    
+        guard self.isBeingDismissed || self.isMovingFromParent else { return }
+        self.onDismiss?()
+        
+    }
+
     
     private func setupNavigationBar() {
         let rotateButton = UIBarButtonItem(

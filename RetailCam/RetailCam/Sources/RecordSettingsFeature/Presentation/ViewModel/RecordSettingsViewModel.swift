@@ -29,7 +29,7 @@ final class RecordSettingsViewModel {
     private var minISOValue : Float = 34
     private var maxISOValue : Float = 3000
     private var minShutterValue : Float = 25
-    private var maxShutterValue : Float = 50000
+    private var maxShutterValue : Float = 1000
     
     var supportedIsoMinValue: Float {
         guard let device = AVCaptureDevice.default(.builtInWideAngleCamera,
@@ -49,28 +49,6 @@ final class RecordSettingsViewModel {
         
         let maxISO = min(maxISOValue, Float(device.activeFormat.maxISO))
         return maxISO
-    }
-
-    var supportedShutterSpeedMinValue: Float {
-        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera,
-                                                   for: .video,
-                                                   position: .back)
-        else { return 0.0 }
-        
-        let minShutterSpeedSeconds = CMTimeGetSeconds(device.activeFormat.minExposureDuration)
-        let minShutterSpeed = Float(1.0 / minShutterSpeedSeconds)
-        return max(minShutterValue, minShutterSpeed)
-    }
-
-    var supportedShutterSpeedMaxValue: Float {
-        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera,
-                                                   for: .video,
-                                                   position: .back)
-        else { return 0.0 }
-        
-        let maxShutterSpeedSeconds = CMTimeGetSeconds(device.activeFormat.maxExposureDuration)
-        let maxShutterSpeed = Float(1.0 / maxShutterSpeedSeconds)
-        return 25
     }
     
     func subscribe() {

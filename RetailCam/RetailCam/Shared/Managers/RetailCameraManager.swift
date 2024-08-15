@@ -58,7 +58,7 @@ final class RetailCamera: NSObject {
         
         let currentShutterSpeedInSeconds = CMTimeGetSeconds(device.exposureDuration)
         let currentShutterSpeed = Int(round(1.0 / currentShutterSpeedInSeconds))
-        
+        debugPrint("Current shuttter is",currentShutterSpeed)
         return currentShutterSpeed
     }
     
@@ -80,7 +80,6 @@ final class RetailCamera: NSObject {
         recordingState
             .receive(on: retailCameraQueue)
             .sink { [weak self] state in
-                debugPrint("State geldi",state)
                 switch state {
                 case .didNotStart:
                     self?.stopRecording()

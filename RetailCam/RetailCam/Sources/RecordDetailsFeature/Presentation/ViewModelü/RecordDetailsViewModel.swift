@@ -13,10 +13,13 @@ final class RecordDetailsViewModel {
     
     private var coordinator: RecordDetailsCoordinator?
     
+    var onRetake: (() -> Void)?
+    var onUpload: (() -> Void)?
+    
     var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()
     private var disposeBag = Set<AnyCancellable>()
     
-    var viewDidAppeaFirstTime: Bool = false
+    var viewDidAppearFirstTime: Bool = false
     
     var photos = [Photo]()
     var photosCell = [RecordDetailsCollectionViewModel]() {
@@ -25,8 +28,12 @@ final class RecordDetailsViewModel {
         }
     }
     
-    init(coordinator: RecordDetailsCoordinator) {
+    init(coordinator: RecordDetailsCoordinator,
+         onRetake: (() -> Void)? = nil,
+         onUpload: (() -> Void)? = nil) {
         self.coordinator = coordinator
+        self.onRetake = onRetake
+        self.onUpload = onUpload
     }
     
     private func mapToPhoto(entities: [PhotoEntity]) -> [Photo] {
@@ -74,6 +81,14 @@ final class RecordDetailsViewModel {
     func resetCells() {
         self.photosCell.removeAll()
         self.photos.removeAll()
+    }
+    
+    func retakeAction() {
+        onRetake?()
+    }
+    
+    func uploadAction() {
+        onUpload?()
     }
 }
 

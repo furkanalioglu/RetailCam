@@ -41,7 +41,6 @@ class RecordViewController: NiblessViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.viewModel.handleViewWillDisappear()
-        RetailCamera.shared.stopSession()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,7 +109,7 @@ class RecordViewController: NiblessViewController {
     private func updateButtonsStack(for state: RecordingState) {
         guard let rootView = rootView else { return }
         
-        if state == .didNotStart {
+        if state == .didNotStart || state == .completed {
             rootView.resetButton.isHidden = true
         } else {
             rootView.resetButton.isHidden = false

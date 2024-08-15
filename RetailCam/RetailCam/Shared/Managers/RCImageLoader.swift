@@ -17,7 +17,15 @@ final class RCImageLoader {
     private let imageProcessingQueue = DispatchQueue(label: "com.retailcam.imageLoaderQueue", qos: .userInitiated)
     private var cache = NSCache<NSString, UIImage>()
     
-    private init() {}
+    private init() {
+        cache.countLimit = 10_000
+        cache.totalCostLimit = calculateTotalCostLimit(forImageSize: CGSize(width: 77, height: 77))
+    }
+    
+    private func calculateTotalCostLimit(forImageSize size: CGSize) -> Int {
+        let bytesPerImage = Int(size.width * size.height * 4)
+        return bytesPerImage * 10_000
+    }
     
     func loadImage(from imagePath: String?, into frame: CGSize, completion: @escaping (UIImage?) -> Void) {
         let targetSize = frame == .zero ? CGSize(width: 200, height: 200) : frame

@@ -10,6 +10,7 @@ import UIKit
 import Combine
 
 class RecordDetailsViewController : NiblessViewController {
+    
     private let viewModel: RecordDetailsViewModel
     private var rootView: RecordDetailsRootView?
     private var disposeBag = Set<AnyCancellable>()
