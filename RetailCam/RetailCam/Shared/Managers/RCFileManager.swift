@@ -61,9 +61,6 @@ final class RCFileManager {
             let imageName = name ?? "Capture_\(currentIndex).jpg"
             let fileURL = folderURL.appendingPathComponent(imageName)
             
-            debugPrint("Attempting to save image at directory: \(folderURL.path)") // Print directory path
-            debugPrint("Full file path: \(fileURL.path)") // Print full file path
-            
             guard let imageData = image.jpegData(compressionQuality: 1.0) else {
                 debugPrint("Failed to convert image to data")
                 return

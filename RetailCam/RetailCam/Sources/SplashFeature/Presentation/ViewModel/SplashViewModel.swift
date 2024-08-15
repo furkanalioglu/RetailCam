@@ -84,7 +84,7 @@ final class SplashViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] success in
                 // Force to true without checking successs
-                debugPrint("Removing all files with response:",success)
+//                debugPrint("Removing all files with response:",success)
                 self?.didRemoveAllFilesInFileManager = true
             }
             .store(in: &disposeBag)
