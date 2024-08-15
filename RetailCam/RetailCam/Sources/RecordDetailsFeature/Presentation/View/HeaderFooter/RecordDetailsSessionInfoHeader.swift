@@ -123,11 +123,9 @@ class RecordDetailsSessionInfoHeader: UICollectionReusableView {
         ])
     }
     
-    var viewModel : RecordDetailsViewModel? {
-        didSet {
-            self.durationValueLabel.text = viewModel?.currentDuration
-            self.subscribe()
-        }
+    func setUI(with duration: String) {
+        self.durationValueLabel.text = duration
+        self.subscribe()
     }
     
     func subscribe() {
@@ -139,12 +137,12 @@ class RecordDetailsSessionInfoHeader: UICollectionReusableView {
             }
             .store(in: &disposeBag)
         
-        viewModel?.resetHeaderSubject
-              .receive(on: DispatchQueue.main)
-              .sink { [weak self] in
-                  self?.resetUI()
-              }
-              .store(in: &disposeBag)
+        RCFileManager.shared.allImagesRemovedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.resetUI()
+            }
+            .store(in: &disposeBag)
     }
     
     private func resetUI() {

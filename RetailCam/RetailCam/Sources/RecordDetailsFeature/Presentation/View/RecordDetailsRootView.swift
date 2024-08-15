@@ -194,7 +194,7 @@ class RecordDetailsRootView: NiblessView {
                     ofKind: kind,
                     withReuseIdentifier: "RecordDetailsSessionInfoHeader",
                     for: indexPath) as! RecordDetailsSessionInfoHeader
-                headerView.viewModel = self.viewModel
+                headerView.setUI(with: self.viewModel.currentDuration)
                 headerView.backgroundColor = .systemGray6
                 return headerView
             } else {

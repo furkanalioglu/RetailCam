@@ -14,7 +14,6 @@ final class RecordDetailsViewModel {
     private var coordinator: RecordDetailsCoordinator?
     
     var photosSubject = PassthroughSubject<[RecordDetailsCollectionViewModel], Never>()
-    let resetHeaderSubject = PassthroughSubject<Void, Never>()
     private var disposeBag = Set<AnyCancellable>()
     
     var onRetake: (() -> Void)?

@@ -29,6 +29,11 @@ final class RCFileManager {
     private let folderName = "CAPTURED_IMAGES"
     private let fileManagerQueue = DispatchQueue(label: "com.retailcam.fileManagerQueue", qos: .utility)
     
+    private let allImagesRemovedSubject = PassthroughSubject<Void, Never>()
+    var allImagesRemovedPublisher: AnyPublisher<Void, Never> {
+        return allImagesRemovedSubject.eraseToAnyPublisher()
+    }
+    
     @Published var lastCapturedImage: Photo? = nil
     
     private init() {}
@@ -141,6 +146,8 @@ final class RCFileManager {
                     for fileURL in fileURLs {
                         try self.fileManager.removeItem(at: fileURL)
                     }
+                    
+                    self.allImagesRemovedSubject.send(())
                     self.lastCapturedImage = nil
                     RCImageLoader.shared.clearCache()
                     
