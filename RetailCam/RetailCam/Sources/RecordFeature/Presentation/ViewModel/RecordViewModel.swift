@@ -73,6 +73,7 @@ final class RecordViewModel {
         switch recordingState.value {
         case .didNotStart, .paused, .completed:
             if recordingState.value == .completed {
+                self.cancelRecording() // Fresh start on new session
                 self.resetTimer()
             }
             
